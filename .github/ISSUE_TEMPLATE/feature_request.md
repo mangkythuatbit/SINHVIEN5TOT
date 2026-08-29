@@ -12,7 +12,19 @@ assignees: ''
 **Yêu cầu kỹ thuật / Ghi chú BRD:**
 - [ ] Tham khảo tài liệu đặc tả Phase 1 (Trang chủ / Niên biểu / Form / CMS).
 - [ ] 
+**User Story (Câu chuyện người dùng):**
+*Là một [Sinh viên / Admin / Khách], tôi muốn [tính năng gì] để [lợi ích / mục đích mang lại gì].*
 
+**Luồng nghiệp vụ chi tiết (Business Flow):**
+1. Bước 1: Người dùng thao tác...
+2. Bước 2: Hệ thống xử lý...
+3. Bước 3: Kết quả trả về...
+
+**Yêu cầu dữ liệu & Ràng buộc (Data & Constraints):**
+- Các trường dữ liệu bắt buộc: [Ví dụ: Email, Tên hoạt động,...]
+- Ràng buộc logic: [Ví dụ: Mã request_code phải là duy nhất, tự sinh 6-8 ký tự...]
+
+**Tiêu chí nghiệm thu (Acceptance Criteria - AC):**
 **Tiêu chí hoàn thành (Definition of Done):**
 - [ ] **Chức năng đúng BRD:** Đáp ứng đầy đủ các yêu cầu nghiệp vụ đã đặc tả trong tài liệu (không thiếu trường, đúng luồng, đúng logic).
 - [ ] **Giao diện Responsive:** Hiển thị mượt mà, không vỡ layout trên cả 3 kích thước: Mobile (< 768px), Tablet (768px - 1024px) và Desktop (> 1024px).
