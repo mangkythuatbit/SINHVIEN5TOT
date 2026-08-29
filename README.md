@@ -1,4 +1,4 @@
-# 🎓 Cổng thông tin Sinh viên 5 Tốt - Khoa Công nghệ Thông tin Kinh doanh (BIT)
+# 🎓 Cổng thông tin Sinh viên 5 Tốt - Khoa Công nghệ thông tin kinh doanh (BIT)
 
 ![Project Status](https://img.shields.io/badge/Status-Phase_1_(In_Development)-blue)
 ![Target](https://img.shields.io/badge/Target-October_2026-orange)
