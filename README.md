@@ -51,18 +51,3 @@ Hệ thống xoay quanh các thực thể (Entities) chính sau:
 - `home_histories` & `home_honors`: Dữ liệu cho trang chủ.
 
 ---
-
-## 🚀 Hướng dẫn cài đặt & Khởi chạy (Installation & Setup)
-
-*(Team Kỹ thuật cập nhật các lệnh cài đặt tương ứng với môi trường)*
-
-### Yêu cầu hệ thống (Prerequisites)
-- Node.js >= `[Phiên bản]`
-- Database >= `[Phiên bản]`
-- Google OAuth API Credentials.
-
-### Các bước cài đặt
-1. Clone dự án:
-   ```bash
-   git clone [Link Repo của bạn]
-   cd [Tên thư mục project]
