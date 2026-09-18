@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trang quản trị · Sinh viên 5 Tốt khoa BIT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="root.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-body">
+
+<!-- ======================= LOGIN SCREEN (/bit-login) ======================= -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <img src="assets/bit-logo.png" alt="Logo BIT" class="login-logo">
+    <span class="login-badge">🔒 Khu vực nội bộ</span>
+    <h1>Đăng nhập trang quản trị</h1>
+    <p class="login-sub">Dành cho BCH Đoàn – Hội khoa Công nghệ thông tin kinh doanh &amp; đại diện BTC Sinh viên 5 Tốt / mảng Kỹ thuật.</p>
+
+    <button class="google-btn" id="googleBtn" type="button">
+      <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.6-6 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l6-6C34.6 5.1 29.6 3 24 3 12.4 3 3 12.4 3 24s9.4 21 21 21 21-9.4 21-21c0-1.2-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.6 15.9 18.9 13 24 13c3.1 0 5.8 1.1 8 3l6-6C34.6 5.1 29.6 3 24 3 16.3 3 9.7 7.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 45c5.5 0 10.4-1.9 14.3-5.1l-6.6-5.6c-2.1 1.5-4.8 2.4-7.7 2.4-5.3 0-9.7-3.4-11.3-8.1l-6.6 5.1C9.6 40.6 16.2 45 24 45z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.2 4.2-4.1 5.6l6.6 5.6C41.7 36.5 45 30.8 45 24c0-1.2-.1-2.4-.4-3.5z"/></svg>
+      Đăng nhập bằng Google
+    </button>
+
+    <form class="login-emailform" id="loginEmailForm">
+      <div class="field">
+        <label for="loginEmail">Chọn tài khoản email khoa / mảng</label>
+        <input class="input" id="loginEmail" type="email" placeholder="ten.bch@ueh.edu.vn" required style="width:100%;">
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Tiếp tục</button>
+      <div class="login-error" id="loginError">Email này không có trong danh sách được cấp quyền BCH. Vui lòng liên hệ mảng Kỹ thuật để được thêm vào whitelist.</div>
+    </form>
+
+    <div class="login-hint">
+      Phase 1 dùng whitelist email thay cho tài khoản/mật khẩu. Bản demo (chưa nối Google OAuth2 thật) — thử nhanh với:<br>
+      <code>bch.doanhoi.bit@ueh.edu.vn</code> (Admin) hoặc <code>kythuat.sv5t.bit@ueh.edu.vn</code> (Editor).
+    </div>
+  </div>
+</div>
+
+<!-- ======================= ADMIN APP SHELL ======================= -->
+<div class="admin-shell" id="adminShell" style="display:none;">
+
+  <div class="admin-mobile-bar">
+    <button id="sidebarOpenBtn" aria-label="Mở menu" type="button">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <strong style="font-size:var(--fs-small);">Trang quản trị SV5T</strong>
+  </div>
+  <div class="admin-scrim" id="adminScrim"></div>
+
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="admin-brand">
+      <img src="assets/bit-logo.png" alt="Logo BIT">
+      <span><strong>SV5T Admin</strong><span>Khoa BIT · Đoàn – Hội</span></span>
+    </div>
+
+    <nav class="admin-nav" id="adminNav">
+      <span class="admin-nav-label">Tổng quan</span>
+      <button type="button" data-view="dashboard" class="is-active" title="Dashboard">
+        <span class="ic" data-icon="grid"></span><span class="label-text">Dashboard</span>
+      </button>
+
+      <span class="admin-nav-label">Quản lý Trang chủ</span>
+      <button type="button" data-view="home" title="Lịch sử &amp; Vinh danh">
+        <span class="ic" data-icon="image"></span><span class="label-text">Lịch sử &amp; Vinh danh</span>
+      </button>
+
+      <span class="admin-nav-label">Quản lý Niên biểu</span>
+      <button type="button" data-view="timeline" title="Tiêu chuẩn &amp; Hoạt động">
+        <span class="ic" data-icon="list"></span><span class="label-text">Tiêu chuẩn &amp; Hoạt động</span>
+      </button>
+      <button type="button" data-view="requests" title="Yêu cầu xét duyệt">
+        <span class="ic" data-icon="inbox"></span><span class="label-text">Yêu cầu xét duyệt</span>
+        <span class="badge-count" id="navPendingCount">0</span>
+      </button>
+    </nav>
+
+    <button type="button" class="admin-collapse-btn" id="sidebarCollapseBtn" title="Thu gọn menu">
+      <span class="ic" data-icon="collapse"></span><span class="label-text">Thu gọn menu</span>
+    </button>
+
+    <div class="admin-user">
+      <span class="avatar" id="userAvatar">B</span>
+      <span class="who">
+        <strong id="userEmail">—</strong>
+        <span id="userRole">—</span>
+      </span>
+      <button id="logoutBtn" type="button" aria-label="Đăng xuất" title="Đăng xuất">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-headerbar">
+      <div class="headerbar-search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="search" id="quickSearch" placeholder="Tìm nhanh hoạt động, yêu cầu, hồ sơ…">
+      </div>
+      <div class="headerbar-actions">
+        <a class="headerbar-btn" href="index.html" target="_blank" rel="noopener" title="Xem trang công khai">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+        <button class="headerbar-btn" id="notifBtn" type="button" title="Thông báo">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="dot" id="notifDot" style="display:none;"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="admin-main-inner">
+
+    <!-- ============ DASHBOARD ============ -->
+    <section class="admin-view is-active" id="view-dashboard">
+      <div class="admin-topbar">
+        <div>
+          <h1>Chào mừng trở lại 👋</h1>
+          <p>Tổng quan nhanh hệ thống Sinh viên 5 Tốt khoa BIT — Phase 1.</p>
+        </div>
+      </div>
+
+      <div class="dash-alert" id="dashAlert">
+        <span class="ic">🔔</span>
+        <div>
+          <strong id="dashAlertTitle">0 yêu cầu xét duyệt mới đang chờ</strong>
+          <p>Sinh viên gửi yêu cầu bổ sung hoạt động — xử lý sớm để cập nhật Niên biểu kịp thời.</p>
+        </div>
+        <button class="btn btn-primary btn-sm" data-view-link="requests">Xử lý ngay</button>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-box"><span class="ic" data-icon="list"></span><div class="num" id="statActivities">0</div><div class="lbl">Hoạt động đang chạy</div></div>
+        <div class="stat-box"><span class="ic" data-icon="users"></span><div class="num" id="statHonors">0</div><div class="lbl">Gương mặt tiêu biểu</div></div>
+        <div class="stat-box"><span class="ic" data-icon="layers"></span><div class="num" id="statSub">0</div><div class="lbl">Tiêu chuẩn con</div></div>
+        <div class="stat-box warn"><span class="ic" data-icon="inbox"></span><div class="num" id="statPending">0</div><div class="lbl">Yêu cầu chờ duyệt</div></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div><h2>Hoạt động vừa cập nhật</h2><p>5 hoạt động mới nhất trong Niên biểu</p></div>
+          <button class="btn btn-outline btn-sm" data-view-link="timeline">Xem tất cả</button>
+        </div>
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Tên hoạt động</th><th>Tiêu chuẩn</th><th>Cấp độ</th><th>Trạng thái</th></tr></thead>
+            <tbody id="dashRecentActivities"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ HOME MANAGEMENT ============ -->
+    <section class="admin-view" id="view-home">
+      <div class="admin-topbar">
+        <div><h1>Quản lý Trang chủ</h1><p>Nội dung Section 3 (Lịch sử SV5T) và Section 4 (Vinh danh SV5T) trên trang chủ.</p></div>
+      </div>
+
+      <div class="admin-subnav" id="homeSubnav">
+        <button type="button" data-sub="histories" class="is-active">Lịch sử SV5T qua từng năm</button>
+        <button type="button" data-sub="honors">Vinh danh SV5T tiêu biểu</button>
+      </div>
+
+      <div class="admin-subview is-active" id="home-histories">
+        <div class="panel">
+          <div class="panel-head">
+            <div><h2>Danh sách theo năm</h2><p>Bộ nhận diện, số liệu highlight hiển thị ở lưới 3×1 trang chủ</p></div>
+            <button class="btn btn-primary btn-sm" id="addHistoryBtn" type="button">+ Thêm năm</button>
+          </div>
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Năm</th><th>Bộ nhận diện (mô tả ảnh)</th><th>Số liệu highlight</th><th style="text-align:right;">Thao tác</th></tr></thead>
+              <tbody id="historyBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-subview" id="home-honors">
+        <div class="panel">
+          <div class="panel-head">
+            <div><h2>Hồ sơ vinh danh</h2><p>Hiển thị theo tabs Cấp UEH / Cấp TP / Cấp Khoa ở trang chủ</p></div>
+            <button class="btn btn-primary btn-sm" id="addHonorBtn" type="button">+ Thêm hồ sơ</button>
+          </div>
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Họ tên</th><th>Phân loại</th><th>Năm đạt giải</th><th>Thành tích</th><th style="text-align:right;">Thao tác</th></tr></thead>
+              <tbody id="honorBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TIMELINE MANAGEMENT ============ -->
+    <section class="admin-view" id="view-timeline">
+      <div class="admin-topbar">
+        <div><h1>Quản lý Niên biểu</h1><p>Tiêu chuẩn con và Hoạt động hiển thị trên trang Niên biểu.</p></div>
+      </div>
+
+      <div class="admin-subnav" id="timelineSubnav">
+        <button type="button" data-sub="subcriteria" class="is-active">Tiêu chuẩn con</button>
+        <button type="button" data-sub="activities">Hoạt động</button>
+      </div>
+
+      <div class="admin-subview is-active" id="timeline-subcriteria">
+        <div class="panel">
+          <div class="panel-head">
+            <div><h2>Tiêu chuẩn con</h2><p>VD: ĐRL, NCKH — gắn vào 1 trong 5 tiêu chuẩn gốc</p></div>
+            <button class="btn btn-primary btn-sm" id="addSubBtn" type="button">+ Thêm tiêu chuẩn con</button>
+          </div>
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Tên tiêu chuẩn con</th><th>Thuộc tiêu chuẩn gốc</th><th style="text-align:right;">Thao tác</th></tr></thead>
+              <tbody id="subCriteriaBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-subview" id="timeline-activities">
+        <div class="panel">
+          <div class="panel-head">
+            <div><h2>Hoạt động</h2><p>Bật/Tắt/Đóng hiển thị trực tiếp bằng cách bấm vào trạng thái</p></div>
+            <button class="btn btn-primary btn-sm" id="addActivityBtn" type="button">+ Thêm hoạt động</button>
+          </div>
+          <div class="admin-subnav" id="activityFilterNav" style="margin-bottom: var(--space-4);">
+            <button type="button" data-crit="" class="is-active">Tất cả</button>
+            <button type="button" data-crit="hoc-tap">Học tập tốt</button>
+            <button type="button" data-crit="dao-duc">Đạo đức tốt</button>
+            <button type="button" data-crit="tinh-nguyen">Tình nguyện tốt</button>
+            <button type="button" data-crit="hoi-nhap">Hội nhập tốt</button>
+            <button type="button" data-crit="the-luc">Thể lực tốt</button>
+          </div>
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Tên hoạt động</th><th>Tiêu chuẩn / con</th><th>Cấp độ</th><th>Thời gian</th><th>Trạng thái</th><th style="text-align:right;">Thao tác</th></tr></thead>
+              <tbody id="activitiesBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ REQUESTS MANAGEMENT ============ -->
+    <section class="admin-view" id="view-requests">
+      <div class="admin-topbar">
+        <div><h1>Yêu cầu xét duyệt hoạt động</h1><p>Danh sách sinh viên gửi đề xuất từ trang Niên biểu — duyệt để đưa vào Niên biểu chính thức.</p></div>
+      </div>
+
+      <div class="panel">
+        <div class="admin-subnav" id="requestFilterNav">
+          <button type="button" data-status="" class="is-active">Tất cả</button>
+          <button type="button" data-status="pending">Chờ duyệt</button>
+          <button type="button" data-status="approved">Đã duyệt</button>
+          <button type="button" data-status="rejected">Từ chối</button>
+        </div>
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Mã yêu cầu</th><th>Tên hoạt động</th><th>Email sinh viên</th><th>Ghi chú</th><th>Trạng thái</th><th style="text-align:right;">Thao tác</th></tr></thead>
+            <tbody id="requestsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- ======================= MODAL DÙNG CHUNG CHO FORM ======================= -->
+<div class="admin-modal-backdrop" id="formModal">
+  <div class="admin-modal">
+    <button class="admin-modal-close" id="formModalClose" type="button" aria-label="Đóng">×</button>
+    <h3 id="formModalTitle">Thêm mới</h3>
+    <form id="formModalForm"></form>
+  </div>
+</div>
+
+<!-- Modal xác nhận duyệt yêu cầu, chọn cấp ghi nhận -->
+<div class="admin-modal-backdrop" id="approveModal">
+  <div class="admin-modal" style="max-width:420px;">
+    <button class="admin-modal-close" id="approveModalClose" type="button" aria-label="Đóng">×</button>
+    <h3>Duyệt yêu cầu</h3>
+    <p class="section-desc" style="margin-bottom:var(--space-4);">Chọn cấp ghi nhận cho hoạt động này trước khi duyệt.</p>
+    <div class="field" style="margin-bottom:var(--space-5);">
+      <label for="approveLevel">Cấp ghi nhận</label>
+      <select class="input" id="approveLevel" style="width:100%;">
+        <option value="Khoa">Khoa</option>
+        <option value="UEH">UEH</option>
+        <option value="TP">Thành phố</option>
+        <option value="Hội">Hội Sinh viên</option>
+      </select>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-outline btn-sm" id="approveCancelBtn" type="button">Hủy</button>
+      <button class="btn btn-primary btn-sm" id="approveConfirmBtn" type="button">Xác nhận duyệt</button>
+    </div>
+  </div>
+</div>
+
+<div class="admin-toast" id="adminToast"></div>
+
+<script>
+/* ==========================================================================
+   DEMO PHASE 1 — Toàn bộ dữ liệu lưu trong LocalStorage (chưa có Backend/DB).
+   Cấu trúc bảng phỏng theo THIẾT KẾ CƠ SỞ DỮ LIỆU trong tài liệu mô tả
+   (users, home_histories, home_honors, criteria, sub_criteria, activities,
+   activity_requests) để khi có Backend chỉ cần thay lớp lưu trữ này bằng
+   gọi API thật, không cần đổi UI.
+   ========================================================================== */
+
+const CRITERIA_LABEL = {
+  'hoc-tap': 'Học tập tốt', 'dao-duc': 'Đạo đức tốt', 'tinh-nguyen': 'Tình nguyện tốt',
+  'hoi-nhap': 'Hội nhập tốt', 'the-luc': 'Thể lực tốt'
+};
+
+// ---- Whitelist mô phỏng bảng users (email, role) ----
+const WHITELIST = {
+  'bch.doanhoi.bit@ueh.edu.vn': 'Admin',
+  'kythuat.sv5t.bit@ueh.edu.vn': 'Editor',
+  'sv5t.bit@ueh.edu.vn': 'Editor',
+};
+
+const LS_KEY = 'sv5tAdminData_v1';
+const SESSION_KEY = 'sv5tAdminSession_v1';
+
+function seedData(){
+  return {
+    histories: [
+      { id: 1, year: '2024', image: 'Bộ nhận diện SV5T 2024 (vuông)', highlights: '120 sinh viên đạt danh hiệu · 18 hoạt động' },
+      { id: 2, year: '2025', image: 'Bộ nhận diện SV5T 2025 (vuông)', highlights: '156 sinh viên đạt danh hiệu · 24 hoạt động' },
+      { id: 3, year: '2026', image: 'Bộ nhận diện SV5T 2026 (vuông)', highlights: 'Đang diễn ra · 30+ hoạt động dự kiến' },
+    ],
+    honors: [
+      { id: 1, name: 'Nguyễn Văn A', level: 'UEH', year: '2026', achievement: 'Đạt danh hiệu SV5T cấp UEH năm 2026, thành viên CLB Học thuật BIT, IELTS 7.5.' },
+      { id: 2, name: 'Trần Thị B', level: 'UEH', year: '2026', achievement: 'Trưởng ban Tình nguyện khoa, tham gia 5 chiến dịch Mùa hè xanh, GPA 3.7/4.' },
+      { id: 3, name: 'Phạm Thị D', level: 'TP', year: '2026', achievement: 'Đạt danh hiệu SV5T cấp Thành phố, đại diện UEH tham gia Liên hoan SV5T TP.HCM.' },
+      { id: 4, name: 'Vũ Văn G', level: 'Khoa', year: '2026', achievement: 'Sinh viên tiêu biểu cấp Khoa BIT, tích cực tham gia hoạt động Đoàn – Hội, GPA 3.5/4.' },
+    ],
+    subCriteria: [
+      { id: 1, criterionId: 'hoc-tap', name: 'Nghiên cứu khoa học (NCKH)' },
+      { id: 2, criterionId: 'hoc-tap', name: 'Điểm rèn luyện (ĐRL)' },
+      { id: 3, criterionId: 'tinh-nguyen', name: 'Chiến dịch tình nguyện hè' },
+    ],
+    activities: [
+      { id: 1, criterionId: 'hoc-tap', subCriterionId: 1, name: 'Hội nghị Nghiên cứu khoa học sinh viên', level: 'TP', time: '01/03/2026 – 30/04/2026', requirement: 'Có đề tài NCKH đã đăng ký', note: 'Ưu tiên xét danh hiệu cấp TP', status: 'expired' },
+      { id: 2, criterionId: 'hoc-tap', subCriterionId: 2, name: 'Cuộc thi Học thuật BIT Challenge', level: 'Khoa', time: '01/10/2026 – 30/11/2026', requirement: 'GPA ≥ 2.5, đăng ký theo nhóm', note: 'Cộng điểm rèn luyện ĐRL', status: 'active' },
+      { id: 3, criterionId: 'tinh-nguyen', subCriterionId: 3, name: 'Chiến dịch Mùa hè xanh 2026', level: 'Hội', time: '01/06/2026 – 31/07/2026', requirement: 'Cam kết tối thiểu 7 ngày', note: 'Có giấy chứng nhận', status: 'expired' },
+      { id: 4, criterionId: 'the-luc', subCriterionId: null, name: 'Giải chạy bộ SV5T Run 2026', level: 'Khoa', time: '12/10/2026', requirement: 'Không giới hạn', note: 'Có huy chương hoàn thành', status: 'active' },
+    ],
+    requests: [
+      { id: 1, code: 'A1B2C3', email: 'sv001@st.ueh.edu.vn', name: 'Ngày hội STEM khoa BIT', link: '#', note: '', status: 'approved', level: 'Khoa' },
+      { id: 2, code: 'D4E5F6', email: 'sv002@st.ueh.edu.vn', name: 'Giải Cờ vua sinh viên', link: '#', note: 'Giải đấu do CLB tổ chức, có giấy mời', status: 'pending', level: null },
+      { id: 3, code: 'G7H8I9', email: 'sv003@st.ueh.edu.vn', name: 'Workshop Thiết kế UI/UX', link: '#', note: '', status: 'rejected', level: null },
+    ],
+  };
+}
+
+let DB = JSON.parse(localStorage.getItem(LS_KEY) || 'null') || seedData();
+function save(){ localStorage.setItem(LS_KEY, JSON.stringify(DB)); }
+function nextId(arr){ return arr.length ? Math.max(...arr.map(x => x.id)) + 1 : 1; }
+
+/* ---------------- ICONS (inline, dùng lucide-style path) ---------------- */
+const ic = {
+  grid: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>',
+  image: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>',
+  list: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>',
+  inbox: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>',
+  users: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+  layers: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>',
+  edit: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg>',
+  trash: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>',
+  check: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>',
+  x: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
+  collapse: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/></svg>',
+};
+// Render icon vào các placeholder [data-icon]
+document.querySelectorAll('[data-icon]').forEach(el => {
+  el.innerHTML = ic[el.dataset.icon] || '';
+});
+
+/* ==========================================================================
+   TOAST
+   ========================================================================== */
+function toast(html){
+  const t = document.getElementById('adminToast');
+  t.innerHTML = html;
+  t.classList.add('is-visible');
+  setTimeout(() => t.classList.remove('is-visible'), 3200);
+}
+
+/* ==========================================================================
+   ĐĂNG NHẬP (whitelist email — mô phỏng Google OAuth2, demo Phase 1)
+   ========================================================================== */
+const loginScreen = document.getElementById('loginScreen');
+const adminShell = document.getElementById('adminShell');
+const googleBtn = document.getElementById('googleBtn');
+const loginEmailForm = document.getElementById('loginEmailForm');
+const loginError = document.getElementById('loginError');
+
+googleBtn.addEventListener('click', () => {
+  loginEmailForm.classList.add('is-visible');
+  document.getElementById('loginEmail').focus();
+});
+
+loginEmailForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+  const role = WHITELIST[email];
+  if (!role){
+    loginError.classList.add('is-visible');
+    return;
+  }
+  loginError.classList.remove('is-visible');
+  sessionStorage.setItem(SESSION_KEY, JSON.stringify({ email, role }));
+  enterApp({ email, role });
+});
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  sessionStorage.removeItem(SESSION_KEY);
+  location.reload();
+});
+
+function enterApp(session){
+  loginScreen.style.display = 'none';
+  adminShell.style.display = 'grid';
+  document.getElementById('userEmail').textContent = session.email;
+  document.getElementById('userRole').textContent = session.role === 'Admin' ? 'Quản trị viên' : 'Biên tập viên';
+  document.getElementById('userAvatar').textContent = session.email[0].toUpperCase();
+  renderAll();
+}
+
+/* ==========================================================================
+   ĐIỀU HƯỚNG SIDEBAR / MOBILE DRAWER
+   ========================================================================== */
+document.getElementById('adminNav').addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-view]');
+  if (!btn) return;
+  switchView(btn.dataset.view);
+});
+document.querySelectorAll('[data-view-link]').forEach(btn => {
+  btn.addEventListener('click', () => switchView(btn.dataset.viewLink));
+});
+function switchView(view){
+  document.querySelectorAll('.admin-nav button[data-view]').forEach(b => b.classList.toggle('is-active', b.dataset.view === view));
+  document.querySelectorAll('.admin-view').forEach(v => v.classList.toggle('is-active', v.id === 'view-' + view));
+  document.getElementById('adminSidebar').classList.remove('is-open');
+  document.getElementById('adminScrim').classList.remove('is-open');
+  const search = document.getElementById('quickSearch');
+  if (search && search.value) {
+    search.value = '';
+    document.querySelectorAll('.data-table tbody tr').forEach(row => { row.style.display = ''; });
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+document.getElementById('sidebarOpenBtn').addEventListener('click', () => {
+  document.getElementById('adminSidebar').classList.add('is-open');
+  document.getElementById('adminScrim').classList.add('is-open');
+});
+document.getElementById('adminScrim').addEventListener('click', () => {
+  document.getElementById('adminSidebar').classList.remove('is-open');
+  document.getElementById('adminScrim').classList.remove('is-open');
+});
+
+/* ---- Thu gọn / mở rộng sidebar (icon rail) ---- */
+const SIDEBAR_COLLAPSE_KEY = 'sv5tAdminSidebarCollapsed';
+const adminShellEl = document.getElementById('adminShell');
+document.getElementById('sidebarCollapseBtn').addEventListener('click', () => {
+  const collapsed = adminShellEl.classList.toggle('is-collapsed');
+  localStorage.setItem(SIDEBAR_COLLAPSE_KEY, collapsed ? '1' : '0');
+});
+if (localStorage.getItem(SIDEBAR_COLLAPSE_KEY) === '1') adminShellEl.classList.add('is-collapsed');
+
+/* ---- Chuông thông báo: đưa thẳng tới Yêu cầu xét duyệt ---- */
+document.getElementById('notifBtn').addEventListener('click', () => switchView('requests'));
+
+/* ---- Tìm nhanh: lọc dòng trong bảng của view đang mở ---- */
+document.getElementById('quickSearch').addEventListener('input', (e) => {
+  const q = e.target.value.trim().toLowerCase();
+  const activeView = document.querySelector('.admin-view.is-active');
+  if (!activeView) return;
+  activeView.querySelectorAll('.data-table tbody tr, .timeline-table tbody tr').forEach(row => {
+    if (row.querySelector('.table-empty')) return;
+    row.style.display = !q || row.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+});
+
+/* ==========================================================================
+   SUB-TABS (Home management, Timeline management)
+   ========================================================================== */
+function wireSubnav(navId, viewPrefix){
+  document.getElementById(navId).addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-sub]');
+    if (!btn) return;
+    document.querySelectorAll(`#${navId} button`).forEach(b => b.classList.toggle('is-active', b === btn));
+    document.querySelectorAll(`[id^="${viewPrefix}-"]`).forEach(v => v.classList.remove('is-active'));
+    document.getElementById(`${viewPrefix}-${btn.dataset.sub}`).classList.add('is-active');
+  });
+}
+wireSubnav('homeSubnav', 'home');
+wireSubnav('timelineSubnav', 'timeline');
+
+/* ==========================================================================
+   MODAL FORM DÙNG CHUNG
+   ========================================================================== */
+const formModal = document.getElementById('formModal');
+const formModalTitle = document.getElementById('formModalTitle');
+const formModalForm = document.getElementById('formModalForm');
+document.getElementById('formModalClose').addEventListener('click', closeFormModal);
+formModal.addEventListener('click', (e) => { if (e.target === formModal) closeFormModal(); });
+function closeFormModal(){ formModal.classList.remove('is-open'); }
+function openFormModal(title, bodyHtml, onSubmit){
+  formModalTitle.textContent = title;
+  formModalForm.innerHTML = bodyHtml + `
+    <div class="form-actions">
+      <button type="button" class="btn btn-outline btn-sm" onclick="closeFormModal()">Hủy</button>
+      <button type="submit" class="btn btn-primary btn-sm">Lưu</button>
+    </div>`;
+  formModal.classList.add('is-open');
+  formModalForm.onsubmit = (e) => { e.preventDefault(); onSubmit(new FormData(formModalForm)); };
+}
+window.closeFormModal = closeFormModal;
+
+function confirmDelete(msg){ return confirm(msg || 'Bạn chắc chắn muốn xóa mục này?'); }
+
+/* ==========================================================================
+   1) LỊCH SỬ SV5T (home_histories)
+   ========================================================================== */
+function renderHistories(){
+  const tbody = document.getElementById('historyBody');
+  tbody.innerHTML = DB.histories.map(h => `
+    <tr>
+      <td class="cell-name">${h.year}</td>
+      <td class="cell-muted">${h.image}</td>
+      <td>${h.highlights}</td>
+      <td><div class="row-actions">
+        <button class="icon-action" title="Sửa" onclick="editHistory(${h.id})">${ic.edit}</button>
+        <button class="icon-action danger" title="Xóa" onclick="deleteHistory(${h.id})">${ic.trash}</button>
+      </div></td>
+    </tr>`).join('') || `<tr><td colspan="4" class="table-empty">Chưa có dữ liệu năm nào.</td></tr>`;
+}
+function historyFormHtml(h){
+  h = h || { year: '', image: '', highlights: '' };
+  return `
+    <div class="form-grid">
+      <div class="field"><label>Năm</label><input class="input" name="year" required value="${h.year}" placeholder="2026" style="width:100%;"></div>
+      <div class="field"><label>Mô tả bộ nhận diện / ảnh</label><input class="input" name="image" required value="${h.image}" placeholder="Ảnh vuông SV5T 2026" style="width:100%;"></div>
+      <div class="field field-full"><label>Số liệu highlight</label><input class="input" name="highlights" required value="${h.highlights}" placeholder="156 sinh viên đạt danh hiệu · 24 hoạt động" style="width:100%;"></div>
+    </div>`;
+}
+document.getElementById('addHistoryBtn').addEventListener('click', () => {
+  openFormModal('Thêm năm mới', historyFormHtml(), (fd) => {
+    DB.histories.push({ id: nextId(DB.histories), year: fd.get('year'), image: fd.get('image'), highlights: fd.get('highlights') });
+    save(); renderHistories(); closeFormModal(); toast('Đã thêm dữ liệu năm mới.');
+  });
+});
+window.editHistory = (id) => {
+  const h = DB.histories.find(x => x.id === id);
+  openFormModal('Sửa dữ liệu năm ' + h.year, historyFormHtml(h), (fd) => {
+    Object.assign(h, { year: fd.get('year'), image: fd.get('image'), highlights: fd.get('highlights') });
+    save(); renderHistories(); closeFormModal(); toast('Đã lưu thay đổi.');
+  });
+};
+window.deleteHistory = (id) => {
+  if (!confirmDelete()) return;
+  DB.histories = DB.histories.filter(x => x.id !== id);
+  save(); renderHistories(); toast('Đã xóa.');
+};
+
+/* ==========================================================================
+   2) VINH DANH SV5T (home_honors)
+   ========================================================================== */
+function renderHonors(){
+  const tbody = document.getElementById('honorBody');
+  tbody.innerHTML = DB.honors.map(h => `
+    <tr>
+      <td class="cell-name">${h.name}</td>
+      <td><span class="badge badge-active">Cấp ${h.level === 'TP' ? 'Thành phố' : h.level}</span></td>
+      <td>${h.year}</td>
+      <td class="cell-muted" style="max-width:280px;">${h.achievement.slice(0,70)}${h.achievement.length>70?'…':''}</td>
+      <td><div class="row-actions">
+        <button class="icon-action" title="Sửa" onclick="editHonor(${h.id})">${ic.edit}</button>
+        <button class="icon-action danger" title="Xóa" onclick="deleteHonor(${h.id})">${ic.trash}</button>
+      </div></td>
+    </tr>`).join('') || `<tr><td colspan="5" class="table-empty">Chưa có hồ sơ vinh danh nào.</td></tr>`;
+}
+function honorFormHtml(h){
+  h = h || { name: '', level: 'UEH', year: '', achievement: '' };
+  return `
+    <div class="form-grid">
+      <div class="field field-full"><label>Họ và tên</label><input class="input" name="name" required value="${h.name}" style="width:100%;"></div>
+      <div class="field"><label>Phân loại</label>
+        <select class="input" name="level" style="width:100%;">
+          <option value="UEH" ${h.level==='UEH'?'selected':''}>Cấp UEH</option>
+          <option value="TP" ${h.level==='TP'?'selected':''}>Cấp Thành phố</option>
+          <option value="Khoa" ${h.level==='Khoa'?'selected':''}>Cấp Khoa</option>
+        </select>
+      </div>
+      <div class="field"><label>Năm đạt giải</label><input class="input" name="year" required value="${h.year}" placeholder="2026" style="width:100%;"></div>
+      <div class="field field-full"><label>Thành tích chi tiết</label><textarea class="input" name="achievement" required style="width:100%; min-height:90px;">${h.achievement}</textarea></div>
+      <div class="field field-full"><label>Hình ảnh (link, tùy chọn — Phase 1 chưa hỗ trợ upload trực tiếp)</label><input class="input" name="image" placeholder="https://drive.google.com/..." style="width:100%;"></div>
+    </div>`;
+}
+document.getElementById('addHonorBtn').addEventListener('click', () => {
+  openFormModal('Thêm hồ sơ vinh danh', honorFormHtml(), (fd) => {
+    DB.honors.push({ id: nextId(DB.honors), name: fd.get('name'), level: fd.get('level'), year: fd.get('year'), achievement: fd.get('achievement') });
+    save(); renderHonors(); closeFormModal(); toast('Đã thêm hồ sơ vinh danh.');
+  });
+});
+window.editHonor = (id) => {
+  const h = DB.honors.find(x => x.id === id);
+  openFormModal('Sửa hồ sơ — ' + h.name, honorFormHtml(h), (fd) => {
+    Object.assign(h, { name: fd.get('name'), level: fd.get('level'), year: fd.get('year'), achievement: fd.get('achievement') });
+    save(); renderHonors(); closeFormModal(); toast('Đã lưu thay đổi.');
+  });
+};
+window.deleteHonor = (id) => {
+  if (!confirmDelete()) return;
+  DB.honors = DB.honors.filter(x => x.id !== id);
+  save(); renderHonors(); toast('Đã xóa.');
+};
+
+/* ==========================================================================
+   3) TIÊU CHUẨN CON (sub_criteria)
+   ========================================================================== */
+function renderSubCriteria(){
+  const tbody = document.getElementById('subCriteriaBody');
+  tbody.innerHTML = DB.subCriteria.map(s => `
+    <tr>
+      <td class="cell-name">${s.name}</td>
+      <td><span class="badge badge-active">${CRITERIA_LABEL[s.criterionId]}</span></td>
+      <td><div class="row-actions">
+        <button class="icon-action" title="Sửa" onclick="editSub(${s.id})">${ic.edit}</button>
+        <button class="icon-action danger" title="Xóa" onclick="deleteSub(${s.id})">${ic.trash}</button>
+      </div></td>
+    </tr>`).join('') || `<tr><td colspan="3" class="table-empty">Chưa có tiêu chuẩn con nào.</td></tr>`;
+}
+function criterionOptions(selected){
+  return Object.entries(CRITERIA_LABEL).map(([k,v]) => `<option value="${k}" ${k===selected?'selected':''}>${v}</option>`).join('');
+}
+function subFormHtml(s){
+  s = s || { name: '', criterionId: 'hoc-tap' };
+  return `
+    <div class="field" style="margin-bottom:var(--space-4);"><label>Thuộc tiêu chuẩn gốc</label>
+      <select class="input" name="criterionId" style="width:100%;">${criterionOptions(s.criterionId)}</select>
+    </div>
+    <div class="field"><label>Tên tiêu chuẩn con</label><input class="input" name="name" required value="${s.name}" placeholder="VD: Nghiên cứu khoa học (NCKH)" style="width:100%;"></div>`;
+}
+document.getElementById('addSubBtn').addEventListener('click', () => {
+  openFormModal('Thêm tiêu chuẩn con', subFormHtml(), (fd) => {
+    DB.subCriteria.push({ id: nextId(DB.subCriteria), criterionId: fd.get('criterionId'), name: fd.get('name') });
+    save(); renderSubCriteria(); refreshActivityFormCaches(); closeFormModal(); toast('Đã thêm tiêu chuẩn con.');
+  });
+});
+window.editSub = (id) => {
+  const s = DB.subCriteria.find(x => x.id === id);
+  openFormModal('Sửa tiêu chuẩn con', subFormHtml(s), (fd) => {
+    Object.assign(s, { criterionId: fd.get('criterionId'), name: fd.get('name') });
+    save(); renderSubCriteria(); renderActivities(); closeFormModal(); toast('Đã lưu thay đổi.');
+  });
+};
+window.deleteSub = (id) => {
+  if (!confirmDelete('Xóa tiêu chuẩn con này? Các hoạt động đang gắn sẽ chuyển về "Không có".')) return;
+  DB.subCriteria = DB.subCriteria.filter(x => x.id !== id);
+  DB.activities.forEach(a => { if (a.subCriterionId === id) a.subCriterionId = null; });
+  save(); renderSubCriteria(); renderActivities(); toast('Đã xóa.');
+};
+function refreshActivityFormCaches(){ /* no-op placeholder — form luôn đọc DB mới nhất khi mở */ }
+
+/* ==========================================================================
+   4) HOẠT ĐỘNG (activities)
+   ========================================================================== */
+let activityFilter = '';
+const STATUS_LABEL = { active: 'Đang bật', expired: 'Tắt', closed: 'Đã đóng' };
+const STATUS_CLASS = { active: 'on', expired: 'off', closed: 'closed' };
+
+function renderActivities(){
+  const tbody = document.getElementById('activitiesBody');
+  const list = DB.activities.filter(a => !activityFilter || a.criterionId === activityFilter);
+  tbody.innerHTML = list.map(a => {
+    const sub = DB.subCriteria.find(s => s.id === a.subCriterionId);
+    return `
+    <tr>
+      <td class="cell-name">${a.name}</td>
+      <td class="cell-muted">${CRITERIA_LABEL[a.criterionId]}${sub ? ' · ' + sub.name : ''}</td>
+      <td>${a.level}</td>
+      <td class="cell-muted">${a.time}</td>
+      <td><button class="toggle-pill ${STATUS_CLASS[a.status]}" onclick="cycleStatus(${a.id})" title="Bấm để đổi trạng thái">${STATUS_LABEL[a.status]}</button></td>
+      <td><div class="row-actions">
+        <button class="icon-action" title="Sửa" onclick="editActivity(${a.id})">${ic.edit}</button>
+        <button class="icon-action danger" title="Xóa" onclick="deleteActivity(${a.id})">${ic.trash}</button>
+      </div></td>
+    </tr>`;
+  }).join('') || `<tr><td colspan="6" class="table-empty">Không có hoạt động nào trong tiêu chuẩn này.</td></tr>`;
+}
+window.cycleStatus = (id) => {
+  const a = DB.activities.find(x => x.id === id);
+  const order = ['active', 'expired', 'closed'];
+  a.status = order[(order.indexOf(a.status) + 1) % order.length];
+  save(); renderActivities(); renderDashboard();
+};
+document.getElementById('activityFilterNav').addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-crit]');
+  if (!btn) return;
+  document.querySelectorAll('#activityFilterNav button').forEach(b => b.classList.toggle('is-active', b === btn));
+  activityFilter = btn.dataset.crit;
+  renderActivities();
+});
+function subCriterionOptionsFor(criterionId, selected){
+  const list = DB.subCriteria.filter(s => s.criterionId === criterionId);
+  const opts = list.map(s => `<option value="${s.id}" ${String(s.id)===String(selected)?'selected':''}>${s.name}</option>`).join('');
+  return `<option value="">— Không có —</option>${opts}`;
+}
+function activityFormHtml(a){
+  a = a || { criterionId: 'hoc-tap', subCriterionId: '', name: '', level: 'Khoa', time: '', requirement: '', note: '', status: 'active' };
+  return `
+    <div class="form-grid">
+      <div class="field"><label>Tiêu chuẩn gốc</label>
+        <select class="input" name="criterionId" id="fCriterionId" style="width:100%;">${criterionOptions(a.criterionId)}</select>
+      </div>
+      <div class="field"><label>Tiêu chuẩn con</label>
+        <select class="input" name="subCriterionId" id="fSubCriterionId" style="width:100%;">${subCriterionOptionsFor(a.criterionId, a.subCriterionId)}</select>
+      </div>
+      <div class="field field-full"><label>Tên hoạt động</label><input class="input" name="name" required value="${a.name}" style="width:100%;"></div>
+      <div class="field"><label>Cấp độ</label>
+        <select class="input" name="level" style="width:100%;">
+          ${['Khoa','UEH','TP','Hội'].map(l => `<option ${a.level===l?'selected':''}>${l}</option>`).join('')}
+        </select>
+      </div>
+      <div class="field"><label>Thời gian diễn ra</label><input class="input" name="time" required value="${a.time}" placeholder="01/10/2026 – 30/11/2026" style="width:100%;"></div>
+      <div class="field field-full"><label>Yêu cầu</label><input class="input" name="requirement" value="${a.requirement}" style="width:100%;"></div>
+      <div class="field"><label>Ghi chú</label><input class="input" name="note" value="${a.note || ''}" style="width:100%;"></div>
+      <div class="field"><label>Trạng thái hiển thị</label>
+        <select class="input" name="status" style="width:100%;">
+          <option value="active" ${a.status==='active'?'selected':''}>Bật</option>
+          <option value="expired" ${a.status==='expired'?'selected':''}>Tắt</option>
+          <option value="closed" ${a.status==='closed'?'selected':''}>Đã đóng</option>
+        </select>
+      </div>
+    </div>`;
+}
+function wireActivityFormCascade(){
+  const critSel = document.getElementById('fCriterionId');
+  const subSel = document.getElementById('fSubCriterionId');
+  critSel?.addEventListener('change', () => { subSel.innerHTML = subCriterionOptionsFor(critSel.value, ''); });
+}
+document.getElementById('addActivityBtn').addEventListener('click', () => {
+  openFormModal('Thêm hoạt động', activityFormHtml(), (fd) => {
+    DB.activities.push({
+      id: nextId(DB.activities), criterionId: fd.get('criterionId'),
+      subCriterionId: fd.get('subCriterionId') ? Number(fd.get('subCriterionId')) : null,
+      name: fd.get('name'), level: fd.get('level'), time: fd.get('time'),
+      requirement: fd.get('requirement'), note: fd.get('note'), status: fd.get('status'),
+    });
+    save(); renderActivities(); renderDashboard(); closeFormModal(); toast('Đã thêm hoạt động mới.');
+  });
+  wireActivityFormCascade();
+});
+window.editActivity = (id) => {
+  const a = DB.activities.find(x => x.id === id);
+  openFormModal('Sửa hoạt động', activityFormHtml(a), (fd) => {
+    Object.assign(a, {
+      criterionId: fd.get('criterionId'),
+      subCriterionId: fd.get('subCriterionId') ? Number(fd.get('subCriterionId')) : null,
+      name: fd.get('name'), level: fd.get('level'), time: fd.get('time'),
+      requirement: fd.get('requirement'), note: fd.get('note'), status: fd.get('status'),
+    });
+    save(); renderActivities(); renderDashboard(); closeFormModal(); toast('Đã lưu thay đổi.');
+  });
+  wireActivityFormCascade();
+};
+window.deleteActivity = (id) => {
+  if (!confirmDelete()) return;
+  DB.activities = DB.activities.filter(x => x.id !== id);
+  save(); renderActivities(); renderDashboard(); toast('Đã xóa.');
+};
+
+/* ==========================================================================
+   5) YÊU CẦU XÉT DUYỆT (activity_requests)
+   ========================================================================== */
+let requestFilter = '';
+const REQ_STATUS_LABEL = { pending: 'Chờ duyệt', approved: 'Đã duyệt', rejected: 'Từ chối' };
+const REQ_STATUS_CLASS = { pending: 'badge-pending', approved: 'badge-approved', rejected: 'badge-rejected' };
+
+function renderRequests(){
+  const tbody = document.getElementById('requestsBody');
+  const list = DB.requests.filter(r => !requestFilter || r.status === requestFilter);
+  tbody.innerHTML = list.map(r => `
+    <tr>
+      <td class="cell-name">${r.code}</td>
+      <td>${r.name}${r.link && r.link !== '#' ? ` · <a href="${r.link}" target="_blank" rel="noopener">Link</a>` : ''}</td>
+      <td class="cell-muted">${r.email}</td>
+      <td class="cell-muted" style="max-width:220px;">${r.note || '—'}</td>
+      <td><span class="badge ${REQ_STATUS_CLASS[r.status]}">${REQ_STATUS_LABEL[r.status]}${r.status==='approved' && r.level ? ' · ' + r.level : ''}</span></td>
+      <td><div class="row-actions">
+        ${r.status === 'pending' ? `
+          <button class="icon-action" title="Duyệt" onclick="openApprove(${r.id})">${ic.check}</button>
+          <button class="icon-action danger" title="Từ chối" onclick="rejectRequest(${r.id})">${ic.x}</button>` : `
+          <button class="icon-action" title="Đưa về chờ duyệt" onclick="resetRequest(${r.id})">↺</button>`}
+      </div></td>
+    </tr>`).join('') || `<tr><td colspan="6" class="table-empty">Không có yêu cầu nào phù hợp bộ lọc.</td></tr>`;
+}
+document.getElementById('requestFilterNav').addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-status]');
+  if (!btn) return;
+  document.querySelectorAll('#requestFilterNav button').forEach(b => b.classList.toggle('is-active', b === btn));
+  requestFilter = btn.dataset.status;
+  renderRequests();
+});
+
+const approveModal = document.getElementById('approveModal');
+let pendingApproveId = null;
+window.openApprove = (id) => { pendingApproveId = id; approveModal.classList.add('is-open'); };
+document.getElementById('approveModalClose').addEventListener('click', () => approveModal.classList.remove('is-open'));
+document.getElementById('approveCancelBtn').addEventListener('click', () => approveModal.classList.remove('is-open'));
+approveModal.addEventListener('click', (e) => { if (e.target === approveModal) approveModal.classList.remove('is-open'); });
+document.getElementById('approveConfirmBtn').addEventListener('click', () => {
+  const r = DB.requests.find(x => x.id === pendingApproveId);
+  r.status = 'approved';
+  r.level = document.getElementById('approveLevel').value;
+  save(); renderRequests(); renderDashboard(); approveModal.classList.remove('is-open');
+  toast(`Đã duyệt yêu cầu <strong>${r.code}</strong> — cấp ${r.level}.`);
+});
+window.rejectRequest = (id) => {
+  const r = DB.requests.find(x => x.id === id);
+  r.status = 'rejected';
+  save(); renderRequests(); renderDashboard();
+  toast(`Đã từ chối yêu cầu <strong>${r.code}</strong>.`);
+};
+window.resetRequest = (id) => {
+  const r = DB.requests.find(x => x.id === id);
+  r.status = 'pending'; r.level = null;
+  save(); renderRequests(); renderDashboard();
+};
+
+/* ==========================================================================
+   DASHBOARD
+   ========================================================================== */
+function renderDashboard(){
+  const activeActivities = DB.activities.filter(a => a.status === 'active').length;
+  const pending = DB.requests.filter(r => r.status === 'pending').length;
+  document.getElementById('statActivities').textContent = activeActivities;
+  document.getElementById('statHonors').textContent = DB.honors.length;
+  document.getElementById('statSub').textContent = DB.subCriteria.length;
+  document.getElementById('statPending').textContent = pending;
+  document.getElementById('navPendingCount').textContent = pending;
+  document.getElementById('navPendingCount').style.display = pending ? 'inline-block' : 'none';
+  const notifDot = document.getElementById('notifDot');
+  if (notifDot) notifDot.style.display = pending ? 'block' : 'none';
+  document.getElementById('dashAlertTitle').textContent = `${pending} yêu cầu xét duyệt mới đang chờ`;
+  document.getElementById('dashAlert').style.opacity = pending ? '1' : '0.55';
+
+  const recent = [...DB.activities].slice(-5).reverse();
+  document.getElementById('dashRecentActivities').innerHTML = recent.map(a => `
+    <tr>
+      <td class="cell-name">${a.name}</td>
+      <td class="cell-muted">${CRITERIA_LABEL[a.criterionId]}</td>
+      <td>${a.level}</td>
+      <td><span class="toggle-pill ${STATUS_CLASS[a.status]}">${STATUS_LABEL[a.status]}</span></td>
+    </tr>`).join('') || `<tr><td colspan="4" class="table-empty">Chưa có hoạt động nào.</td></tr>`;
+}
+
+function renderAll(){
+  renderDashboard();
+  renderHistories();
+  renderHonors();
+  renderSubCriteria();
+  renderActivities();
+  renderRequests();
+}
+
+/* ==========================================================================
+   KHỞI ĐỘNG: khôi phục phiên đăng nhập nếu có (đặt cuối cùng vì cần toàn bộ
+   hàm render phía trên đã được khai báo trước khi gọi enterApp)
+   ========================================================================== */
+(function initSession(){
+  const existing = JSON.parse(sessionStorage.getItem(SESSION_KEY) || 'null');
+  if (existing && WHITELIST[existing.email]) enterApp(existing);
+})();
+
+</script>
+</body>
+</html>

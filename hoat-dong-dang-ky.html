@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hoạt động đã lưu — Sinh viên 5 Tốt BIT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="root.css">
+<link rel="stylesheet" href="style.css">
+
+<style>
+  .page-header {
+    padding: var(--space-8, 40px) 0 var(--space-6, 24px);
+    background: var(--color-bg-alt, #f8fafc);
+    border-bottom: 1px solid var(--color-dark-100, #e2e8f0);
+  }
+
+  /* Khung thống kê tiến độ 5 tiêu chuẩn */
+  .progress-summary {
+    background: #ffffff;
+    border: 1px solid var(--color-dark-200, #e2e8f0);
+    border-radius: var(--radius-lg, 12px);
+    padding: 24px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  }
+
+  .progress-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .criterion-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: #64748b;
+    transition: all 0.2s ease;
+  }
+
+  .criterion-card.is-achieved {
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+    color: #166534;
+    font-weight: 600;
+  }
+
+  .criterion-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #cbd5e1;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+  }
+
+  .criterion-card.is-achieved .criterion-icon {
+    background: #22c55e;
+  }
+
+  /* Bảng & Danh sách hoạt động */
+  .action-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .saved-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .activity-card {
+    background: #ffffff;
+    border: 1px solid var(--color-dark-200, #e2e8f0);
+    border-radius: var(--radius-lg, 12px);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  }
+
+  .activity-info h4 {
+    margin: 0 0 8px 0;
+    font-size: 1.1rem;
+    color: var(--color-dark-900, #0f172a);
+  }
+
+  .activity-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: #f1f5f9;
+    color: #475569;
+  }
+
+  .tag--criterion {
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-weight: 500;
+  }
+
+  .btn-remove {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: background 0.2s;
+  }
+
+  .btn-remove:hover {
+    background: #fee2e2;
+  }
+
+  /* Trạng thái trống */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: #ffffff;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+  }
+
+  .empty-state p {
+    color: #64748b;
+    margin-bottom: 20px;
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <img src="assets/bit-logo.png" alt="Logo BIT">
+      <span>
+        <span class="brand-name">Sinh viên 5 Tốt</span>
+        <span class="brand-tag">Khoa Công nghệ thông tin kinh doanh</span>
+      </span>
+    </a>
+
+    <nav class="nav-menu" id="navMenu">
+      <a href="index.html">Trang chủ</a>
+      <a href="nien-bieu.html">Niên biểu</a>
+      <a href="dang-ky.html">Đăng ký phong trào SV5T</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="hoat-dong-dang-ky.html" class="icon-btn is-active" id="trackedBtn" aria-label="Hoạt động đã lưu">
+        ★
+        <span class="icon-badge" id="trackedCount">0</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Mở menu" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<section class="page-header">
+  <div class="container">
+    <span class="section-eyebrow">Hồ sơ cá nhân</span>
+    <h2>Hoạt động đã đánh dấu theo dõi</h2>
+    <p class="section-desc">Theo dõi các hoạt động bạn đã lưu trữ cục bộ để sẵn sàng nộp minh chứng SV5T năm 2026.</p>
+  </div>
+</section>
+
+<main class="section">
+  <div class="container">
+    
+    <!-- KHUNG THỐNG KÊ TIẾN ĐỘ -->
+    <div class="progress-summary">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h3 style="margin:0; font-size: 1.15rem;">Tiến độ phủ 5 Tiêu chuẩn</h3>
+        <span id="criteriaCountText" style="font-size: 0.9rem; font-weight: 600; color: var(--color-blue-600, #2563eb);">0/5 Tiêu chuẩn</span>
+      </div>
+      
+      <div class="progress-grid" id="criteriaGrid">
+        <div class="criterion-card" data-criterion="Học tập tốt"><span class="criterion-icon">✓</span> Học tập tốt</div>
+        <div class="criterion-card" data-criterion="Đạo đức tốt"><span class="criterion-icon">✓</span> Đạo đức tốt</div>
+        <div class="criterion-card" data-criterion="Thể lực tốt"><span class="criterion-icon">✓</span> Thể lực tốt</div>
+        <div class="criterion-card" data-criterion="Tình nguyện tốt"><span class="criterion-icon">✓</span> Tình nguyện tốt</div>
+        <div class="criterion-card" data-criterion="Hội nhập tốt"><span class="criterion-icon">✓</span> Hội nhập tốt</div>
+      </div>
+    </div>
+
+    <!-- DANH SÁCH HOẠT ĐỘNG -->
+    <div class="action-bar">
+      <h3 style="margin:0;">Danh sách đã lưu (<span id="totalSavedCount">0</span>)</h3>
+      <div>
+        <button id="btnDemoData" class="btn btn-outline" style="font-size: 0.8rem; padding: 6px 12px;">+ Thêm dữ liệu mẫu</button>
+        <button id="btnClearAll" class="btn-remove" style="display:none;">Xóa tất cả</button>
+      </div>
+    </div>
+
+    <div id="savedList" class="saved-list"></div>
+
+    <!-- EMPTY STATE -->
+    <div id="emptyState" class="empty-state" style="display:none;">
+      <div style="font-size: 3rem; margin-bottom: 10px;">⭐</div>
+      <h4>Chưa có hoạt động nào được lưu</h4>
+      <p>Hãy truy cập trang Niên biểu để chọn và đánh dấu các hoạt động bạn dự định tham gia.</p>
+      <a href="nien-bieu.html" class="btn btn-primary">Khám phá Niên biểu hoạt động</a>
+    </div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-bottom">
+    <span>© 2026 Đoàn TN – Hội SV khoa BIT, UEH</span>
+  </div>
+</footer>
+
+<script>
+const STORAGE_KEY = 'sv5t_tracked_activities';
+
+// Dữ liệu mẫu kiểm thử
+const DEMO_ACTIVITIES = [
+  { id: 'act-1', title: 'Cuộc thi Học thuật BIT Hackathon 2026', criterion: 'Học tập tốt', level: 'Cấp Khoa', date: '15/03/2026' },
+  { id: 'act-2', title: 'Chiến dịch Tình nguyện Mùa hè xanh 2026', criterion: 'Tình nguyện tốt', level: 'Cấp UEH', date: '01/07/2026' },
+  { id: 'act-3', title: 'Giải chạy Student Run 2026', criterion: 'Thể lực tốt', level: 'Cấp Thành phố', date: '20/04/2026' }
+];
+
+function getSavedActivities() {
+  return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+}
+
+function saveActivities(list) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+  updateUI();
+}
+
+function removeActivity(id) {
+  const current = getSavedActivities();
+  const updated = current.filter(item => item.id !== id);
+  saveActivities(updated);
+}
+
+function updateUI() {
+  const list = getSavedActivities();
+  const savedListEl = document.getElementById('savedList');
+  const emptyStateEl = document.getElementById('emptyState');
+  const totalSavedEl = document.getElementById('totalSavedCount');
+  const badgeCountEl = document.getElementById('trackedCount');
+  const clearBtn = document.getElementById('btnClearAll');
+
+  // Cập nhật số đếm badge
+  badgeCountEl.textContent = list.length;
+  totalSavedEl.textContent = list.length;
+
+  if (list.length === 0) {
+    savedListEl.innerHTML = '';
+    emptyStateEl.style.display = 'block';
+    clearBtn.style.display = 'none';
+  } else {
+    emptyStateEl.style.display = 'none';
+    clearBtn.style.display = 'inline-block';
+    
+    savedListEl.innerHTML = list.map(item => `
+      <div class="activity-card">
+        <div class="activity-info">
+          <h4>${item.title}</h4>
+          <div class="activity-tags">
+            <span class="tag tag--criterion">${item.criterion}</span>
+            <span class="tag">${item.level}</span>
+            <span class="tag"> ${item.date}</span>
+          </div>
+        </div>
+        <button class="btn-remove" onclick="removeActivity('${item.id}')">Bỏ lưu</button>
+      </div>
+    `).join('');
+  }
+
+  // Cập nhật tiến độ 5 tiêu chuẩn
+  const achievedCriteria = new Set(list.map(i => i.criterion));
+  const criteriaCards = document.querySelectorAll('.criterion-card');
+  
+  criteriaCards.forEach(card => {
+    const criterionName = card.dataset.criterion;
+    if (achievedCriteria.has(criterionName)) {
+      card.classList.add('is-achieved');
+    } else {
+      card.classList.remove('is-achieved');
+    }
+  });
+
+  document.getElementById('criteriaCountText').textContent = `${achievedCriteria.size}/5 Tiêu chuẩn`;
+}
+
+// Event Listeners
+document.getElementById('btnClearAll').addEventListener('click', () => {
+  if (confirm('Bạn có chắc muốn xóa toàn bộ hoạt động đã lưu?')) {
+    saveActivities([]);
+  }
+});
+
+document.getElementById('btnDemoData').addEventListener('click', () => {
+  saveActivities(DEMO_ACTIVITIES);
+});
+
+// Khởi chạy khi tải trang
+updateUI();
+</script>
+</body>
+</html>

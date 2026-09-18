@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sinh viên 5 Tốt — Khoa Công nghệ thông tin kinh doanh (BIT)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="root.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <img src="assets/bit-logo.png" alt="Logo BIT">
+      <span>
+        <span class="brand-name">Sinh viên 5 Tốt</span>
+        <span class="brand-tag">Khoa Công nghệ thông tin kinh doanh</span>
+      </span>
+    </a>
+
+    <nav class="nav-menu" id="navMenu">
+      <a href="index.html" class="is-active">Trang chủ</a>
+      <a href="nien-bieu.html">Niên biểu</a>
+      <a href="dang-ky.html" target="_blank" rel="noopener">Đăng ký phong trào SV5T</a>
+    </nav>
+
+   <div class="nav-actions">
+      <a href="hoat-dong-dang-ky.html" class="icon-btn is-active" id="trackedBtn" aria-label="Hoạt động đã lưu">
+        ★
+        <span class="icon-badge" id="trackedCount">0</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Mở menu" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+</header>
+
+
+<!-- HERO BANNER SLIDER -->
+<section class="hero">
+  <div class="hero-slider" id="heroSlider">
+    
+    <a class="hero-slide is-active" href="#" target="_blank" rel="noopener" data-slide>
+      <img src="link-anh-1.jpg" alt="Banner phát động #1" class="hero-img">
+    </a>
+    
+    <a class="hero-slide" href="#" target="_blank" rel="noopener" data-slide>
+      <img src="link-anh-2.jpg" alt="Banner phát động #2" class="hero-img">
+    </a>
+    
+    <a class="hero-slide" href="#" target="_blank" rel="noopener" data-slide>
+      <img src="link-anh-3.jpg" alt="Banner phát động #3" class="hero-img">
+    </a>
+
+    <div class="hero-caption">
+            <h1>Sinh viên 5 Tốt 2026</h1>
+      <p>CỔNG THÔNG TIN SINH VIÊN 5 TỐT</p>
+    </div>
+    
+    <div class="hero-dots" id="heroDots"></div>
+  </div>
+</section>
+
+<!-- SECTION 1: GIỚI THIỆU (dạng tabs) -->
+<section class="section" id="gioi-thieu">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">Về phong trào</span>
+      <h2>Tìm hiểu về Sinh viên 5 Tốt</h2>
+      <p class="section-desc">Ba nội dung cốt lõi bạn cần nắm trước khi bắt đầu hành trình chinh phục danh hiệu.</p>
+    </div>
+
+    <div class="about-tabnav" role="tablist" aria-label="Nội dung giới thiệu phong trào" id="aboutTabnav">
+      <button type="button" role="tab" aria-selected="true" aria-controls="about-panel-1" id="about-tab-1" class="is-active" data-panel="about-panel-1">
+        <span class="tab-index">1</span>
+        <span><span class="tab-title">Danh hiệu SV5T</span><span class="tab-sub">Thông tin chung, cấp xét duyệt</span></span>
+      </button>
+      <button type="button" role="tab" aria-selected="false" aria-controls="about-panel-2" id="about-tab-2" data-panel="about-panel-2">
+        <span class="tab-index">2</span>
+        <span><span class="tab-title">Phong trào & hoạt động</span><span class="tab-sub">SV5T vận hành như thế nào</span></span>
+      </button>
+      <button type="button" role="tab" aria-selected="false" aria-controls="about-panel-3" id="about-tab-3" data-panel="about-panel-3">
+        <span class="tab-index">3</span>
+        <span><span class="tab-title">5 tiêu chuẩn đánh giá</span><span class="tab-sub">Điều kiện để đạt danh hiệu</span></span>
+      </button>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-panels">
+        <div class="about-panel is-active" id="about-panel-1" role="tabpanel" aria-labelledby="about-tab-1">
+          <h3>Danh hiệu Sinh viên 5 Tốt là gì?</h3>
+          <p>Sinh viên 5 Tốt là danh hiệu cao quý do Hội Sinh viên Việt Nam phát động và công nhận hằng năm, dành cho những sinh viên đạt kết quả toàn diện ở cả năm mặt: học tập, đạo đức, thể lực, tình nguyện và hội nhập. Đây là một trong những ghi nhận có giá trị nhất mà một sinh viên có thể đạt được trong quá trình học tập tại giảng đường.</p>
+          <p>Danh hiệu được xét duyệt theo bốn cấp tăng dần: cấp Khoa, cấp Trường (UEH), cấp Thành phố và cấp Trung ương Hội Sinh viên Việt Nam. Sinh viên đạt danh hiệu ở cấp thấp có thể tiếp tục được đề cử xét ở cấp cao hơn nếu hồ sơ và thành tích đủ điều kiện.</p>
+          <p>Không chỉ là một tấm bằng khen, danh hiệu SV5T còn mở ra nhiều cơ hội: cộng điểm rèn luyện, ưu tiên xét học bổng, hồ sơ đẹp khi ứng tuyển thực tập hoặc du học, cùng cơ hội giao lưu với mạng lưới sinh viên tiêu biểu trên cả nước.</p>
+          <p>Tại khoa Công nghệ thông tin kinh doanh (BIT), phong trào được BCH Đoàn – Hội khoa trực tiếp đồng hành, tổng hợp hoạt động phù hợp và hỗ trợ sinh viên hoàn thiện hồ sơ minh chứng xuyên suốt năm học 2026.</p>
+        </div>
+
+        <div class="about-panel" id="about-panel-2" role="tabpanel" aria-labelledby="about-tab-2" hidden>
+          <h3>Phong trào SV5T vận hành như thế nào?</h3>
+          <p>Phong trào Sinh viên 5 Tốt không phải một cuộc thi đơn lẻ mà là một hành trình rèn luyện xuyên suốt cả năm học, được cấu thành từ hàng chục hoạt động thuộc nhiều lĩnh vực khác nhau, diễn ra liên tục từ đầu đến cuối năm.</p>
+          <p>Các hoạt động trải rộng từ học thuật (cuộc thi kiến thức, nghiên cứu khoa học), rèn luyện đạo đức (diễn đàn, cuộc thi tìm hiểu), tình nguyện (chiến dịch cộng đồng, hiến máu), hội nhập (giao lưu quốc tế, hùng biện tiếng Anh) cho đến thể lực (giải thể thao, giải chạy phong trào).</p>
+          <p>Để sinh viên không bị bỏ lỡ, BIT tổng hợp toàn bộ hoạt động phù hợp từng tiêu chuẩn vào trang Niên biểu hoạt động — nơi bạn có thể tra cứu, lọc theo cấp độ và theo dõi thời gian diễn ra của từng hoạt động theo thời gian thực.</p>
+          <p>Với những hoạt động uy tín nhưng chưa có trong hệ thống, sinh viên có thể chủ động gửi yêu cầu bổ sung ngay tại trang Niên biểu để BCH khoa xem xét và cập nhật.</p>
+        </div>
+
+        <div class="about-panel" id="about-panel-3" role="tabpanel" aria-labelledby="about-tab-3" hidden>
+          <h3>5 tiêu chuẩn để đạt danh hiệu SV5T</h3>
+          <p>Để đạt danh hiệu, sinh viên cần chứng minh sự nỗ lực cân bằng ở cả năm tiêu chuẩn dưới đây — không tiêu chuẩn nào có thể thay thế cho tiêu chuẩn còn lại, bởi tinh thần của SV5T là sự phát triển toàn diện chứ không phải xuất sắc một mặt.</p>
+          <div class="criteria-inline">
+            <span class="criteria-chip"><span class="dot"></span>Học tập tốt</span>
+            <span class="criteria-chip"><span class="dot"></span>Đạo đức tốt</span>
+            <span class="criteria-chip"><span class="dot"></span>Tình nguyện tốt</span>
+            <span class="criteria-chip"><span class="dot"></span>Hội nhập tốt</span>
+            <span class="criteria-chip"><span class="dot"></span>Thể lực tốt</span>
+          </div>
+          <p>"Học tập tốt" và "Đạo đức tốt" là hai tiêu chuẩn nền tảng, yêu cầu kết quả học tập ổn định cùng ý thức, tác phong tốt trong quá trình rèn luyện tại trường.</p>
+          <p>"Tình nguyện tốt" và "Hội nhập tốt" ghi nhận đóng góp cho cộng đồng và khả năng thích ứng, giao lưu trong môi trường trong nước lẫn quốc tế. "Thể lực tốt" đánh giá việc rèn luyện sức khỏe thông qua các hoạt động thể thao phong trào.</p>
+          <p>Minh chứng cho từng tiêu chuẩn được tích lũy dần qua các hoạt động tại trang Niên biểu — mỗi hoạt động đã đăng ký và hoàn thành sẽ là một minh chứng hợp lệ khi bạn nộp hồ sơ xét danh hiệu.</p>
+        </div>
+      </div>
+
+     <div class="about-stat-card">
+  <div class="stat-row" style="display: flex; justify-content: space-between; align-items: center;">
+    <span>Cấp xét duyệt</span>
+    <span class="stat-num">04 cấp</span>
+  </div>
+  <div class="stat-row" style="display: flex; justify-content: space-between; align-items: center;">
+    <span>Tiêu chuẩn đánh giá</span>
+    <!-- Đã sửa lỗi cú pháp và thêm text-align: right -->
+    <span class="stat-num" style="text-align: right;">05 tiêu chuẩn</span>
+  </div>
+  <div class="stat-row" style="display: flex; justify-content: space-between; align-items: center;">
+    <span>Năm phát động</span>
+    <span class="stat-num">2024</span>
+  </div>
+  <a href="https://www.facebook.com/groups/1129624948171351" target="_blank" rel="noopener" class="btn btn-primary">Cùng BIT chinh phục SV5T</a>
+</div>
+    </div>
+  </div>
+</section>
+
+<svg class="wave-divider wave-divider--alt" viewBox="0 0 1200 48" preserveAspectRatio="none"><path d="M0,24 C300,60 900,-12 1200,24 L1200,48 L0,48 Z"></path></svg>
+
+<!-- SECTION 2: HÌNH ẢNH HOẠT ĐỘNG -->
+<section class="section section--alt" id="hinh-anh">
+  <div class="container">
+    <div class="section-head-row">
+      <div>
+        <span class="section-eyebrow">Khoảnh khắc BIT</span>
+        <h2>Hoạt động nổi bật của Sinh viên 5 Tốt khoa BIT</h2>
+      </div>
+      <a href="#" target="_blank" rel="noopener" class="btn btn-outline">Xem thêm hình ảnh</a>
+    </div>
+
+    <div class="gallery-track">
+      <div class="gallery-card"><div class="ph" style="width:100%;height:100%;border-radius:0;border:none;">Ảnh hoạt động — 300×300</div><span class="cap">Ngày hội hiến máu BIT</span></div>
+      <div class="gallery-card"><div class="ph" style="width:100%;height:100%;border-radius:0;border:none;">Ảnh hoạt động — 300×300</div><span class="cap">Mùa hè xanh 2026</span></div>
+      <div class="gallery-card"><div class="ph" style="width:100%;height:100%;border-radius:0;border:none;">Ảnh hoạt động — 300×300</div><span class="cap">Giải thể thao SV5T</span></div>
+      <div class="gallery-card"><div class="ph" style="width:100%;height:100%;border-radius:0;border:none;">Ảnh hoạt động — 300×300</div><span class="cap">Hội trại BIT Fest</span></div>
+      <div class="gallery-card"><div class="ph" style="width:100%;height:100%;border-radius:0;border:none;">Ảnh hoạt động — 300×300</div><span class="cap">Workshop kỹ năng số</span></div>
+    </div>
+     </div>
+</section>
+
+<!-- SECTION 3: SV5T QUA TỪNG NĂM -->
+<section class="section" id="qua-cac-nam">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">Hành trình</span>
+      <h2>Phong trào SV5T qua từng năm</h2>
+      <p class="section-desc">Nhấp vào từng năm để xem chi tiết bộ nhận diện và số liệu nổi bật.</p>
+    </div>
+    <div class="history-grid">
+      <a class="history-card" href="javascript:void(0)" data-year="2024">
+        <div class="ph" style="width:100%;height:100%;border-radius:0;border:none;">Bộ nhận diện SV5T 2024 (vuông)</div>
+        <div class="overlay"><span class="year">2024</span><span class="stat">120 sinh viên đạt danh hiệu · 18 hoạt động</span></div>
+      </a>
+      <a class="history-card" href="javascript:void(0)" data-year="2025">
+        <div class="ph" style="width:100%;height:100%;border-radius:0;border:none;">Bộ nhận diện SV5T 2025 (vuông)</div>
+        <div class="overlay"><span class="year">2025</span><span class="stat">156 sinh viên đạt danh hiệu · 24 hoạt động</span></div>
+      </a>
+      <a class="history-card" href="javascript:void(0)" data-year="2026">
+        <div class="ph" style="width:100%;height:100%;border-radius:0;border:none;">Bộ nhận diện SV5T 2026 (vuông)</div>
+        <div class="overlay"><span class="year">2026</span><span class="stat">Đang diễn ra · 30+ hoạt động dự kiến</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+<svg class="wave-divider wave-divider--alt" viewBox="0 0 1200 48" preserveAspectRatio="none"><path d="M0,24 C300,-12 900,60 1200,24 L1200,48 L0,48 Z"></path></svg>
+
+<!-- SECTION 4: VINH DANH -->
+<section class="section section--alt" id="vinh-danh">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">Tự hào BIT</span>
+      <h2>Vinh danh Sinh viên 5 Tốt tiêu biểu</h2>
+    </div>
+
+    <div class="tabs" role="tablist" id="honorTabs">
+      <button class="tab-btn is-active" data-level="UEH" type="button">Cấp UEH</button>
+      <button class="tab-btn" data-level="TP" type="button">Cấp Thành phố</button>
+      <button class="tab-btn" data-level="Khoa" type="button">Cấp Khoa</button>
+    </div>
+
+    <div class="honor-grid" id="honorGrid"><!-- được render bằng JS từ dữ liệu mock --></div>
+  </div>
+</section>
+
+<!-- MODAL CHI TIẾT VINH DANH -->
+<div class="modal-backdrop" id="honorModal">
+  <div class="modal">
+    <button class="modal-close" id="honorModalClose" aria-label="Đóng">×</button>
+    <div class="photo"><div class="ph" style="width:100%;height:100%;border-radius:0;border:none;" id="modalPhotoLabel">Ảnh chân dung</div></div>
+    <div class="content">
+      <span class="level-tag" id="modalLevel">Cấp UEH</span>
+      <h3 id="modalName">Họ và tên</h3>
+      <p class="achievement-text" id="modalAchievement">Thành tích chi tiết...</p>
+    </div>
+  </div>
+</div>
+<!-- MODAL CHI TIẾT SV5T QUA TỪNG NĂM -->
+<div class="modal-backdrop" id="yearModal">
+  <div class="modal">
+    <button class="modal-close" id="yearModalClose" aria-label="Đóng">×</button>
+    <div class="photo">
+      <div class="ph" style="width:100%;height:100%;border-radius:0;border:none;" id="yearModalPhoto">Bộ nhận diện</div>
+    </div>
+    <div class="content">
+      <span class="level-tag" id="yearModalTag">Hành trình SV5T</span>
+      <h3 id="yearModalTitle">Phong trào SV5T</h3>
+      <div style="margin-top: 12px; padding: 12px; background: var(--color-bg-alt, #f8fafc); border-radius: 8px; border: 1px solid var(--color-dark-100, #e2e8f0);">
+        <strong style="display:block; font-size: 0.85rem; color: #64748b; margin-bottom: 4px;">SỐ LIỆU HIGHLIGHT</strong>
+        <p class="achievement-text" id="yearModalHighlight" style="margin:0; font-weight: 600; color: var(--color-blue-600, #2563eb);"></p>
+      </div>
+      <p id="yearModalDesc" style="margin-top: 12px; line-height: 1.6;"></p>
+    </div>
+  </div>
+</div>
+<svg class="wave-divider" viewBox="0 0 1200 48" preserveAspectRatio="none" style="display:block;"><path d="M0,24 C300,60 900,-12 1200,24 L1200,48 L0,48 Z" fill="#1F1B1D"></path></svg>
+
+<footer class="site-footer">
+  <div class="container footer-cta">
+    <h2>Sẵn sàng chinh phục danh hiệu SV5T 2026?</h2>
+    <p>Đăng ký tham gia phong trào ngay hôm nay để BIT đồng hành cùng bạn suốt năm học.</p>
+    <div class="footer-actions">
+      <a href="#" target="_blank" rel="noopener" class="btn btn-primary">Đăng ký phong trào SV5T</a>
+      <a href="#" target="_blank" rel="noopener" class="btn btn-outline" style="border-color:rgba(255,255,255,0.3); color:var(--color-blue-500);">Tham gia group Facebook</a>
+    </div>
+  </div>
+
+  <div class="container footer-main">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="footer-logo-chip"><img src="assets/bit-logo.png" alt="Logo BIT"></span>
+        <p class="footer-desc">Cổng thông tin phong trào Sinh viên 5 Tốt khoa Công nghệ thông tin kinh doanh (BIT), Trường Đại học Kinh tế TP.HCM — nơi tra cứu hoạt động, theo dõi tiến trình và vinh danh sinh viên tiêu biểu.</p>
+        <div class="footer-social">
+          <a href="#" target="_blank" rel="noopener" aria-label="Facebook BIT">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.9h2.54V9.85c0-2.5 1.49-3.89 3.78-3.89 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.44 2.9h-2.34V22c4.78-.8 8.44-4.94 8.44-9.94z"/></svg>
+          </a>
+          <a href="#" aria-label="Email SV5T BIT">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m2 7 10 6 10-6"></path></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Điều hướng</h4>
+        <ul>
+          <li><a href="index.html">Trang chủ</a></li>
+          <li><a href="nien-bieu.html">Niên biểu hoạt động</a></li>
+          <li><a href="index.html#gioi-thieu">Về phong trào SV5T</a></li>
+          <li><a href="index.html#vinh-danh">Vinh danh tiêu biểu</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Tham gia</h4>
+        <ul>
+          <li><a href="#" target="_blank" rel="noopener">Đăng ký phong trào SV5T</a></li>
+          <li><a href="https://www.facebook.com/groups/1129624948171351" target="_blank" rel="noopener">Group Cùng BIT chinh phục SV5T</a></li>
+          <li><a href="nien-bieu.html">Gửi yêu cầu xét duyệt hoạt động</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Liên hệ</h4>
+        <ul>
+          <li><address>Đoàn TN – Hội SV khoa Công nghệ thông tin kinh doanh (BIT), UEH</address></li>
+          <li><a href="mailto:doanhoi.bit@ueh.edu.vn">sv5t.bit@ueh.edu.vn</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <span>© 2026 Đoàn TN – Hội SV khoa Công nghệ thông tin kinh doanh (BIT), UEH</span>
+    <span>Cổng thông tin SV5T · Phase 1 · <a href="admin.html" style="color:rgba(255,255,255,0.55);">BCH đăng nhập</a></span>
+  </div>
+</footer>
+
+<style>
+  /* Placeholder ảnh dùng tạm khi chưa có hình thật — chỉ phục vụ bản thiết kế */
+  .ph {
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    background: repeating-linear-gradient(135deg, var(--color-dark-100), var(--color-dark-100) 10px, var(--color-bg-alt) 10px, var(--color-bg-alt) 20px);
+    color: var(--color-dark-300); font-size: var(--fs-tiny); font-weight: var(--fw-semibold);
+    border: 1px dashed var(--color-dark-300); border-radius: var(--radius-md); padding: var(--space-3);
+  }
+  .ph--hero { background: linear-gradient(135deg, var(--color-blue-700), var(--color-dark-900)); color: rgba(255,255,255,0.55); border: none; }
+</style>
+
+<script>
+// ---- Header: đổ bóng khi cuộn trang ----
+const siteHeader = document.querySelector('.site-header');
+window.addEventListener('scroll', () => {
+  siteHeader.classList.toggle('is-scrolled', window.scrollY > 8);
+}, { passive: true });
+
+// ---- Tabs "Về phong trào" (có ARIA + điều hướng bàn phím) ----
+(function aboutTabs(){
+  const nav = document.getElementById('aboutTabnav');
+  const tabs = [...nav.querySelectorAll('[role="tab"]')];
+  function activate(tab){
+    tabs.forEach(t => {
+      const isActive = t === tab;
+      t.classList.toggle('is-active', isActive);
+      t.setAttribute('aria-selected', isActive);
+      const panel = document.getElementById(t.dataset.panel);
+      panel.classList.toggle('is-active', isActive);
+      panel.hidden = !isActive;
+    });
+    tab.focus();
+  }
+  nav.addEventListener('click', (e) => {
+    const tab = e.target.closest('[role="tab"]');
+    if (tab) activate(tab);
+  });
+  nav.addEventListener('keydown', (e) => {
+    const idx = tabs.indexOf(document.activeElement);
+    if (idx === -1) return;
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); activate(tabs[(idx + 1) % tabs.length]); }
+    if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); activate(tabs[(idx - 1 + tabs.length) % tabs.length]); }
+  });
+})();
+
+// ---- Mobile nav ----
+const navToggle = document.getElementById('navToggle');
+const navMenu = document.getElementById('navMenu');
+navToggle?.addEventListener('click', () => {
+  const open = navMenu.classList.toggle('is-open');
+  navToggle.setAttribute('aria-expanded', open);
+});
+
+// ---- Icon tính năng LocalStorage (chưa triển khai — chỉ đặt chỗ theo tài liệu) ----
+document.getElementById('trackedBtn')?.addEventListener('click', () => {
+  alert('Tính năng theo dõi hoạt động đã tick (lưu LocalStorage) sẽ ra mắt ở giai đoạn sau của Phase 1.');
+});
+
+// ---- Hero slider ----
+(function heroSlider(){
+  const slides = document.querySelectorAll('#heroSlider [data-slide]');
+  const dotsWrap = document.getElementById('heroDots');
+  let current = 0;
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'hero-dot' + (i === 0 ? ' is-active' : '');
+    dot.addEventListener('click', () => show(i));
+    dotsWrap.appendChild(dot);
+  });
+  function show(i){
+    slides[current].classList.remove('is-active');
+    dotsWrap.children[current].classList.remove('is-active');
+    current = i;
+    slides[current].classList.add('is-active');
+    dotsWrap.children[current].classList.add('is-active');
+  }
+  setInterval(() => show((current + 1) % slides.length), 5000);
+})();
+
+// ---- Vinh danh: dữ liệu mock + tabs + modal ----
+const HONORS = {
+  UEH: [
+    { name: 'Nguyễn Văn A', achievement: 'Đạt danh hiệu Sinh viên 5 Tốt cấp UEH năm 2026, thành viên CLB Học thuật BIT, IELTS 7.5.' },
+    { name: 'Trần Thị B', achievement: 'Trưởng ban Tình nguyện khoa, tham gia 5 chiến dịch Mùa hè xanh, GPA 3.7/4.' },
+    { name: 'Lê Văn C', achievement: 'Quán quân cuộc thi Khởi nghiệp UEH 2026, đại diện khoa BIT tham dự giao lưu sinh viên toàn trường.' },
+  ],
+  TP: [
+    { name: 'Phạm Thị D', achievement: 'Đạt danh hiệu Sinh viên 5 Tốt cấp Thành phố, đại diện UEH tham gia Liên hoan SV5T TP.HCM.' },
+    { name: 'Hoàng Văn E', achievement: 'Giải Nhì Nghiên cứu khoa học cấp Thành, thành viên đội tuyển Case Competition.' },
+    { name: 'Đỗ Thị F', achievement: 'Vận động viên tiêu biểu giải Điền kinh sinh viên TP.HCM, đạt Huy chương Vàng 100m.' },
+  ],
+  Khoa: [
+    { name: 'Vũ Văn G', achievement: 'Sinh viên tiêu biểu cấp Khoa BIT, tích cực tham gia hoạt động Đoàn – Hội, GPA 3.5/4.' },
+    { name: 'Ngô Thị H', achievement: 'Thành viên Ban tổ chức chuỗi sự kiện BIT Fest 2026, tình nguyện viên tích cực.' },
+    { name: 'Bùi Văn I', achievement: 'Đạt học bổng khuyến khích học tập 4 học kỳ liên tiếp, hỗ trợ mentor tân sinh viên.' },
+  ],
+};
+
+function renderHonors(level){
+  const grid = document.getElementById('honorGrid');
+  grid.innerHTML = '';
+  const list = HONORS[level] || [];
+  const fullList = [...list, ...list, ...list].slice(0, 9); // đủ lưới 3x3 cho bản demo
+  fullList.forEach((person, idx) => {
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'honor-card';
+    card.innerHTML = `
+      <div class="photo"><div class="ph" style="width:100%;height:100%;border-radius:0;border:none;">Ảnh chân dung</div></div>
+      <div class="body">
+        <span class="level-tag">Cấp ${level === 'TP' ? 'Thành phố' : level}</span>
+        <h4>${person.name}</h4>
+        <p class="achievement">${person.achievement.slice(0, 60)}...</p>
+      </div>`;
+    card.addEventListener('click', () => openHonorModal(level, person));
+    grid.appendChild(card);
+  });
+}
+
+document.getElementById('honorTabs').addEventListener('click', (e) => {
+  const btn = e.target.closest('.tab-btn');
+  if (!btn) return;
+  document.querySelectorAll('#honorTabs .tab-btn').forEach(b => b.classList.remove('is-active'));
+  btn.classList.add('is-active');
+  renderHonors(btn.dataset.level);
+});
+
+const honorModal = document.getElementById('honorModal');
+function openHonorModal(level, person){
+  document.getElementById('modalLevel').textContent = 'Cấp ' + (level === 'TP' ? 'Thành phố' : level);
+  document.getElementById('modalName').textContent = person.name;
+  document.getElementById('modalAchievement').textContent = person.achievement;
+  honorModal.classList.add('is-open');
+}
+document.getElementById('honorModalClose').addEventListener('click', () => honorModal.classList.remove('is-open'));
+honorModal.addEventListener('click', (e) => { if (e.target === honorModal) honorModal.classList.remove('is-open'); });
+
+renderHonors('UEH'); // mặc định cấp cao nhất (theo FE-01.3)
+// ---- Dữ liệu các năm từ bảng quản trị ----
+const YEAR_DATA = {
+  '2024': {
+    year: '2024',
+    identity: 'Bộ nhận diện SV5T 2024 (vuông)',
+    highlight: '120 sinh viên đạt danh hiệu · 18 hoạt động',
+    desc: 'Năm 2024 đánh dấu cột mốc phát triển mạnh mẽ của phong trào Sinh viên 5 Tốt tại Khoa BIT với 120 sinh viên được tuyên dương các cấp cùng 18 hoạt động rèn luyện được tổ chức.'
+  },
+  '2025': {
+    year: '2025',
+    identity: 'Bộ nhận diện SV5T 2025 (vuông)',
+    highlight: '156 sinh viên đạt danh hiệu · 24 hoạt động',
+    desc: 'Năm 2025 ghi nhận sự bứt phá vượt bậc về cả số lượng lẫn chất lượng với 156 sinh viên xuất sắc đạt danh hiệu và chuỗi 24 hoạt động phủ rộng 5 tiêu chuẩn.'
+  },
+  '2026': {
+    year: '2026',
+    identity: 'Bộ nhận diện SV5T 2026 (vuông)',
+    highlight: 'Đang diễn ra · 30+ hoạt động dự kiến',
+    desc: 'Hành trình 2026 đang diễn ra sôi nổi với hơn 30 hoạt động dự kiến. Đây là năm tiếp tục đẩy mạnh ứng dụng công nghệ trong việc theo dõi và hỗ trợ sinh viên hoàn thiện hồ sơ.'
+  }
+};
+
+// ---- Modal Chi tiết năm ----
+const yearModal = document.getElementById('yearModal');
+const yearModalClose = document.getElementById('yearModalClose');
+
+document.querySelectorAll('.history-card').forEach(card => {
+  card.addEventListener('click', (e) => {
+    e.preventDefault();
+    const year = card.dataset.year;
+    const data = YEAR_DATA[year];
+    if (!data) return;
+
+    document.getElementById('yearModalTitle').textContent = 'Phong trào Sinh viên 5 Tốt ' + data.year;
+    document.getElementById('yearModalPhoto').textContent = data.identity;
+    document.getElementById('yearModalHighlight').textContent = data.highlight;
+    document.getElementById('yearModalDesc').textContent = data.desc;
+
+    yearModal.classList.add('is-open');
+  });
+});
+
+yearModalClose?.addEventListener('click', () => yearModal.classList.remove('is-open'));
+yearModal?.addEventListener('click', (e) => { 
+  if (e.target === yearModal) yearModal.classList.remove('is-open'); 
+});
+</script>
+</body>
+</html>

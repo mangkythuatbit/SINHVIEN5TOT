@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Niên biểu hoạt động — Sinh viên 5 Tốt khoa BIT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="root.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <img src="assets/bit-logo.png" alt="Logo BIT">
+      <span>
+        <span class="brand-name">Sinh viên 5 Tốt</span>
+        <span class="brand-tag">Khoa Công nghệ thông tin kinh doanh</span>
+      </span>
+    </a>
+    <nav class="nav-menu" id="navMenu">
+      <a href="index.html">Trang chủ</a>
+      <a href="nien-bieu.html" class="is-active">Niên biểu</a>
+      <a href="dang-ky.html" target="_blank" rel="noopener">Đăng ký phong trào SV5T</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="hoat-dong-dang-ky.html" class="icon-btn is-active" id="trackedBtn" aria-label="Hoạt động đã lưu">
+        ★
+        <span class="icon-badge" id="trackedCount">0</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Mở menu" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+</header>
+
+
+<section class="section" style="padding-block: var(--space-7) 0;">
+  <div class="container">
+    <span class="section-eyebrow">Tra cứu hoạt động</span>
+    <h1 style="font-size: var(--fs-h2);">Niên biểu hoạt động Sinh viên 5 Tốt</h1>
+    <p class="section-desc">Chọn 1 trong 5 tiêu chuẩn để tra cứu hoạt động phù hợp và theo dõi tiến trình rèn luyện của bạn.</p>
+
+    <!-- MENU 5 TIÊU CHUẨN -->
+    <nav class="criteria-nav" id="criteriaNav">
+      <a href="#" data-criterion="hoc-tap" class="is-active">Học tập tốt</a>
+      <a href="#" data-criterion="dao-duc">Đạo đức tốt</a>
+      <a href="#" data-criterion="tinh-nguyen">Tình nguyện tốt</a>
+      <a href="#" data-criterion="hoi-nhap">Hội nhập tốt</a>
+      <a href="#" data-criterion="the-luc">Thể lực tốt</a>
+    </nav>
+  </div>
+</section>
+
+<!-- SECTION 1: BẢNG HOẠT ĐỘNG + BỘ LỌC -->
+<section class="section" style="padding-top: var(--space-6);">
+  <div class="container">
+
+    <div class="timeline-toolbar">
+      <div class="field field-search">
+        <label for="searchInput">Tìm theo tên hoạt động</label>
+        <input class="input" id="searchInput" type="text" placeholder="VD: Cuộc thi học thuật...">
+      </div>
+      <div class="field">
+        <label for="levelSelect">Cấp độ</label>
+        <select class="input" id="levelSelect">
+          <option value="">Tất cả cấp</option>
+          <option value="Khoa">Khoa</option>
+          <option value="UEH">UEH</option>
+          <option value="TP">Thành phố</option>
+          <option value="Hội">Hội Sinh viên</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="statusSelect">Trạng thái</label>
+        <select class="input" id="statusSelect">
+          <option value="">Tất cả</option>
+          <option value="active">Đang hoạt động</option>
+          <option value="expired">Đã hết hạn</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table class="timeline-table">
+        <thead>
+          <tr>
+            <th>Tên hoạt động</th>
+            <th>Cấp độ</th>
+            <th>Thời gian diễn ra</th>
+            <th>Yêu cầu</th>
+            <th>Ghi chú</th>
+          </tr>
+        </thead>
+        <tbody id="activityBody"><!-- render bằng JS --></tbody>
+      </table>
+    </div>
+
+    <!-- SECTION 2: TRẠNG THÁI RỖNG + FORM ĐÓNG GÓP -->
+    <div class="empty-state" id="emptyState">
+      <h3>Không tìm thấy hoạt động phù hợp</h3>
+      <p>Bạn có hoạt động muốn đóng góp vào niên biểu SV5T? Gửi yêu cầu để BCH Khoa xét duyệt và cập nhật giúp bạn.</p>
+      <button class="btn btn-primary" id="openRequestForm" type="button">Đóng góp hoạt động cho BIT</button>
+    </div>
+
+    <p class="section-desc" style="margin-top: var(--space-6);">
+      Không tìm thấy hoạt động bạn cần?
+      <button class="btn btn-outline btn-sm" id="openRequestForm2" type="button" style="margin-left: var(--space-2);">Yêu cầu xét duyệt hoạt động</button>
+    </p>
+
+    <form class="request-form" id="requestForm">
+      <h3 style="margin-bottom: var(--space-5);">Form đóng góp / yêu cầu xét duyệt hoạt động</h3>
+      <div class="grid-2">
+        <div class="field">
+          <label for="reqEmail">Email <span style="color:var(--color-primary)">*</span></label>
+          <input class="input" id="reqEmail" type="email" required placeholder="ten@st.ueh.edu.vn">
+        </div>
+        <div class="field">
+          <label for="reqName">Tên hoạt động <span style="color:var(--color-primary)">*</span></label>
+          <input class="input" id="reqName" type="text" required placeholder="VD: Cuộc thi Ý tưởng khởi nghiệp">
+        </div>
+      </div>
+      <div class="field">
+        <label for="reqLink">Link hoạt động <span style="color:var(--color-primary)">*</span></label>
+        <input class="input" id="reqLink" type="url" required placeholder="https://...">
+      </div>
+      <div class="field">
+        <label for="reqNote">Ghi chú / lời nhắn</label>
+        <textarea class="input" id="reqNote" placeholder="Thông tin thêm để BCH dễ xét duyệt (không bắt buộc)"></textarea>
+      </div>
+      <button class="btn btn-primary" type="submit">Gửi yêu cầu</button>
+      <p class="section-desc" style="margin-top: var(--space-4);">Sau khi gửi, hoạt động của bạn sẽ được ghi nhận vào hộp thư SV5T và nhóm CHINH PHỤC SV5T để BCH xét duyệt. Theo dõi kết quả tại bảng bên dưới hoặc qua email.</p>
+    </form>
+
+    <!-- SECTION 3: BẢNG THEO DÕI YÊU CẦU -->
+    <div style="margin-top: var(--space-9);">
+      <span class="section-eyebrow">Theo dõi yêu cầu</span>
+      <h2 style="font-size: var(--fs-h3); margin-bottom: var(--space-2);">Yêu cầu xét duyệt hoạt động đã gửi</h2>
+      <p class="section-desc">Chỉ hiển thị mã yêu cầu, tên hoạt động và trạng thái — email được bảo mật, không hiển thị công khai.</p>
+
+      <div class="table-wrap" style="margin-top: var(--space-5);">
+        <table class="timeline-table">
+          <thead>
+            <tr>
+              <th>Mã yêu cầu</th>
+              <th>Tên hoạt động</th>
+              <th>Link hoạt động</th>
+              <th>Trạng thái</th>
+            </tr>
+          </thead>
+          <tbody id="requestBody"><!-- render bằng JS --></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="toast" id="toast"></div>
+
+<footer class="site-footer">
+  <div class="container footer-main" style="padding-top: var(--space-7);">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="footer-logo-chip"><img src="assets/bit-logo.png" alt="Logo BIT"></span>
+        <p class="footer-desc">Cổng thông tin phong trào Sinh viên 5 Tốt khoa Công nghệ thông tin kinh doanh (BIT), Trường Đại học Kinh tế TP.HCM — nơi tra cứu hoạt động, theo dõi tiến trình và vinh danh sinh viên tiêu biểu.</p>
+        <div class="footer-social">
+          <a href="#" target="_blank" rel="noopener" aria-label="Facebook BIT">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.9h2.54V9.85c0-2.5 1.49-3.89 3.78-3.89 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.44 2.9h-2.34V22c4.78-.8 8.44-4.94 8.44-9.94z"/></svg>
+          </a>
+          <a href="#" aria-label="Email SV5T BIT">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m2 7 10 6 10-6"></path></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Điều hướng</h4>
+        <ul>
+          <li><a href="index.html">Trang chủ</a></li>
+          <li><a href="nien-bieu.html">Niên biểu hoạt động</a></li>
+          <li><a href="index.html#gioi-thieu">Về phong trào SV5T</a></li>
+          <li><a href="index.html#vinh-danh">Vinh danh tiêu biểu</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Tham gia</h4>
+        <ul>
+          <li><a href="#" target="_blank" rel="noopener">Đăng ký phong trào SV5T</a></li>
+          <li><a href="#" target="_blank" rel="noopener">Group Cùng BIT chinh phục SV5T</a></li>
+          <li><a href="nien-bieu.html">Gửi yêu cầu xét duyệt hoạt động</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Liên hệ</h4>
+        <ul>
+          <li><address>Đoàn TN – Hội SV khoa Công nghệ thông tin kinh doanh (BIT), UEH</address></li>
+          <li><a href="mailto:doanhoi.bit@ueh.edu.vn">sv5t.bit@ueh.edu.vn</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <span>© 2026 Đoàn TN – Hội SV khoa Công nghệ thông tin kinh doanh (BIT), UEH</span>
+    <span>Cổng thông tin SV5T · Phase 1 · <a href="admin.html" style="color:rgba(255,255,255,0.55);">BCH đăng nhập</a></span>
+  </div>
+</footer>
+
+<script>
+// ---- Header: đổ bóng khi cuộn trang ----
+const siteHeader = document.querySelector('.site-header');
+window.addEventListener('scroll', () => {
+  siteHeader.classList.toggle('is-scrolled', window.scrollY > 8);
+}, { passive: true });
+
+// ---- Mobile nav (dùng chung) ----
+document.getElementById('navToggle')?.addEventListener('click', function(){
+  const open = document.getElementById('navMenu').classList.toggle('is-open');
+  this.setAttribute('aria-expanded', open);
+});
+document.getElementById('trackedBtn')?.addEventListener('click', () => {
+  alert('Tính năng theo dõi hoạt động đã tick (lưu LocalStorage) sẽ ra mắt ở giai đoạn sau của Phase 1.');
+});
+
+// ---- Dữ liệu mock hoạt động theo 5 tiêu chuẩn (FE-02.1, FE-02.3) ----
+const ACTIVITIES = {
+  'hoc-tap': [
+    { name: 'Cuộc thi Học thuật BIT Challenge', level: 'Khoa', time: '01/10/2026 – 30/11/2026', req: 'GPA ≥ 2.5, đăng ký theo nhóm', note: 'Cộng điểm rèn luyện ĐRL', status: 'active' },
+    { name: 'Kỳ thi chứng chỉ Tin học ứng dụng', level: 'UEH', time: '15/09/2026 – 15/10/2026', req: 'Sinh viên năm 2 trở lên', note: '', status: 'active' },
+    { name: 'Hội nghị Nghiên cứu khoa học sinh viên', level: 'TP', time: '01/03/2026 – 30/04/2026', req: 'Có đề tài NCKH đã đăng ký', note: 'Ưu tiên xét danh hiệu cấp TP', status: 'expired' },
+  ],
+  'dao-duc': [
+    { name: 'Cuộc thi tìm hiểu Tư tưởng Hồ Chí Minh', level: 'UEH', time: '01/05/2026 – 19/05/2026', req: 'Không giới hạn', note: '', status: 'expired' },
+    { name: 'Diễn đàn "Sinh viên với văn hóa ứng xử"', level: 'Khoa', time: '10/11/2026 – 20/11/2026', req: 'Đăng ký trước 05/11', note: '', status: 'active' },
+  ],
+  'tinh-nguyen': [
+    { name: 'Chiến dịch Mùa hè xanh 2026', level: 'Hội', time: '01/06/2026 – 31/07/2026', req: 'Cam kết tối thiểu 7 ngày', note: 'Có giấy chứng nhận', status: 'expired' },
+    { name: 'Hiến máu nhân đạo "Giọt hồng BIT"', level: 'Khoa', time: '05/10/2026 – 06/10/2026', req: 'Đủ sức khỏe theo quy định', note: '', status: 'active' },
+    { name: 'Tình nguyện Trung thu cho em', level: 'Khoa', time: '20/09/2026 – 27/09/2026', req: 'Không giới hạn', note: '', status: 'active' },
+  ],
+  'hoi-nhap': [
+    { name: 'Cuộc thi Hùng biện tiếng Anh UEH Voice', level: 'UEH', time: '01/10/2026 – 15/11/2026', req: 'Chứng chỉ tiếng Anh tương đương B1', note: '', status: 'active' },
+    { name: 'Giao lưu sinh viên quốc tế ASEAN Youth', level: 'TP', time: '01/12/2026 – 05/12/2026', req: 'Hồ sơ ứng tuyển trước 15/11', note: 'Số lượng có hạn', note2: '', status: 'active' },
+  ],
+  'the-luc': [
+    { name: 'Giải chạy bộ SV5T Run 2026', level: 'Khoa', time: '12/10/2026', req: 'Không giới hạn', note: 'Có huy chương hoàn thành', status: 'active' },
+    { name: 'Giải bóng đá sinh viên UEH Cup', level: 'UEH', time: '01/09/2026 – 30/09/2026', req: 'Đăng ký theo đội', note: '', status: 'expired' },
+  ],
+};
+
+let currentCriterion = 'hoc-tap';
+
+function renderActivities(){
+  const search = document.getElementById('searchInput').value.trim().toLowerCase();
+  const level = document.getElementById('levelSelect').value;
+  const status = document.getElementById('statusSelect').value;
+  const list = (ACTIVITIES[currentCriterion] || []).filter(a => {
+    return (!search || a.name.toLowerCase().includes(search))
+      && (!level || a.level === level)
+      && (!status || a.status === status);
+  });
+
+  const tbody = document.getElementById('activityBody');
+  const emptyState = document.getElementById('emptyState');
+  tbody.innerHTML = '';
+
+  if (list.length === 0){
+    emptyState.classList.add('is-visible');
+  } else {
+    emptyState.classList.remove('is-visible');
+    list.forEach(a => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong>${a.name}</strong></td>
+        <td>${a.level}</td>
+        <td>${a.time}</td>
+        <td>${a.req}</td>
+        <td>${a.note || '—'}
+          <div>${a.status === 'active' ? '<span class="badge badge-active">Đang hoạt động</span>' : '<span class="badge badge-expired">Đã hết hạn</span>'}</div>
+        </td>`;
+      tbody.appendChild(tr);
+    });
+  }
+}
+
+// ---- Menu 5 tiêu chuẩn ----
+document.getElementById('criteriaNav').addEventListener('click', (e) => {
+  e.preventDefault();
+  const link = e.target.closest('a');
+  if (!link) return;
+  document.querySelectorAll('#criteriaNav a').forEach(a => a.classList.remove('is-active'));
+  link.classList.add('is-active');
+  currentCriterion = link.dataset.criterion;
+  renderActivities();
+});
+
+['searchInput'].forEach(id => document.getElementById(id).addEventListener('input', renderActivities));
+['levelSelect', 'statusSelect'].forEach(id => document.getElementById(id).addEventListener('change', renderActivities));
+
+renderActivities(); // mặc định load "Học tập tốt" (FE-02.1)
+
+// ---- Form đóng góp hoạt động (FE-03.x) ----
+const requestForm = document.getElementById('requestForm');
+function toggleRequestForm(){ requestForm.classList.toggle('is-visible'); if (requestForm.classList.contains('is-visible')) requestForm.scrollIntoView({behavior:'smooth', block:'center'}); }
+document.getElementById('openRequestForm').addEventListener('click', toggleRequestForm);
+document.getElementById('openRequestForm2').addEventListener('click', toggleRequestForm);
+
+const REQUESTS = [
+  { code: 'A1B2C3', name: 'Ngày hội STEM khoa BIT', link: '#', status: 'approved' },
+  { code: 'D4E5F6', name: 'Giải Cờ vua sinh viên', link: '#', status: 'pending' },
+  { code: 'G7H8I9', name: 'Workshop Thiết kế UI/UX', link: '#', status: 'rejected' },
+];
+
+function renderRequests(){
+  const tbody = document.getElementById('requestBody');
+  tbody.innerHTML = '';
+  const statusMap = { approved: ['badge-approved','Đã duyệt'], pending: ['badge-pending','Chờ duyệt'], rejected: ['badge-rejected','Bị từ chối'] };
+  REQUESTS.forEach(r => {
+    const [cls, label] = statusMap[r.status];
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><strong>${r.code}</strong></td><td>${r.name}</td><td><a href="${r.link}" target="_blank" rel="noopener">Xem liên kết</a></td><td><span class="badge ${cls}">${label}</span></td>`;
+    tbody.appendChild(tr);
+  });
+}
+renderRequests();
+
+function showToast(html){
+  const toast = document.getElementById('toast');
+  toast.innerHTML = html;
+  toast.classList.add('is-visible');
+  setTimeout(() => toast.classList.remove('is-visible'), 4500);
+}
+
+function genRequestCode(){
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let code = '';
+  for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
+  return code;
+}
+
+requestForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = document.getElementById('reqName').value.trim();
+  const link = document.getElementById('reqLink').value.trim();
+  const code = genRequestCode();
+  REQUESTS.unshift({ code, name, link, status: 'pending' });
+  renderRequests();
+  showToast(`Gửi yêu cầu thành công. Mã theo dõi của bạn là: <strong>${code}</strong>`);
+  requestForm.reset();
+  requestForm.classList.remove('is-visible');
+});
+</script>
+</body>
+</html>

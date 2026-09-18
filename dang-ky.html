@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đăng ký Phong trào SV5T — Khoa Công nghệ thông tin kinh doanh (BIT)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="root.css">
+<link rel="stylesheet" href="style.css">
+
+<style>
+  /* Style riêng cho trang Đăng ký Form */
+  .page-header {
+    padding: var(--space-8, 40px) 0 var(--space-6, 24px);
+    background: var(--color-bg-alt, #f8fafc);
+    border-bottom: 1px solid var(--color-dark-100, #e2e8f0);
+  }
+  
+  .registration-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    margin-top: 30px;
+  }
+
+  @media (min-width: 992px) {
+    .registration-grid {
+      grid-template-columns: 340px 1fr;
+      align-items: start;
+    }
+  }
+
+  /* Khung Hướng dẫn */
+  .guide-card {
+    background: #ffffff;
+    border: 1px solid var(--color-dark-200, #e2e8f0);
+    border-radius: var(--radius-lg, 12px);
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    position: sticky;
+    top: 90px;
+  }
+
+  .guide-card h3 {
+    font-size: 1.15rem;
+    margin-top: 0;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-dark-900, #0f172a);
+  }
+
+  .guide-list {
+    padding-left: 20px;
+    margin: 0 0 20px 0;
+  }
+
+  .guide-list li {
+    margin-bottom: 12px;
+    font-size: 0.925rem;
+    line-height: 1.5;
+    color: var(--color-dark-700, #334155);
+  }
+
+  .guide-alert {
+    background: #fffbe8;
+    border-left: 4px solid #f59e0b;
+    padding: 12px 16px;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    color: #78350f;
+    margin-bottom: 20px;
+  }
+
+  /* Khung Iframe Form */
+  .form-wrapper {
+    background: #ffffff;
+    border: 1px solid var(--color-dark-200, #e2e8f0);
+    border-radius: var(--radius-lg, 12px);
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    min-height: 700px;
+    position: relative;
+  }
+
+  .form-wrapper iframe {
+    width: 100%;
+    height: 900px;
+    border: none;
+    display: block;
+  }
+
+  .fallback-bar {
+    background: #f1f5f9;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-bottom: 1px solid var(--color-dark-200, #e2e8f0);
+    font-size: 0.875rem;
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <img src="assets/bit-logo.png" alt="Logo BIT">
+      <span>
+        <span class="brand-name">Sinh viên 5 Tốt</span>
+        <span class="brand-tag">Khoa Công nghệ thông tin kinh doanh</span>
+      </span>
+    </a>
+
+    <nav class="nav-menu" id="navMenu">
+      <a href="index.html">Trang chủ</a>
+      <a href="nien-bieu.html">Niên biểu</a>
+      <a href="dang-ky.html" class="is-active">Đăng ký phong trào SV5T</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="hoat-dong-dang-ky.html" class="icon-btn is-active" id="trackedBtn" aria-label="Hoạt động đã lưu">
+        ★
+        <span class="icon-badge" id="trackedCount">0</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Mở menu" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+</header>
+
+
+<!-- PAGE TITLE -->
+<section class="page-header">
+  <div class="container">
+    <span class="section-eyebrow">Năm học 2026</span>
+    <h2>Đăng ký Phong trào Sinh viên 5 Tốt</h2>
+    <p class="section-desc">Hoàn tất biểu mẫu dưới đây để bắt đầu hành trình rèn luyện và lưu hồ sơ theo dõi tại Khoa BIT.</p>
+  </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<main class="section">
+  <div class="container">
+    <div class="registration-grid">
+      
+      <!-- CỘT 1: HƯỚNG DẪN & LƯU Ý -->
+      <aside class="guide-card">
+        <h3>Hướng dẫn đăng ký</h3>
+        
+        <ol class="guide-list">
+          <li><strong>Đăng nhập Email UEH:</strong> Đảm bảo trình duyệt đã đăng nhập tài khoản Google sinh viên (<code>@st.ueh.edu.vn</code>).</li>
+          <li><strong>Chuẩn bị thông tin:</strong> Điền chính xác Mã số sinh viên, Lớp, Khóa và thông tin liên lạc (Zalo/SĐT).</li>
+          <li><strong>Chọn mục tiêu:</strong> Đánh dấu các cấp danh hiệu và tiêu chuẩn bạn dự định chinh phục trong năm học 2026.</li>
+          <li><strong>Xác nhận:</strong> Bấm nút <strong>Gửi / Submit</strong> ở cuối biểu mẫu đến khi nhận được thông báo thành công.</li>
+        </ol>
+
+   
+        <!-- Nút dự phòng mở Tab mới -->
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSc_YOUR_FORM_ID/viewform" 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           class="btn btn-primary" 
+           style="width: 100%; text-align: center; justify-content: center;">
+          Mở Form trong tab mới
+        </a>
+      </aside>
+
+      <!-- CỘT 2: KHUNG NHÚNG GOOGLE FORM -->
+      <section class="form-wrapper">
+        <!-- Thanh hỗ trợ nhanh trên đầu Form -->
+        <div class="fallback-bar">
+          <span>Gặp sự cố khi hiển thị biểu mẫu?</span>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSc_YOUR_FORM_ID/viewform" target="_blank" rel="noopener">
+            Mở Form cửa sổ riêng ↗
+          </a>
+        </div>
+
+        <!-- THAY URL GOOGLE FORM CỦA BẠN VÀO THẺ SRC DƯỚI ĐÂY -->
+        <iframe 
+          src="https://docs.google.com/forms/d/e/1FAIpQLSc_YOUR_FORM_ID/viewform?embedded=true" 
+          title="Form Đăng ký Sinh viên 5 Tốt BIT 2026"
+          loading="lazy">
+          Đang tải biểu mẫu...
+        </iframe>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-main">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="footer-logo-chip"><img src="assets/bit-logo.png" alt="Logo BIT"></span>
+        <p class="footer-desc">Cổng thông tin phong trào Sinh viên 5 Tốt khoa Công nghệ thông tin kinh doanh (BIT), UEH.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Điều hướng</h4>
+        <ul>
+          <li><a href="index.html">Trang chủ</a></li>
+          <li><a href="nien-bieu.html">Niên biểu hoạt động</a></li>
+          <li><a href="dang-ky.html">Đăng ký phong trào</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Liên hệ</h4>
+        <ul>
+          <li><address>Đoàn TN – Hội SV khoa BIT</address></li>
+          <li><a href="mailto:doanhoi.bit@ueh.edu.vn">sv5t.bit@ueh.edu.vn</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <span>© 2026 Đoàn TN – Hội SV khoa BIT, UEH</span>
+  </div>
+</footer>
+
+<script>
+// Toggle Header Mobile
+const navToggle = document.getElementById('navToggle');
+const navMenu = document.getElementById('navMenu');
+navToggle?.addEventListener('click', () => {
+  const open = navMenu.classList.toggle('is-open');
+  navToggle.setAttribute('aria-expanded', open);
+});
+</script>
+</body>
+</html>
