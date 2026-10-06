@@ -114,21 +114,44 @@
   --gradient-dark: linear-gradient(160deg, var(--color-dark-700) 0%, var(--color-dark-900) 100%);
   --gradient-hero: radial-gradient(120% 140% at 15% 0%, rgba(54,124,179,0.55) 0%, rgba(31,27,29,0) 55%), linear-gradient(150deg, var(--color-dark-900) 10%, var(--color-blue-700) 100%);
   --gradient-text: linear-gradient(100deg, #fff 20%, var(--color-blue-100) 100%);
+/* ==========================================================================
+     BỔ SUNG ĐẦY ĐỦ THEO HÌNH HƯỚNG DẪN & FEEDBACK ANH BẢO LEE
+     ========================================================================== */
 
- /* ================= TOKEN BỔ SUNG THEO FIGMA ================= */
-  /* 1. Màu xanh nhạt (Feedback) */
-  --primary-color-2: #EAF2F8;
+  /* --- 1. BẢNG MÀU (COLORS - THEO ẢNH GỢI Ý) --- */
+  /* Màu chủ đạo */
+  --primary-color: var(--color-blue-500);          /* #367CB3 - Xanh BIT */
+  --primary-hover: var(--color-blue-600);          /* #2E6996 - Màu hover khi rê chuột */
+  --primary-color-2: #EAF2F8;                      /* Xanh nhạt cho tab/badge */
 
-  /* 2. Chiều cao & lề trên dưới của button (Feedback) */
-  --button-height: 44px;
-  --button-padding-y: 10px;
-  --button-padding-x: 20px;
+  /* Màu nền và chữ */
+  --bg-color: #ffffff;                             /* Màu nền chính */
+  --text-color: var(--color-dark-500);             /* #4F464B - Màu chữ chính */
+  --text-muted: var(--color-dark-300);             /* #A69FA2 - Màu chữ phụ/mờ */
 
-  /* 3. Bo góc chuẩn (Feedback) */
-  --radius-button: 8px;       /* Bo góc nút chữ nhật */
-  --radius-card: 16px;        /* Bo góc khung ảnh và thẻ card */
-  --radius-pill: 999px;       /* Bo tròn dạng viên thuốc cho tab/pill */
+  /* Màu trạng thái */
+  --success-color: #28a745;                        /* Màu xanh lá thành công */
+  --error-color: #dc3545;                          /* Màu đỏ thông báo lỗi */
 
-  /* 4. Khoảng cách trên dưới giữa các section (Feedback) */
-  --spacing-section-y: 72px;
+  /* --- 2. NÚT BẤM (BUTTON TOKENS) --- */
+  --button-height: 44px;                           /* Chiều cao của 1 button */
+  --button-padding-y: 10px;                        /* Khoảng cách trên dưới nút */
+  --button-padding-x: 20px;                        /* Khoảng cách trái phải nút */
+
+  /* --- 3. BO GÓC (BORDER RADIUS) --- */
+  --radius-button: 8px;                            /* Bo góc button */
+  --radius-card: 16px;                             /* Bo góc khung ảnh và thẻ card */
+  --radius-pill: 999px;                            /* Bo tròn tab viên thuốc */
+
+  /* --- 4. KHOẢNG CÁCH (SPACING) DESKTOP --- */
+  --gap-col-cards: 24px;                           /* Khoảng cách ngang giữa các khối trên cùng 1 hàng */
+  --gap-icon-text: 8px;                            /* Khoảng cách giữa icon và chữ */
+  --spacing-section-y: 80px;                       /* Khoảng cách giữa các section lớn với nhau */
+
+  /* --- 5. KÍCH THƯỚC DÀNH CHO ĐIỆN THOẠI (MOBILE RESPONSIVE) --- */
+  --font-size-h1-mobile: 28px;                     /* Cỡ chữ H1 thu nhỏ trên mobile */
+  --font-size-h2-mobile: 20px;                     /* Cỡ chữ H2 thu nhỏ trên mobile */
+  --font-size-body-mobile: 15px;                   /* Cỡ chữ nội dung trên mobile */
+  --gap-col-mobile: 16px;                          /* Khoảng cách ngang co lại trên điện thoại */
+  --spacing-section-mobile: 48px;                  /* Khoảng cách section co lại trên điện thoại */
 }
