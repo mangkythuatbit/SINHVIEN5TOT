@@ -110,4 +110,24 @@
   --gradient-dark: linear-gradient(160deg, var(--color-dark-700) 0%, var(--color-dark-900) 100%);
   --gradient-hero: radial-gradient(120% 140% at 15% 0%, rgba(54,124,179,0.55) 0%, rgba(31,27,29,0) 55%), linear-gradient(150deg, var(--color-dark-900) 10%, var(--color-blue-700) 100%);
   --gradient-text: linear-gradient(100deg, #fff 20%, var(--color-blue-100) 100%);
+   /* =================================================== */
+  /* THÊM THEO THIẾT KẾ FIGMA */
+  /* 1. Color styles */
+  --primary-color: var(--color-blue-500);
+  --primary-color-2: var(--color-blue-300);
+  --text-color: var(--color-dark-500);
+  --background: #ffffff;
+
+  /* 2. Text styles */
+  --font-size-h1: 36px;
+  --line-height-h1: 1.3;
+
+  --font-size-h2: 24px;
+  --line-height-h2: 1.3;
+
+  --font-size-body: 16px;
+  --line-height-body: 1.5;
+
+  --font-size-button: 16px;
+  --line-height-button: normal;
 }
