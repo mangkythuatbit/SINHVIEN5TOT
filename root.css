@@ -1,4 +1,5 @@
-/* ==========================================================================
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+/* =================================================== *//* ==========================================================================
    ROOT.CSS — Design Tokens
    Bộ nhận diện SV5T khoa BIT chỉ dùng 2 màu gốc lấy từ logo:
      - Xanh BIT   : #367CB3
@@ -52,24 +53,27 @@
   --color-status-pending-bg:  var(--color-dark-50);
   --color-status-pending-text:var(--color-dark-500);
 
-  /* ---- Typography ---- */
-  --font-family-base: 'Be Vietnam Pro', -apple-system, 'Segoe UI', sans-serif;
-  --fw-regular: 400;
-  --fw-medium: 500;
-  --fw-semibold: 600;
-  --fw-bold: 700;
-  --fw-extrabold: 800;
+   /* ---- Typography (Theo Figma Quỳnh) ---- */
+--font-family-base: 'Roboto', sans-serif;
+--fw-regular: 400;
+--fw-medium: 500;
+--fw-bold: 700;
 
-  --fs-h1: clamp(2rem, 1.5rem + 2vw, 3.25rem);
-  --fs-h2: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
-  --fs-h3: clamp(1.15rem, 1rem + 0.6vw, 1.5rem);
-  --fs-h4: 1.125rem;
-  --fs-body-lg: 1.125rem;
-  --fs-body: 1rem;
-  --fs-small: 0.875rem;
-  --fs-tiny: 0.75rem;
-  --lh-heading: 1.2;
-  --lh-body: 1.65;
+/* H1: 36/130 */
+--font-size-h1: 36px;
+--line-height-h1: 1.3;
+
+/* H2: 24/130 */
+--font-size-h2: 24px;
+--line-height-h2: 1.3;
+
+/* Body: 16/150 */
+--font-size-body: 16px;
+--line-height-body: 1.5;
+
+/* Button: 16/Auto */
+--font-size-button: 16px;
+--line-height-button: normal;
 
   /* ---- Spacing scale ---- */
   --space-1: 4px;
@@ -110,24 +114,21 @@
   --gradient-dark: linear-gradient(160deg, var(--color-dark-700) 0%, var(--color-dark-900) 100%);
   --gradient-hero: radial-gradient(120% 140% at 15% 0%, rgba(54,124,179,0.55) 0%, rgba(31,27,29,0) 55%), linear-gradient(150deg, var(--color-dark-900) 10%, var(--color-blue-700) 100%);
   --gradient-text: linear-gradient(100deg, #fff 20%, var(--color-blue-100) 100%);
-   /* =================================================== */
-  /* THÊM THEO THIẾT KẾ FIGMA */
-  /* 1. Color styles */
-  --primary-color: var(--color-blue-500);
-  --primary-color-2: var(--color-blue-300);
-  --text-color: var(--color-dark-500);
-  --background: #ffffff;
 
-  /* 2. Text styles */
-  --font-size-h1: 36px;
-  --line-height-h1: 1.3;
+ /* ================= TOKEN BỔ SUNG THEO FIGMA ================= */
+  /* 1. Màu xanh nhạt (Feedback) */
+  --primary-color-2: #EAF2F8;
 
-  --font-size-h2: 24px;
-  --line-height-h2: 1.3;
+  /* 2. Chiều cao & lề trên dưới của button (Feedback) */
+  --button-height: 44px;
+  --button-padding-y: 10px;
+  --button-padding-x: 20px;
 
-  --font-size-body: 16px;
-  --line-height-body: 1.5;
+  /* 3. Bo góc chuẩn (Feedback) */
+  --radius-button: 8px;       /* Bo góc nút chữ nhật */
+  --radius-card: 16px;        /* Bo góc khung ảnh và thẻ card */
+  --radius-pill: 999px;       /* Bo tròn dạng viên thuốc cho tab/pill */
 
-  --font-size-button: 16px;
-  --line-height-button: normal;
+  /* 4. Khoảng cách trên dưới giữa các section (Feedback) */
+  --spacing-section-y: 72px;
 }
