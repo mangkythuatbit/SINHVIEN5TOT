@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SV5T - BIT</title>
+
+  <!-- Tailwind CDN phải nằm trong <head> -->
+  <script src="https://cdn.tailwindcss.com"></script>
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SV5T - BIT</title>
+
+  <!-- Tailwind CDN phải nằm trong <head> -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Be Vietnam Pro -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/root.css" />
+  <link rel="stylesheet" href="css/header.css" />
+</head>
+  <link rel="stylesheet" href="css/root.css" />
+  <link rel="stylesheet" href="css/header.css" />
+</head>
+
+<body>
+  <!-- Dán <header> vào đây (hoặc include từ header.html) -->
+     <header class="header">
+    <div class="header__inner">
+
+      <!-- Cột 1 + 2 -->
+      <div class="header__left">
+        <a href="/" class="brand" aria-label="Trang chủ BIT">
+          <img class="brand__logo" src="assets/bit-logo.png" alt="Logo BIT" />
+          <span class="brand__name">
+            ĐOÀN - HỘI<br />KHOA CÔNG NGHỆ THÔNG TIN KINH DOANH
+          </span>
+        </a>
+        <div class="header__tag"><span>SV5T</span></div>
+      </div>
+
+      <!-- Cột 3 + 4 + 5 -->
+      <nav class="header__right" aria-label="Điều hướng chính">
+        <ul class="menu">
+          <li><a href="/" class="is-active" aria-current="page">Trang chủ</a></li>
+          <li><a href="/nien-bieu">Niên biểu</a></li>
+        </ul>
+
+        <a href="/theo-doi" class="saved">
+          Theo dõi hoạt động đã lưu
+          <span class="saved__badge" aria-label="0 hoạt động đã lưu">0</span>
+        </a>
+
+        <a href="/dang-ky" class="cta">Đăng ký phong trào SV5T</a>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- Dán 2 <section> vào đây -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+<!-- ================= SECTION 1: 5 TIÊU CHUẨN ================= -->
+<section class="bg-white">
+  <div class="mx-auto max-w-[1200px] px-6 py-12">
+
+    <!-- Dòng 1: Tiêu đề & giới thiệu -->
+    <h2 class="text-2xl font-bold text-[#1a365d]">5 tiêu chuẩn để đạt danh hiệu SV5T</h2>
+    <p class="mt-2 text-sm text-[#4B5563]">
+      Sinh viên cần chứng minh nỗ lực cân bằng ở cả năm tiêu chuẩn. Không tiêu chuẩn nào thay thế được tiêu chuẩn còn lại,
+      vì tinh thần của SV5T là phát triển toàn diện chứ không phải xuất sắc một mặt.
+    </p>
+
+    <!-- Dòng 2: Thanh tab 5 cột -->
+    <div class="mt-6 grid grid-cols-5 gap-3" role="tablist" id="tabs">
+
+      <button type="button" role="tab" data-tab="hoc-tap" data-active="true"
+        class="tab relative flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white py-4 text-sm font-medium text-black transition
+               after:absolute after:left-1/2 after:top-full after:-translate-x-1/2 after:border-x-8 after:border-t-8 after:border-x-transparent after:border-t-transparent after:content-['']
+               data-[active=true]:border-[#1a365d] data-[active=true]:bg-[#1a365d] data-[active=true]:text-white data-[active=true]:after:border-t-[#1a365d]">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Học tập tốt
+      </button>
+
+      <button type="button" role="tab" data-tab="dao-duc" data-active="false"
+        class="tab relative flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white py-4 text-sm font-medium text-black transition hover:border-[#1a365d]
+               after:absolute after:left-1/2 after:top-full after:-translate-x-1/2 after:border-x-8 after:border-t-8 after:border-x-transparent after:border-t-transparent after:content-['']
+               data-[active=true]:border-[#1a365d] data-[active=true]:bg-[#1a365d] data-[active=true]:text-white data-[active=true]:after:border-t-[#1a365d]">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+        Đạo đức tốt
+      </button>
+
+      <button type="button" role="tab" data-tab="the-luc" data-active="false"
+        class="tab relative flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white py-4 text-sm font-medium text-black transition hover:border-[#1a365d]
+               after:absolute after:left-1/2 after:top-full after:-translate-x-1/2 after:border-x-8 after:border-t-8 after:border-x-transparent after:border-t-transparent after:content-['']
+               data-[active=true]:border-[#1a365d] data-[active=true]:bg-[#1a365d] data-[active=true]:text-white data-[active=true]:after:border-t-[#1a365d]">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.4 14.4 9.6 9.6"/><path d="M18.657 21.485a2 2 0 1 1-2.829-2.828l-1.767 1.768a2 2 0 1 1-2.829-2.829l6.364-6.364a2 2 0 1 1 2.829 2.829l-1.768 1.767a2 2 0 1 1 2.828 2.829z"/><path d="m21.5 21.5-1.4-1.4"/><path d="M3.9 3.9 2.5 2.5"/><path d="M6.404 12.768a2 2 0 1 1-2.829-2.829l1.768-1.767a2 2 0 1 1-2.828-2.829l2.828-2.828a2 2 0 1 1 2.829 2.828l1.767-1.768a2 2 0 1 1 2.829 2.829z"/></svg>
+        Thể lực tốt
+      </button>
+
+      <button type="button" role="tab" data-tab="tinh-nguyen" data-active="false"
+        class="tab relative flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white py-4 text-sm font-medium text-black transition hover:border-[#1a365d]
+               after:absolute after:left-1/2 after:top-full after:-translate-x-1/2 after:border-x-8 after:border-t-8 after:border-x-transparent after:border-t-transparent after:content-['']
+               data-[active=true]:border-[#1a365d] data-[active=true]:bg-[#1a365d] data-[active=true]:text-white data-[active=true]:after:border-t-[#1a365d]">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Tình nguyện tốt
+      </button>
+
+      <button type="button" role="tab" data-tab="hoi-nhap" data-active="false"
+        class="tab relative flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white py-4 text-sm font-medium text-black transition hover:border-[#1a365d]
+               after:absolute after:left-1/2 after:top-full after:-translate-x-1/2 after:border-x-8 after:border-t-8 after:border-x-transparent after:border-t-transparent after:content-['']
+               data-[active=true]:border-[#1a365d] data-[active=true]:bg-[#1a365d] data-[active=true]:text-white data-[active=true]:after:border-t-[#1a365d]">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Hội nhập tốt
+      </button>
+    </div>
+
+    <!-- Dòng 3: Tab panel -->
+    <div id="tab-panel" role="tabpanel" class="mt-4 rounded-lg border border-gray-200 p-6">
+      <h3 id="panel-title" class="text-lg font-bold text-blue-900">Học tập tốt</h3>
+      <p id="panel-desc" class="mt-1 text-sm text-gray-600">Một trong hai tiêu chuẩn nền tảng, yêu cầu kết quả học tập ổn định.</p>
+
+      <div class="mt-4 flex flex-wrap items-center gap-2">
+        <span class="text-sm font-medium text-gray-700">Hoạt động tiêu biểu:</span>
+        <div id="panel-badges" class="flex flex-wrap gap-2">
+          <span class="rounded-md bg-blue-50 px-3 py-1 text-xs font-medium text-blue-800">Cuộc thi kiến thức</span>
+          <span class="rounded-md bg-blue-50 px-3 py-1 text-xs font-medium text-blue-800">Nghiên cứu khoa học</span>
+        </div>
+      </div>
+
+      <a href="/nien-bieu" class="mt-4 inline-block text-sm font-semibold text-blue-700 underline-offset-4 hover:underline">
+        Xem hoạt động trong Niên biểu →
+      </a>
+    </div>
+
+    <!-- Dòng 4: Ghi chú -->
+    <p class="mt-4 text-xs text-gray-500">
+      Minh chứng được tích lũy dần qua trang Niên biểu: mỗi hoạt động đã đăng kí và hoàn thành là một minh chứng hợp lệ khi bạn nộp hồ sơ xét danh hiệu.
+    </p>
+  </div>
+</section>
+
+<!-- ================= SECTION 2: HOẠT ĐỘNG NỔI BẬT ================= -->
+<section class="bg-white">
+  <div class="mx-auto max-w-[1200px] px-6 py-12">
+    <h2 class="text-2xl font-bold text-[#1a365d]">Hoạt động nổi bật của phong trào Sinh viên 5 Tốt khoa BIT</h2>
+
+    <div class="mt-6 grid grid-cols-4 gap-4">
+      <div class="flex aspect-[4/3] items-center justify-center rounded-lg border border-dashed border-gray-300 text-sm text-gray-500
+                  bg-[repeating-linear-gradient(135deg,#e5e7eb_0,#e5e7eb_8px,#f3f4f6_8px,#f3f4f6_16px)]">Ảnh 1</div>
+      <div class="flex aspect-[4/3] items-center justify-center rounded-lg border border-dashed border-gray-300 text-sm text-gray-500
+                  bg-[repeating-linear-gradient(135deg,#e5e7eb_0,#e5e7eb_8px,#f3f4f6_8px,#f3f4f6_16px)]">Ảnh 2</div>
+      <div class="flex aspect-[4/3] items-center justify-center rounded-lg border border-dashed border-gray-300 text-sm text-gray-500
+                  bg-[repeating-linear-gradient(135deg,#e5e7eb_0,#e5e7eb_8px,#f3f4f6_8px,#f3f4f6_16px)]">Ảnh 3</div>
+      <div class="flex aspect-[4/3] items-center justify-center rounded-lg border border-dashed border-gray-300 text-sm text-gray-500
+                  bg-[repeating-linear-gradient(135deg,#e5e7eb_0,#e5e7eb_8px,#f3f4f6_8px,#f3f4f6_16px)]">Ảnh 4</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= JS: chuyển tab ================= -->
+<script>
+  const TAB_DATA = {
+    "hoc-tap": {
+      title: "Học tập tốt",
+      desc: "Một trong hai tiêu chuẩn nền tảng, yêu cầu kết quả học tập ổn định.",
+      badges: ["Cuộc thi kiến thức", "Nghiên cứu khoa học"]
+    },
+    // TODO: thay nội dung thật cho 4 tab còn lại
+    "dao-duc":    { title: "Đạo đức tốt",    desc: "Nội dung đang cập nhật.", badges: [] },
+    "the-luc":    { title: "Thể lực tốt",    desc: "Nội dung đang cập nhật.", badges: [] },
+    "tinh-nguyen":{ title: "Tình nguyện tốt", desc: "Nội dung đang cập nhật.", badges: [] },
+    "hoi-nhap":   { title: "Hội nhập tốt",   desc: "Nội dung đang cập nhật.", badges: [] }
+  };
+
+  const tabs = document.querySelectorAll("#tabs .tab");
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      tabs.forEach(t => t.dataset.active = "false");
+      tab.dataset.active = "true";
+
+      const d = TAB_DATA[tab.dataset.tab];
+      document.getElementById("panel-title").textContent = d.title;
+      document.getElementById("panel-desc").textContent = d.desc;
+      document.getElementById("panel-badges").innerHTML = d.badges
+        .map(b => `<span class="rounded-md bg-blue-50 px-3 py-1 text-xs font-medium text-blue-800">${b}</span>`)
+        .join("");
+    });
+  });
+</script>
+
+  <!-- Dán <script> chuyển tab ở cuối body -->
+</body>
+</html>
