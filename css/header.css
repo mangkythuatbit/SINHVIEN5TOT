@@ -1,0 +1,146 @@
+ /* Giá trị dự phòng: nếu root.css không nạp được thì header vẫn đúng màu */
+    :root {
+      --hd-primary:       var(--color-primary, #367CB3);
+      --hd-primary-hover: var(--color-primary-hover, #2E6996);
+      --hd-primary-dark:  var(--color-blue-700, #24537A);
+      --hd-text:          var(--color-text, #332D30);
+      --hd-border:        var(--color-border, #E4E0E1);
+      --hd-font:          'Be Vietnam Pro', var(--font-family-base, 'Roboto'), sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; padding-top: 73px; font-family: var(--hd-font); color: var(--hd-text); }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; margin: 0; padding: 0; }
+
+    /* ================= HEADER ================= */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      height: 73px;
+      background: #fff;
+      border-bottom: 1px solid var(--hd-border);
+    }
+    .header__inner {
+      height: 100%;
+      max-width: 1920px;
+      margin: 0 auto;
+      padding: 0 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* ---------- Trái: cột 1 + cột 2 ---------- */
+    .header__left  { display: flex; align-items: center; }
+
+    /* Cột 1: logo + tên đơn vị */
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand__logo { height: 28px; width: auto; display: block; }
+    .brand__name {
+      font-size: 10px;
+      font-weight: 500;
+      line-height: 1.4;
+      text-transform: uppercase;
+      color: var(--hd-text);
+      white-space: nowrap;
+    }
+
+    /* Cột 2: vạch chia + SV5T */
+    .header__tag {
+      display: flex; align-items: center;
+      margin-left: 18px; padding-left: 18px;
+      border-left: 1px solid var(--hd-border);
+      height: 32px;
+    }
+    .header__tag span {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--hd-primary-dark);
+    }
+
+    /* ---------- Phải: cột 3 + 4 + 5 ---------- */
+    .header__right { display: flex; align-items: center; height: 100%; gap: 40px; }
+
+    /* Cột 3: menu */
+    .menu { display: flex; align-items: center; height: 100%; gap: 28px; }
+    .menu a {
+      position: relative;
+      display: flex; align-items: center;
+      height: 100%;
+      font-size: 15px; font-weight: 500; line-height: 1.5;
+      color: var(--hd-text);
+      transition: color .2s;
+    }
+    .menu a::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: 14px;
+      height: 2px; background: var(--hd-primary);
+      transform: scaleX(0); transition: transform .2s;
+    }
+    /* Cột 3: menu */
+.menu { display: flex; align-items: center; gap: 28px; }
+
+.menu a {
+  position: relative;
+  display: inline-block;
+  padding: 0;                        /* bỏ padding cũ */
+  font-size: 15px; font-weight: 500;
+  line-height: 1.2;                  /* hộp chữ sát hơn, khoảng cách 4px nhìn chuẩn */
+  color: var(--hd-text);
+  transition: color .2s;
+}
+
+/* Thanh gạch chân: nằm DƯỚI chữ, cách chữ đúng --space-1 */
+.menu a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  top: calc(100% + var(--space-1, 4px));   /* 100% = đáy chữ, + 4px khoảng cách */
+  height: 2px;
+  background: var(--hd-primary);
+  transform: scaleX(0);
+  transition: transform .2s;
+}
+
+/* Hover và active dùng chung vị trí */
+.menu a:hover { color: var(--hd-primary); }
+.menu a:hover::after { transform: scaleX(1); }
+
+.menu a.is-active { color: var(--hd-primary); font-weight: 600; }
+.menu a.is-active::after { transform: scaleX(1); }
+
+    /* Cột 4: theo dõi + badge */
+    .saved {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 15px; font-weight: 500; white-space: nowrap;
+      color: var(--hd-text);
+      transition: color .2s;
+    }
+    .saved:hover { color: var(--hd-primary); }
+    .saved__badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--hd-primary); color: #fff;
+      font-size: 11px; font-weight: 700; line-height: 1;
+    }
+
+    /* Cột 5: CTA */
+    .cta {
+      display: inline-flex; align-items: center; justify-content: center;
+      height: 42px; padding: 0 20px;
+      border-radius: 8px;
+      background: var(--hd-primary); color: #fff;
+      font-size: 15px; font-weight: 600; white-space: nowrap;
+      transition: background .2s, box-shadow .2s;
+    }
+    .cta:hover { background: var(--hd-primary-hover); }
+    .cta:focus-visible { outline: none; box-shadow: 0 0 0 4px var(--color-blue-100, #D2E4F1); }
+
+    /* Màn 1440px - 1920px: giữ nguyên một hàng, co nhẹ khoảng cách ở 1440 */
+    @media (max-width: 1599px) {
+      .header__inner { padding: 0 48px; }
+      .header__right { gap: 32px; }
+      .menu { gap: 24px; }
+    }
+  
