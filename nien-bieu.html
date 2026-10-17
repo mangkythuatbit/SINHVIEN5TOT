@@ -8,32 +8,41 @@
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./css/root.css">
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="css/header.css">
 </head>          
 <body>
 
-<header class="site-header">
-  <div class="container">
-    <a href="index.html" class="brand">
-      <img src="assets/bit-logo.png" alt="Logo BIT">
-      <span>
-        <span class="brand-name">Sinh viên 5 Tốt</span>
-        <span class="brand-tag">Khoa Công nghệ thông tin kinh doanh</span>
-      </span>
-    </a>
-    <nav class="nav-menu" id="navMenu">
-      <a href="index.html">Trang chủ</a>
-      <a href="nien-bieu.html" class="is-active">Niên biểu</a>
-      <a href="dang-ky.html" target="_blank" rel="noopener">Đăng ký phong trào SV5T</a>
-    </nav>
-    <div class="nav-actions">
-      <a href="hoat-dong-dang-ky.html" class="icon-btn is-active" id="trackedBtn" aria-label="Hoạt động đã lưu">
-        ★
-        <span class="icon-badge" id="trackedCount">0</span>
-      </a>
-      <button class="nav-toggle" id="navToggle" aria-label="Mở menu" aria-expanded="false"><span></span></button>
+ <header class="header">
+    <div class="header__inner">
+
+      <!-- Cột 1 + 2 -->
+      <div class="header__left">
+        <a href="/" class="brand" aria-label="Trang chủ BIT">
+          <img class="brand__logo" src="assets/bit-logo.png" alt="Logo BIT" />
+          <span class="brand__name">
+            ĐOÀN - HỘI<br />KHOA CÔNG NGHỆ THÔNG TIN KINH DOANH
+          </span>
+        </a>
+        <div class="header__tag"><span>SV5T</span></div>
+      </div>
+
+      <!-- Cột 3 + 4 + 5 -->
+      <nav class="header__right" aria-label="Điều hướng chính">
+        <ul class="menu">
+          <li><a href="/" class="is-active" aria-current="page">Trang chủ</a></li>
+          <li><a href="/nien-bieu.html">Niên biểu</a></li>
+        </ul>
+
+        <a href="/hoat-dong-dang-ky.html" class="saved">
+          Theo dõi hoạt động đã lưu
+          <span class="saved__badge" aria-label="0 hoạt động đã lưu">0</span>
+        </a>
+
+        <a href="/dang-ky.html" class="cta">Đăng ký phong trào SV5T</a>
+      </nav>
+
     </div>
-  </div>
-</header>
+  </header>
 
 
 <section class="section" style="padding-block: var(--space-7) 0;">
