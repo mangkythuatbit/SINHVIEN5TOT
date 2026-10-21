@@ -1,0 +1,230 @@
+/* ==========================================================================
+   HERO.CSS — Hero banner "Sinh viên 5 Tốt 2026"
+   Gắn vào trang bằng: <link rel="stylesheet" href="./css/hero.css">
+   (đặt SAU root.css và style.css)
+
+   - Mọi class đều bắt đầu bằng "hero-" nên không đụng class cũ của style.css.
+   - Màu / bo góc / chiều cao nút lấy từ token trong root.css
+     (giá trị sau dấu phẩy là dự phòng nếu token chưa có).
+   ========================================================================== */
+
+.hero-banner {
+  /* ---- Token riêng của hero ---- */
+  --hero-header-height: 73px;                 /* chiều cao header cố định */
+  --hero-page-max-width: 1440px;
+  --hero-grid-gap: 24px;
+  --hero-gap-before-buttons: 32px;            /* chiều cao hàng 5 (trống) */
+
+  /* Chiều cao 1 dòng chữ tiêu đề = chiều cao khung "SINH VIÊN".
+     Hàng 1 và hàng 7 dùng đúng giá trị này để nhóm ảnh nhô ra trên/dưới. */
+  --hero-title-font-size: clamp(2.25rem, 3.6vw, 3.25rem);
+  --hero-title-line-height: 1.15;
+  --hero-title-line-size: calc(var(--hero-title-font-size) * var(--hero-title-line-height));
+
+  --hero-color-primary: var(--color-blue-500, #367cb3);
+  --hero-color-primary-dark: var(--color-blue-700, #24537a);
+  --hero-color-primary-darker: #1c4261;
+  --hero-color-text-muted: var(--color-dark-500, #4f464b);
+  --hero-color-bg: var(--color-bg-alt, #f3f1f2);
+  --hero-color-placeholder-border: var(--color-dark-300, #a69fa2);
+  --hero-color-placeholder-stripe: var(--color-dark-100, #e4e0e1);
+  --hero-radius-button: var(--radius-button, 8px);
+  --hero-radius-card: var(--radius-card, 16px);
+  --hero-button-height: var(--button-height, 44px);
+
+  /* Chiều cao: lấp đầy màn hình trừ header 73px.
+     Nếu .site-header đang position: fixed, thêm: margin-top: var(--hero-header-height); */
+  min-height: calc(100vh - var(--hero-header-height));
+  min-height: calc(100dvh - var(--hero-header-height));
+  display: flex;
+  align-items: center;
+  background: var(--hero-color-bg);
+  font-family: inherit;
+}
+
+/* ---------- Lưới 12 cột, tối đa 1440px, căn giữa ---------- */
+.hero-banner__inner {
+  width: 100%;
+  max-width: var(--hero-page-max-width);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--hero-grid-gap);
+}
+
+/* Nội dung chỉ nằm từ cột 2 đến cột 11 (đường lưới 2 → 12);
+   bên trong chia 10 cột: 5 cột chữ + 5 cột ảnh */
+.hero-banner__layout {
+  grid-column: 2 / 12;
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  column-gap: var(--hero-grid-gap);
+  align-items: stretch;   /* nhóm ảnh cao bằng toàn bộ cột chữ (hàng 1 → hàng 7) */
+  padding-block: 48px;
+}
+
+/* ---------- Cột trái: 7 hàng ----------
+   1. trống (cao = 1 dòng "SINH VIÊN")   2. "SINH VIÊN"   3. "5 TỐT 2026"
+   4. dòng phụ (sát đáy hàng)   5. trống (cố định)   6. nhóm nút
+   7. trống (cao = 1 dòng "SINH VIÊN")
+   => Nhóm ảnh cao hơn chữ phía trên và thấp hơn nút phía dưới đúng 1 khung "SINH VIÊN". */
+.hero-content {
+  grid-column: 1 / 6;
+  display: grid;
+  grid-template-rows:
+    var(--hero-title-line-size)
+    auto
+    auto
+    auto
+    var(--hero-gap-before-buttons)
+    auto
+    var(--hero-title-line-size);
+  justify-items: start;
+}
+
+/* Tiêu đề chiếm hàng 2–3; mỗi dòng chữ nằm đúng một hàng (subgrid) */
+.hero-content__title {
+  grid-row: 2 / 4;
+  display: grid;
+  grid-template-rows: subgrid;
+  font-size: var(--hero-title-font-size);
+  font-weight: 800;
+  line-height: var(--hero-title-line-height);
+  color: var(--hero-color-primary-dark);
+}
+
+.hero-content__title-line--one { grid-row: 1; }
+.hero-content__title-line--two { grid-row: 2; }
+
+/* Hàng 4: dòng phụ, căn sát cạnh dưới của hàng */
+.hero-content__subtitle {
+  grid-row: 4;
+  align-self: end;
+  margin-top: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--hero-color-text-muted);
+}
+
+/* Hàng 6: nhóm nút ngang */
+.hero-content__actions {
+  grid-row: 6;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* ---------- Nút bấm ---------- */
+.hero-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--hero-button-height);
+  padding: 10px 20px;
+  border: 2px solid var(--hero-color-primary-dark);
+  border-radius: var(--hero-radius-button);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.hero-button--primary {
+  background: var(--hero-color-primary-dark);
+  color: #ffffff;
+}
+
+.hero-button--primary:hover {
+  background: var(--hero-color-primary-darker);
+  border-color: var(--hero-color-primary-darker);
+}
+
+.hero-button--outline {
+  background: transparent;
+  color: var(--hero-color-primary-dark);
+}
+
+.hero-button--outline:hover {
+  background: var(--hero-color-primary-dark);
+  color: #ffffff;
+}
+
+.hero-button:focus-visible {
+  outline: 3px solid var(--hero-color-primary);
+  outline-offset: 2px;
+}
+
+/* ---------- Cột phải: 3 khung ảnh ---------- */
+.hero-gallery {
+  grid-column: 6 / 11;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+  align-self: stretch;    /* cao bằng cột chữ, không đặt chiều cao cố định */
+  min-height: 280px;
+}
+
+.hero-gallery__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px dashed var(--hero-color-placeholder-border);
+  border-radius: var(--hero-radius-card);
+  font-size: 0.875rem;
+  color: var(--hero-color-text-muted);
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--hero-color-placeholder-stripe) 0 8px,
+    var(--hero-color-bg) 8px 16px
+  );
+}
+
+.hero-gallery__item--one   { grid-column: 1; grid-row: 1 / span 2; } /* dọc, bên trái */
+.hero-gallery__item--two   { grid-column: 2; grid-row: 1; }         /* ngang, trên */
+.hero-gallery__item--three { grid-column: 2; grid-row: 2; }         /* ngang, dưới */
+
+/* Khi có ảnh thật: <img class="hero-gallery__image" src="..." alt="..."> */
+.hero-gallery__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .hero-banner { --hero-grid-gap: 16px; }
+}
+
+/* Mobile / tablet dọc: 1 cột */
+@media (max-width: 768px) {
+  .hero-banner { align-items: flex-start; }
+
+  .hero-banner__layout {
+    grid-column: 1 / -1;
+    grid-template-columns: 1fr;
+    row-gap: 32px;
+    padding: 32px 20px;
+  }
+
+  .hero-content,
+  .hero-gallery { grid-column: 1 / -1; }
+
+  /* Hàng trống 1 và 7 thu về 0 */
+  .hero-content {
+    grid-template-rows: 0 auto auto auto var(--hero-gap-before-buttons) auto 0;
+  }
+
+  .hero-content__actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .hero-gallery { height: clamp(280px, 80vw, 440px); }
+}

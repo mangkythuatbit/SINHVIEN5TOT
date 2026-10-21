@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./css/root.css">
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="./css/banner.css">
 </head>
 <body>
 
@@ -37,29 +38,33 @@
   </div>
 </header>
 
+<!-- HERO BANNER -->
+<section class="hero-banner" id="hero">
+  <div class="hero-banner__inner">
+    <div class="hero-banner__layout">
 
-<!-- HERO BANNER SLIDER -->
-<section class="hero">
-  <div class="hero-slider" id="heroSlider">
-    
-    <a class="hero-slide is-active" href="#" target="_blank" rel="noopener" data-slide>
-      <img src="link-anh-1.jpg" alt="Banner phát động #1" class="hero-img">
-    </a>
-    
-    <a class="hero-slide" href="#" target="_blank" rel="noopener" data-slide>
-      <img src="link-anh-2.jpg" alt="Banner phát động #2" class="hero-img">
-    </a>
-    
-    <a class="hero-slide" href="#" target="_blank" rel="noopener" data-slide>
-      <img src="link-anh-3.jpg" alt="Banner phát động #3" class="hero-img">
-    </a>
+      <!-- Cột trái: 7 hàng (hàng 1, 5, 7 là khoảng trống do CSS tạo) -->
+      <div class="hero-content">
+        <h1 class="hero-content__title">
+          <span class="hero-content__title-line--one">SINH VIÊN</span>
+          <span class="hero-content__title-line--two">5 TỐT 2026</span>
+        </h1>
+        <p class="hero-content__subtitle">Cổng thông tin Sinh viên 5 Tốt</p>
 
-    <div class="hero-caption">
-            <h1>Sinh viên 5 Tốt 2026</h1>
-      <p>CỔNG THÔNG TIN SINH VIÊN 5 TỐT</p>
+        <div class="hero-content__actions">
+          <a href="dang-ky.html" target="_blank" rel="noopener" class="hero-button hero-button--primary">Đăng ký phong trào SV5T</a>
+          <a href="nien-bieu.html" class="hero-button hero-button--outline">Xem niên biểu hoạt động</a>
+        </div>
+      </div>
+
+      <!-- Cột phải: 3 khung ảnh (thay chữ bằng <img class="hero-gallery__image"> khi có ảnh) -->
+      <div class="hero-gallery">
+        <div class="hero-gallery__item hero-gallery__item--one">Ảnh 1</div>
+        <div class="hero-gallery__item hero-gallery__item--two">Ảnh 2</div>
+        <div class="hero-gallery__item hero-gallery__item--three">Ảnh 3</div>
+      </div>
+
     </div>
-    
-    <div class="hero-dots" id="heroDots"></div>
   </div>
 </section>
 
