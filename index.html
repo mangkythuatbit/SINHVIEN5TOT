@@ -2,16 +2,167 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sinh viên 5 Tốt — Khoa Công nghệ thông tin kinh doanh (BIT)</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./css/root.css">
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="./css/banner.css">
-</head>
-<body>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sinh viên 5 Tốt 2026 — Khoa Công nghệ thông tin kinh doanh (BIT)</title>
 
+<!-- root.css: nguồn duy nhất của màu sắc, font, spacing, bo góc -->
+<link rel="stylesheet" href="./css/root.css">
+
+<style>
+/* ===== Base (chỉ dùng biến từ root.css) ===== */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--font-family-base);font-size:var(--font-size-body);line-height:var(--line-height-body);color:var(--text-color);background:var(--bg-color)}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1{font-size:var(--font-size-h1);line-height:var(--line-height-h1);margin:0}
+h2{font-size:var(--font-size-h2);line-height:var(--line-height-h2);margin:0;color:var(--color-blue-700)}
+h3,h4{margin:0}
+.container{max-width:var(--container-max);margin:0 auto;padding:0 var(--container-pad)}
+.section{padding:var(--spacing-section-y) 0}
+.section--alt{background:var(--primary-color-2)}
+:focus-visible{outline:none;box-shadow:var(--shadow-focus)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:var(--button-height);padding:var(--button-padding-y) var(--button-padding-x);border-radius:var(--radius-button);font-size:var(--font-size-button);font-weight:var(--fw-medium);border:2px solid var(--primary-color);cursor:pointer;transition:background var(--transition-base),color var(--transition-base)}
+.btn--primary{background:var(--primary-color);color:var(--color-text-on-primary)}
+.btn--primary:hover{background:var(--primary-hover);border-color:var(--primary-hover)}
+.btn--outline{background:transparent;color:var(--primary-color)}
+.btn--outline:hover{background:var(--primary-color-2)}
+.ph{display:flex;align-items:center;justify-content:center;text-align:center;width:100%;height:100%;color:var(--color-dark-300);font-weight:var(--fw-medium);padding:var(--space-3);
+  background:repeating-linear-gradient(135deg,var(--color-dark-100),var(--color-dark-100) 10px,var(--color-bg-alt) 10px,var(--color-bg-alt) 20px)}
+
+/* ===== Header ===== */
+.site-header{position:sticky;top:0;z-index:50;background:var(--bg-color);border-bottom:1px solid var(--color-border);transition:box-shadow var(--transition-base)}
+.site-header.is-scrolled{box-shadow:var(--shadow-header)}
+.site-header .container{display:flex;align-items:center;justify-content:space-between;gap:var(--space-5);min-height:72px}
+.brand{display:flex;align-items:center;gap:var(--space-3)}
+.brand img{height:44px;width:auto}
+.brand-name{display:block;font-weight:var(--fw-bold);color:var(--color-blue-700)}
+.brand-tag{display:block;font-size:13px;color:var(--text-muted)}
+.nav-menu{display:flex;align-items:center;gap:var(--space-5);font-weight:var(--fw-medium)}
+.nav-menu a{padding:var(--space-2) 0;border-bottom:2px solid transparent}
+.nav-menu a:hover,.nav-menu a.is-active{color:var(--primary-color);border-color:var(--primary-color)}
+.nav-menu .nav-cta{padding:var(--space-2) var(--space-4);border:0;border-radius:var(--radius-button);background:var(--primary-color);color:var(--color-text-on-primary)}
+.nav-menu .nav-cta:hover{background:var(--primary-hover);color:var(--color-text-on-primary)}
+.nav-actions{display:flex;align-items:center;gap:var(--space-3)}
+.icon-btn{position:relative;display:grid;place-items:center;width:var(--button-height);height:var(--button-height);border-radius:var(--radius-pill);background:var(--primary-color-2);color:var(--primary-color);font-size:20px}
+.icon-badge{position:absolute;top:-2px;right:-2px;min-width:18px;height:18px;padding:0 4px;border-radius:var(--radius-pill);background:var(--primary-color);color:var(--color-text-on-primary);font-size:11px;display:grid;place-items:center}
+.nav-toggle{display:none;width:var(--button-height);height:var(--button-height);border:1px solid var(--color-border);border-radius:var(--radius-button);background:var(--bg-color);cursor:pointer;font-size:20px}
+
+/* ===== 1. Banner ===== */
+.hero-banner{background:var(--gradient-hero);color:var(--color-text-on-dark);padding:var(--space-9) 0}
+.hero-banner__layout{display:grid;grid-template-columns:1.1fr 1fr;gap:var(--space-7);align-items:center}
+.hero-content__title{display:flex;flex-direction:column;font-weight:var(--fw-bold)}
+.hero-content__title-line--one{font-size:var(--font-size-h2);color:var(--color-blue-100)}
+.hero-content__title-line--two{font-size:56px;line-height:1.1;background:var(--gradient-text);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-content__subtitle{margin:var(--space-4) 0 var(--space-6);color:var(--color-blue-100)}
+.hero-content__actions{display:flex;flex-wrap:wrap;gap:var(--space-4)}
+.hero-button--outline{color:var(--color-text-on-dark);border-color:var(--color-blue-300)}
+.hero-button--outline:hover{background:rgba(255,255,255,.1)}
+.hero-gallery{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:var(--gap-col-cards);height:380px}
+.hero-gallery__item{border-radius:var(--radius-card);overflow:hidden;box-shadow:var(--shadow-lg)}
+.hero-gallery__item--one{grid-row:1/3}
+.hero-gallery__image{width:100%;height:100%;object-fit:cover}
+
+/* ===== 2. 5 tiêu chuẩn ===== */
+.tabs-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--space-3);margin-top:var(--space-5)}
+.tab{position:relative;display:flex;align-items:center;justify-content:center;gap:var(--gap-icon-text);padding:var(--space-4) var(--space-2);border:1px solid var(--color-border);border-radius:var(--radius-sm);background:var(--color-surface);color:var(--text-color);font:inherit;font-weight:var(--fw-medium);cursor:pointer;transition:var(--transition-base)}
+.tab svg{width:20px;height:20px;flex:none}
+.tab:hover{border-color:var(--primary-color)}
+.tab[data-active="true"]{background:var(--primary-color);border-color:var(--primary-color);color:var(--color-text-on-primary)}
+.tab[data-active="true"]::after{content:"";position:absolute;left:50%;top:100%;transform:translateX(-50%);border:8px solid transparent;border-top-color:var(--primary-color)}
+.tab-panel{margin-top:var(--space-4);padding:var(--space-5);border:1px solid var(--color-border);border-radius:var(--radius-card);background:var(--color-surface)}
+.tab-panel h3{color:var(--color-blue-700)}
+.tab-panel p{margin:var(--space-2) 0 0;color:var(--text-color)}
+.badge-row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);margin-top:var(--space-4)}
+.badge{padding:var(--space-1) var(--space-3);border-radius:var(--radius-sm);background:var(--primary-color-2);color:var(--color-blue-700);font-size:14px;font-weight:var(--fw-medium)}
+.link-more{display:inline-block;margin-top:var(--space-4);font-weight:var(--fw-bold);color:var(--color-blue-700)}
+.link-more:hover{text-decoration:underline}
+.note{margin:var(--space-4) 0 0;font-size:14px;color:var(--text-muted)}
+.photo-row{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--gap-col-cards);margin-top:var(--space-5)}
+.photo-row .ph{aspect-ratio:4/3;height:auto;border-radius:var(--radius-card);border:1px dashed var(--color-dark-300)}
+
+/* ===== 3. SV5T qua từng năm ===== */
+.year-head{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap;margin-bottom:var(--space-5)}
+.year-tabs{display:flex;gap:var(--space-3)}
+.year-btn{padding:6px var(--space-5);border:2px solid var(--color-blue-700);border-radius:var(--radius-button);background:var(--bg-color);color:var(--color-blue-700);font:inherit;font-weight:var(--fw-bold);cursor:pointer;transition:var(--transition-base)}
+.year-btn[data-active="true"]{background:var(--color-blue-700);color:var(--color-text-on-dark)}
+.year-card{display:grid;grid-template-columns:4fr 8fr;gap:var(--space-6);align-items:center;padding:var(--space-6);border:1px solid var(--color-blue-100);border-radius:var(--radius-lg);background:var(--color-surface)}
+.year-count{font-size:64px;font-weight:var(--fw-bold);line-height:1;color:var(--color-blue-700)}
+.year-card h3{font-size:20px;color:var(--color-blue-700);margin-bottom:var(--space-2)}
+.year-card p{margin:0}
+#year-count-label{margin-top:var(--space-2);font-weight:var(--fw-medium);color:var(--text-muted)}
+
+/* ===== 4. Vinh danh ===== */
+.pill-tabs{display:flex;flex-wrap:wrap;gap:var(--space-2);margin:var(--space-5) 0}
+.tab-btn{padding:var(--space-2) var(--space-5);border:1px solid var(--primary-color);border-radius:var(--radius-pill);background:var(--bg-color);color:var(--primary-color);font:inherit;font-weight:var(--fw-medium);cursor:pointer;transition:var(--transition-base)}
+.tab-btn.is-active{background:var(--primary-color);color:var(--color-text-on-primary)}
+.honor-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap-col-cards)}
+.honor-card{display:flex;flex-direction:column;padding:0;overflow:hidden;text-align:left;font:inherit;color:inherit;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-card);cursor:pointer;transition:transform var(--transition-base),box-shadow var(--transition-base)}
+.honor-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.honor-card .photo{aspect-ratio:1/1}
+.honor-card .body{padding:var(--space-4)}
+.honor-card h4{margin:var(--space-2) 0 var(--space-1);color:var(--color-blue-700)}
+.achievement{margin:0;font-size:14px;color:var(--text-muted)}
+.level-tag{display:inline-block;padding:2px var(--space-3);border-radius:var(--radius-pill);background:var(--color-status-active-bg);color:var(--color-status-active-text);font-size:12px;font-weight:var(--fw-bold)}
+.modal-backdrop{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:var(--space-5);background:var(--color-overlay-dark)}
+.modal-backdrop.is-open{display:flex}
+.modal{position:relative;display:grid;grid-template-columns:1fr 1.2fr;width:min(760px,100%);overflow:hidden;background:var(--color-surface);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg)}
+.modal .content{padding:var(--space-6)}
+.modal h3{margin:var(--space-3) 0;color:var(--color-blue-700)}
+.modal .achievement-text{margin:0}
+.modal-close{position:absolute;top:var(--space-3);right:var(--space-3);width:36px;height:36px;border:0;border-radius:var(--radius-pill);background:var(--color-dark-50);font-size:22px;cursor:pointer}
+
+/* ===== 5. Footer ===== */
+.wave-divider{display:block;width:100%;height:48px;fill:var(--color-dark-900)}
+.site-footer{background:var(--color-dark-900);color:var(--color-dark-100)}
+.f-cta{display:flex;align-items:center;justify-content:space-between;gap:var(--space-6);flex-wrap:wrap;padding:var(--space-8) var(--container-pad) var(--space-7);max-width:var(--container-max);margin:0 auto}
+.f-cta h2{color:var(--color-text-on-dark)}
+.f-cta p{margin:var(--space-2) 0 0;color:var(--color-dark-300)}
+.f-btns{display:flex;flex-wrap:wrap;gap:var(--space-3)}
+.f-btns .btn--outline{color:var(--color-blue-300);border-color:rgba(255,255,255,.3)}
+.f-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:var(--space-7);padding:var(--space-7) var(--container-pad);max-width:var(--container-max);margin:0 auto;border-top:1px solid rgba(255,255,255,.1)}
+.f-brand .logo{height:48px;width:auto;padding:var(--space-2);background:var(--bg-color);border-radius:var(--radius-sm);margin-bottom:var(--space-4)}
+.f-brand p{margin:0 0 var(--space-4);color:var(--color-dark-300);font-size:14px}
+.soc{display:flex;gap:var(--space-3)}
+.soc a{display:grid;place-items:center;width:40px;height:40px;border-radius:var(--radius-pill);background:rgba(255,255,255,.08)}
+.soc a:hover{background:var(--primary-color)}
+.soc svg{width:18px;height:18px;fill:currentColor}
+.f-col h4{margin-bottom:var(--space-4);color:var(--color-text-on-dark)}
+.f-col a,.f-col p{display:block;margin:0 0 var(--space-3);font-size:14px;color:var(--color-dark-300)}
+.f-col a:hover{color:var(--color-blue-300)}
+.f-bottom{max-width:var(--container-max);margin:0 auto;padding:var(--space-5) var(--container-pad);border-top:1px solid rgba(255,255,255,.1);font-size:13px;color:var(--color-dark-300)}
+
+/* ===== Responsive ===== */
+@media (max-width:900px){
+  h1{font-size:var(--font-size-h1-mobile)} h2{font-size:var(--font-size-h2-mobile)}
+  body{font-size:var(--font-size-body-mobile)}
+  .section{padding:var(--spacing-section-mobile) 0}
+  .nav-toggle{display:block}
+  .nav-menu{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:flex-start;padding:var(--space-4) var(--container-pad);background:var(--bg-color);border-bottom:1px solid var(--color-border)}
+  .nav-menu.is-open{display:flex}
+  .hero-banner{padding:var(--space-8) 0}
+  .hero-banner__layout{grid-template-columns:1fr;gap:var(--gap-col-mobile)}
+  .hero-content__title-line--two{font-size:40px}
+  .hero-gallery{height:260px;gap:var(--gap-col-mobile)}
+  .tabs-grid{grid-template-columns:repeat(2,1fr)}
+  .tab[data-active="true"]::after{display:none}
+  .photo-row{grid-template-columns:repeat(2,1fr);gap:var(--gap-col-mobile)}
+  .year-card{grid-template-columns:1fr;padding:var(--space-5)}
+  .honor-grid{grid-template-columns:1fr 1fr;gap:var(--gap-col-mobile)}
+  .modal{grid-template-columns:1fr}
+  .f-grid{grid-template-columns:1fr 1fr;gap:var(--space-6)}
+}
+@media (max-width:560px){
+  .honor-grid,.f-grid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+
+<body id="top">
+
+<!-- ================= HEADER ================= -->
 <header class="site-header">
   <div class="container">
     <a href="index.html" class="brand">
@@ -21,409 +172,284 @@
         <span class="brand-tag">Khoa Công nghệ thông tin kinh doanh</span>
       </span>
     </a>
-
-    <nav class="nav-menu" id="navMenu">
-      <a href="index.html" class="is-active">Trang chủ</a>
+    <nav class="nav-menu" id="navMenu" aria-label="Điều hướng chính">
+      <a href="index.html" class="is-active" aria-current="page">Trang chủ</a>
       <a href="nien-bieu.html">Niên biểu</a>
-      <a href="dang-ky.html" target="_blank" rel="noopener">Đăng ký phong trào SV5T</a>
+      <a href="dang-ky.html" class="nav-cta" target="_blank" rel="noopener">Đăng ký phong trào SV5T</a>
     </nav>
-
-   <div class="nav-actions">
-      <a href="hoat-dong-dang-ky.html" class="icon-btn is-active" id="trackedBtn" aria-label="Hoạt động đã lưu">
-        ★
-        <span class="icon-badge" id="trackedCount">0</span>
-      </a>
-      <button class="nav-toggle" id="navToggle" aria-label="Mở menu" aria-expanded="false"><span></span></button>
+    <div class="nav-actions">
+      <a href="hoat-dong-dang-ky.html" class="icon-btn" id="trackedBtn" aria-label="Hoạt động đã lưu">★<span class="icon-badge" id="trackedCount">0</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Mở menu" aria-expanded="false">☰</button>
     </div>
   </div>
 </header>
 
-<!-- HERO BANNER -->
+<!-- ================= 1. BANNER ================= -->
 <section class="hero-banner" id="hero">
-  <div class="hero-banner__inner">
+  <div class="container">
     <div class="hero-banner__layout">
-
-      <!-- Cột trái: 7 hàng (hàng 1, 5, 7 là khoảng trống do CSS tạo) -->
       <div class="hero-content">
         <h1 class="hero-content__title">
           <span class="hero-content__title-line--one">SINH VIÊN</span>
           <span class="hero-content__title-line--two">5 TỐT 2026</span>
         </h1>
         <p class="hero-content__subtitle">Cổng thông tin Sinh viên 5 Tốt</p>
-
         <div class="hero-content__actions">
-          <a href="dang-ky.html" target="_blank" rel="noopener" class="hero-button hero-button--primary">Đăng ký phong trào SV5T</a>
-          <a href="nien-bieu.html" class="hero-button hero-button--outline">Xem niên biểu hoạt động</a>
+          <a href="dang-ky.html" target="_blank" rel="noopener" class="btn btn--primary hero-button">Đăng ký phong trào SV5T</a>
+          <a href="nien-bieu.html" class="btn btn--outline hero-button hero-button--outline">Xem niên biểu hoạt động</a>
         </div>
       </div>
-
-      <!-- Cột phải: 3 khung ảnh (thay chữ bằng <img class="hero-gallery__image"> khi có ảnh) -->
       <div class="hero-gallery">
-        <div class="hero-gallery__item hero-gallery__item--one">Ảnh 1</div>
-        <div class="hero-gallery__item hero-gallery__item--two">Ảnh 2</div>
-        <div class="hero-gallery__item hero-gallery__item--three">Ảnh 3</div>
+        <!-- Thay chữ bằng <img class="hero-gallery__image" src="..." alt="..."> khi có ảnh -->
+        <div class="hero-gallery__item hero-gallery__item--one"><div class="ph">Ảnh 1</div></div>
+        <div class="hero-gallery__item hero-gallery__item--two"><div class="ph">Ảnh 2</div></div>
+        <div class="hero-gallery__item hero-gallery__item--three"><div class="ph">Ảnh 3</div></div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- SECTION 1: GIỚI THIỆU (dạng tabs) -->
-<section class="section" id="gioi-thieu">
+<!-- ================= 2. 5 TIÊU CHUẨN ================= -->
+<section class="section section--alt" id="tieu-chuan">
   <div class="container">
-    <div class="section-head">
-      <span class="section-eyebrow">Về phong trào</span>
-      <h2>Tìm hiểu về Sinh viên 5 Tốt</h2>
-      <p class="section-desc">Ba nội dung cốt lõi bạn cần nắm trước khi bắt đầu hành trình chinh phục danh hiệu.</p>
+    <h2>5 tiêu chuẩn để đạt danh hiệu SV5T</h2>
+    <p class="note" style="color:var(--text-color)">
+      Sinh viên cần chứng minh nỗ lực cân bằng ở cả năm tiêu chuẩn. Không tiêu chuẩn nào thay thế được tiêu chuẩn còn lại,
+      vì tinh thần của SV5T là phát triển toàn diện chứ không phải xuất sắc một mặt.
+    </p>
+
+    <div class="tabs-grid" role="tablist" id="tabs">
+      <button type="button" role="tab" class="tab" data-tab="hoc-tap" data-active="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Học tập tốt
+      </button>
+      <button type="button" role="tab" class="tab" data-tab="dao-duc" data-active="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>Đạo đức tốt
+      </button>
+      <button type="button" role="tab" class="tab" data-tab="the-luc" data-active="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.4 14.4 9.6 9.6"/><path d="M18.657 21.485a2 2 0 1 1-2.829-2.828l-1.767 1.768a2 2 0 1 1-2.829-2.829l6.364-6.364a2 2 0 1 1 2.829 2.829l-1.768 1.767a2 2 0 1 1 2.828 2.829z"/><path d="m21.5 21.5-1.4-1.4"/><path d="M3.9 3.9 2.5 2.5"/><path d="M6.404 12.768a2 2 0 1 1-2.829-2.829l1.768-1.767a2 2 0 1 1-2.828-2.829l2.828-2.828a2 2 0 1 1 2.829 2.828l1.767-1.768a2 2 0 1 1 2.829 2.829z"/></svg>Thể lực tốt
+      </button>
+      <button type="button" role="tab" class="tab" data-tab="tinh-nguyen" data-active="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Tình nguyện tốt
+      </button>
+      <button type="button" role="tab" class="tab" data-tab="hoi-nhap" data-active="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Hội nhập tốt
+      </button>
     </div>
 
-    <div class="about-tabnav" role="tablist" aria-label="Nội dung giới thiệu phong trào" id="aboutTabnav">
-      <button type="button" role="tab" aria-selected="true" aria-controls="about-panel-1" id="about-tab-1" class="is-active" data-panel="about-panel-1">
-        <span class="tab-index">1</span>
-        <span><span class="tab-title">Danh hiệu SV5T</span><span class="tab-sub">Thông tin chung, cấp xét duyệt</span></span>
-      </button>
-      <button type="button" role="tab" aria-selected="false" aria-controls="about-panel-2" id="about-tab-2" data-panel="about-panel-2">
-        <span class="tab-index">2</span>
-        <span><span class="tab-title">Phong trào & hoạt động</span><span class="tab-sub">SV5T vận hành như thế nào</span></span>
-      </button>
-      <button type="button" role="tab" aria-selected="false" aria-controls="about-panel-3" id="about-tab-3" data-panel="about-panel-3">
-        <span class="tab-index">3</span>
-        <span><span class="tab-title">5 tiêu chuẩn đánh giá</span><span class="tab-sub">Điều kiện để đạt danh hiệu</span></span>
-      </button>
-    </div>
-
-    <div class="about-grid">
-      <div class="about-panels">
-        <div class="about-panel is-active" id="about-panel-1" role="tabpanel" aria-labelledby="about-tab-1">
-          <h3>Danh hiệu Sinh viên 5 Tốt là gì?</h3>
-          <p>Sinh viên 5 Tốt là danh hiệu cao quý do Hội Sinh viên Việt Nam phát động và công nhận hằng năm, dành cho những sinh viên đạt kết quả toàn diện ở cả năm mặt: học tập, đạo đức, thể lực, tình nguyện và hội nhập. Đây là một trong những ghi nhận có giá trị nhất mà một sinh viên có thể đạt được trong quá trình học tập tại giảng đường.</p>
-          <p>Danh hiệu được xét duyệt theo bốn cấp tăng dần: cấp Khoa, cấp Trường (UEH), cấp Thành phố và cấp Trung ương Hội Sinh viên Việt Nam. Sinh viên đạt danh hiệu ở cấp thấp có thể tiếp tục được đề cử xét ở cấp cao hơn nếu hồ sơ và thành tích đủ điều kiện.</p>
-          <p>Không chỉ là một tấm bằng khen, danh hiệu SV5T còn mở ra nhiều cơ hội: cộng điểm rèn luyện, ưu tiên xét học bổng, hồ sơ đẹp khi ứng tuyển thực tập hoặc du học, cùng cơ hội giao lưu với mạng lưới sinh viên tiêu biểu trên cả nước.</p>
-          <p>Tại khoa Công nghệ thông tin kinh doanh (BIT), phong trào được BCH Đoàn – Hội khoa trực tiếp đồng hành, tổng hợp hoạt động phù hợp và hỗ trợ sinh viên hoàn thiện hồ sơ minh chứng xuyên suốt năm học 2026.</p>
-        </div>
-
-        <div class="about-panel" id="about-panel-2" role="tabpanel" aria-labelledby="about-tab-2" hidden>
-          <h3>Phong trào SV5T vận hành như thế nào?</h3>
-          <p>Phong trào Sinh viên 5 Tốt không phải một cuộc thi đơn lẻ mà là một hành trình rèn luyện xuyên suốt cả năm học, được cấu thành từ hàng chục hoạt động thuộc nhiều lĩnh vực khác nhau, diễn ra liên tục từ đầu đến cuối năm.</p>
-          <p>Các hoạt động trải rộng từ học thuật (cuộc thi kiến thức, nghiên cứu khoa học), rèn luyện đạo đức (diễn đàn, cuộc thi tìm hiểu), tình nguyện (chiến dịch cộng đồng, hiến máu), hội nhập (giao lưu quốc tế, hùng biện tiếng Anh) cho đến thể lực (giải thể thao, giải chạy phong trào).</p>
-          <p>Để sinh viên không bị bỏ lỡ, BIT tổng hợp toàn bộ hoạt động phù hợp từng tiêu chuẩn vào trang Niên biểu hoạt động — nơi bạn có thể tra cứu, lọc theo cấp độ và theo dõi thời gian diễn ra của từng hoạt động theo thời gian thực.</p>
-          <p>Với những hoạt động uy tín nhưng chưa có trong hệ thống, sinh viên có thể chủ động gửi yêu cầu bổ sung ngay tại trang Niên biểu để BCH khoa xem xét và cập nhật.</p>
-        </div>
-
-        <div class="about-panel" id="about-panel-3" role="tabpanel" aria-labelledby="about-tab-3" hidden>
-          <h3>5 tiêu chuẩn để đạt danh hiệu SV5T</h3>
-          <p>Để đạt danh hiệu, sinh viên cần chứng minh sự nỗ lực cân bằng ở cả năm tiêu chuẩn dưới đây — không tiêu chuẩn nào có thể thay thế cho tiêu chuẩn còn lại, bởi tinh thần của SV5T là sự phát triển toàn diện chứ không phải xuất sắc một mặt.</p>
-          <div class="criteria-inline">
-            <span class="criteria-chip"><span class="dot"></span>Học tập tốt</span>
-            <span class="criteria-chip"><span class="dot"></span>Đạo đức tốt</span>
-            <span class="criteria-chip"><span class="dot"></span>Tình nguyện tốt</span>
-            <span class="criteria-chip"><span class="dot"></span>Hội nhập tốt</span>
-            <span class="criteria-chip"><span class="dot"></span>Thể lực tốt</span>
-          </div>
-          <p>"Học tập tốt" và "Đạo đức tốt" là hai tiêu chuẩn nền tảng, yêu cầu kết quả học tập ổn định cùng ý thức, tác phong tốt trong quá trình rèn luyện tại trường.</p>
-          <p>"Tình nguyện tốt" và "Hội nhập tốt" ghi nhận đóng góp cho cộng đồng và khả năng thích ứng, giao lưu trong môi trường trong nước lẫn quốc tế. "Thể lực tốt" đánh giá việc rèn luyện sức khỏe thông qua các hoạt động thể thao phong trào.</p>
-          <p>Minh chứng cho từng tiêu chuẩn được tích lũy dần qua các hoạt động tại trang Niên biểu — mỗi hoạt động đã đăng ký và hoàn thành sẽ là một minh chứng hợp lệ khi bạn nộp hồ sơ xét danh hiệu.</p>
+    <div class="tab-panel" id="tab-panel" role="tabpanel">
+      <h3 id="panel-title">Học tập tốt</h3>
+      <p id="panel-desc">Một trong hai tiêu chuẩn nền tảng, yêu cầu kết quả học tập ổn định.</p>
+      <div class="badge-row">
+        <strong>Hoạt động tiêu biểu:</strong>
+        <div class="badge-row" id="panel-badges" style="margin:0">
+          <span class="badge">Cuộc thi kiến thức</span>
+          <span class="badge">Nghiên cứu khoa học</span>
         </div>
       </div>
+      <a href="nien-bieu.html" class="link-more">Xem hoạt động trong Niên biểu →</a>
+    </div>
 
-     <div class="about-stat-card">
-  <div class="stat-row" style="display: flex; justify-content: space-between; align-items: center;">
-    <span>Cấp xét duyệt</span>
-    <span class="stat-num">04 cấp</span>
-  </div>
-  <div class="stat-row" style="display: flex; justify-content: space-between; align-items: center;">
-    <span>Tiêu chuẩn đánh giá</span>
-    <!-- Đã sửa lỗi cú pháp và thêm text-align: right -->
-    <span class="stat-num" style="text-align: right;">05 tiêu chuẩn</span>
-  </div>
-  <div class="stat-row" style="display: flex; justify-content: space-between; align-items: center;">
-    <span>Năm phát động</span>
-    <span class="stat-num">2024</span>
-  </div>
-  <a href="https://www.facebook.com/groups/1129624948171351" target="_blank" rel="noopener" class="btn btn-primary">Cùng BIT chinh phục SV5T</a>
-</div>
+    <p class="note">Minh chứng được tích lũy dần qua trang Niên biểu: mỗi hoạt động đã đăng kí và hoàn thành là một minh chứng hợp lệ khi bạn nộp hồ sơ xét danh hiệu.</p>
+
+    <h2 style="margin-top:var(--space-8)">Hoạt động nổi bật của phong trào Sinh viên 5 Tốt khoa BIT</h2>
+    <div class="photo-row">
+      <div class="ph">Ảnh 1</div><div class="ph">Ảnh 2</div><div class="ph">Ảnh 3</div><div class="ph">Ảnh 4</div>
     </div>
   </div>
 </section>
 
-<svg class="wave-divider wave-divider--alt" viewBox="0 0 1200 48" preserveAspectRatio="none"><path d="M0,24 C300,60 900,-12 1200,24 L1200,48 L0,48 Z"></path></svg>
-
-<!-- SECTION 2: HÌNH ẢNH HOẠT ĐỘNG -->
-<section class="section section--alt" id="hinh-anh">
-  <div class="container">
-    <div class="section-head-row">
-      <div>
-        <span class="section-eyebrow">Khoảnh khắc BIT</span>
-        <h2>Hoạt động nổi bật của Sinh viên 5 Tốt khoa BIT</h2>
-      </div>
-      <a href="#" target="_blank" rel="noopener" class="btn btn-outline">Xem thêm hình ảnh</a>
-    </div>
-
-    <div class="gallery-track">
-      <div class="gallery-card"><div class="ph" style="width:100%;height:100%;border-radius:0;border:none;">Ảnh hoạt động — 300×300</div><span class="cap">Ngày hội hiến máu BIT</span></div>
-      <div class="gallery-card"><div class="ph" style="width:100%;height:100%;border-radius:0;border:none;">Ảnh hoạt động — 300×300</div><span class="cap">Mùa hè xanh 2026</span></div>
-      <div class="gallery-card"><div class="ph" style="width:100%;height:100%;border-radius:0;border:none;">Ảnh hoạt động — 300×300</div><span class="cap">Giải thể thao SV5T</span></div>
-      <div class="gallery-card"><div class="ph" style="width:100%;height:100%;border-radius:0;border:none;">Ảnh hoạt động — 300×300</div><span class="cap">Hội trại BIT Fest</span></div>
-      <div class="gallery-card"><div class="ph" style="width:100%;height:100%;border-radius:0;border:none;">Ảnh hoạt động — 300×300</div><span class="cap">Workshop kỹ năng số</span></div>
-    </div>
-     </div>
-</section>
-
-<!-- SECTION 3: SV5T QUA TỪNG NĂM -->
+<!-- ================= 3. SV5T QUA TỪNG NĂM ================= -->
 <section class="section" id="qua-cac-nam">
   <div class="container">
-    <div class="section-head">
-      <span class="section-eyebrow">Hành trình</span>
+    <div class="year-head">
       <h2>Phong trào SV5T qua từng năm</h2>
-      <p class="section-desc">Nhấp vào từng năm để xem chi tiết bộ nhận diện và số liệu nổi bật.</p>
+      <div class="year-tabs" id="year-tabs" role="tablist">
+        <button type="button" role="tab" class="year-btn" data-year="2024" data-active="false">2024</button>
+        <button type="button" role="tab" class="year-btn" data-year="2025" data-active="false">2025</button>
+        <button type="button" role="tab" class="year-btn" data-year="2026" data-active="true">2026</button>
+      </div>
     </div>
-    <div class="history-grid">
-      <a class="history-card" href="javascript:void(0)" data-year="2024">
-        <div class="ph" style="width:100%;height:100%;border-radius:0;border:none;">Bộ nhận diện SV5T 2024 (vuông)</div>
-        <div class="overlay"><span class="year">2024</span><span class="stat">120 sinh viên đạt danh hiệu · 18 hoạt động</span></div>
-      </a>
-      <a class="history-card" href="javascript:void(0)" data-year="2025">
-        <div class="ph" style="width:100%;height:100%;border-radius:0;border:none;">Bộ nhận diện SV5T 2025 (vuông)</div>
-        <div class="overlay"><span class="year">2025</span><span class="stat">156 sinh viên đạt danh hiệu · 24 hoạt động</span></div>
-      </a>
-      <a class="history-card" href="javascript:void(0)" data-year="2026">
-        <div class="ph" style="width:100%;height:100%;border-radius:0;border:none;">Bộ nhận diện SV5T 2026 (vuông)</div>
-        <div class="overlay"><span class="year">2026</span><span class="stat">Đang diễn ra · 30+ hoạt động dự kiến</span></div>
-      </a>
+    <div class="year-card">
+      <div>
+        <div class="year-count" id="year-count">4</div>
+        <p id="year-count-label">chặng hoạt động · đang diễn ra</p>
+      </div>
+      <div>
+        <h3 id="year-title">Phong trào Sinh viên 5 Tốt 2026</h3>
+        <p id="year-desc">Hành trình 2026 đang diễn ra sôi nổi với 4 chặng hoạt động dự kiến. Năm nay tiếp tục đẩy mạnh ứng dụng công nghệ trong việc theo dõi và hỗ trợ sinh viên hoàn thiện hồ sơ.</p>
+      </div>
     </div>
   </div>
 </section>
-<svg class="wave-divider wave-divider--alt" viewBox="0 0 1200 48" preserveAspectRatio="none"><path d="M0,24 C300,-12 900,60 1200,24 L1200,48 L0,48 Z"></path></svg>
 
-<!-- SECTION 4: VINH DANH -->
+<!-- ================= 4. VINH DANH ================= -->
 <section class="section section--alt" id="vinh-danh">
   <div class="container">
-    <div class="section-head">
-      <span class="section-eyebrow">Tự hào BIT</span>
-      <h2>Vinh danh Sinh viên 5 Tốt tiêu biểu</h2>
-    </div>
-
-    <div class="tabs" role="tablist" id="honorTabs">
+    <h2>Vinh danh Sinh viên 5 Tốt tiêu biểu</h2>
+    <div class="pill-tabs" role="tablist" id="honorTabs">
       <button class="tab-btn is-active" data-level="UEH" type="button">Cấp UEH</button>
       <button class="tab-btn" data-level="TP" type="button">Cấp Thành phố</button>
       <button class="tab-btn" data-level="Khoa" type="button">Cấp Khoa</button>
     </div>
-
-    <div class="honor-grid" id="honorGrid"><!-- được render bằng JS từ dữ liệu mock --></div>
+    <div class="honor-grid" id="honorGrid"></div>
   </div>
 </section>
 
-<!-- MODAL CHI TIẾT VINH DANH -->
 <div class="modal-backdrop" id="honorModal">
-  <div class="modal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalName">
     <button class="modal-close" id="honorModalClose" aria-label="Đóng">×</button>
-    <div class="photo"><div class="ph" style="width:100%;height:100%;border-radius:0;border:none;" id="modalPhotoLabel">Ảnh chân dung</div></div>
+    <div class="photo"><div class="ph">Ảnh chân dung</div></div>
     <div class="content">
       <span class="level-tag" id="modalLevel">Cấp UEH</span>
       <h3 id="modalName">Họ và tên</h3>
-      <p class="achievement-text" id="modalAchievement">Thành tích chi tiết...</p>
+      <p class="achievement-text" id="modalAchievement"></p>
     </div>
   </div>
 </div>
-<!-- MODAL CHI TIẾT SV5T QUA TỪNG NĂM -->
-<div class="modal-backdrop" id="yearModal">
-  <div class="modal">
-    <button class="modal-close" id="yearModalClose" aria-label="Đóng">×</button>
-    <div class="photo">
-      <div class="ph" style="width:100%;height:100%;border-radius:0;border:none;" id="yearModalPhoto">Bộ nhận diện</div>
-    </div>
-    <div class="content">
-      <span class="level-tag" id="yearModalTag">Hành trình SV5T</span>
-      <h3 id="yearModalTitle">Phong trào SV5T</h3>
-      <div style="margin-top: 12px; padding: 12px; background: var(--color-bg-alt, #f8fafc); border-radius: 8px; border: 1px solid var(--color-dark-100, #e2e8f0);">
-        <strong style="display:block; font-size: 0.85rem; color: #64748b; margin-bottom: 4px;">SỐ LIỆU HIGHLIGHT</strong>
-        <p class="achievement-text" id="yearModalHighlight" style="margin:0; font-weight: 600; color: var(--color-blue-600, #2563eb);"></p>
-      </div>
-      <p id="yearModalDesc" style="margin-top: 12px; line-height: 1.6;"></p>
-    </div>
-  </div>
-</div>
-<svg class="wave-divider" viewBox="0 0 1200 48" preserveAspectRatio="none" style="display:block;"><path d="M0,24 C300,60 900,-12 1200,24 L1200,48 L0,48 Z" fill="#1F1B1D"></path></svg>
 
+<!-- ================= 5. FOOTER ================= -->
+<svg class="wave-divider" viewBox="0 0 1200 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0,24 C300,60 900,-12 1200,24 L1200,48 L0,48 Z"/></svg>
 <footer class="site-footer">
-  <div class="container footer-cta">
-    <h2>Sẵn sàng chinh phục danh hiệu SV5T 2026?</h2>
-    <p>Đăng ký tham gia phong trào ngay hôm nay để BIT đồng hành cùng bạn suốt năm học.</p>
-    <div class="footer-actions">
-      <a href="#" target="_blank" rel="noopener" class="btn btn-primary">Đăng ký phong trào SV5T</a>
-      <a href="#" target="_blank" rel="noopener" class="btn btn-outline" style="border-color:rgba(255,255,255,0.3); color:var(--color-blue-500);">Tham gia group Facebook</a>
+  <section class="f-cta">
+    <div>
+      <h2>Sẵn sàng chinh phục danh hiệu SV5T 2026?</h2>
+      <p>Đăng ký tham gia phong trào ngay hôm nay để BIT đồng hành cùng bạn suốt năm học.</p>
+    </div>
+    <div class="f-btns">
+      <a class="btn btn--primary" href="dang-ky.html" target="_blank" rel="noopener">Đăng ký phong trào SV5T</a>
+      <a class="btn btn--outline" href="https://www.facebook.com/groups/1129624948171351" target="_blank" rel="noopener">Tham gia group Facebook</a>
+    </div>
+  </section>
+
+  <div class="f-grid">
+    <div class="f-col f-brand">
+      <img class="logo" src="assets/bit-logo.png" alt="Logo BIT">
+      <p>Cổng thông tin Sinh viên 5 Tốt khoa BIT, UEH: tra cứu hoạt động, theo dõi tiến trình và vinh danh sinh viên tiêu biểu.</p>
+      <div class="soc">
+        <a href="https://www.facebook.com/groups/1129624948171351" aria-label="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-1.6 19.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0 0 12 2z"/></svg></a>
+        <a href="mailto:doanhoi.bit@ueh.edu.vn" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zm0 2v.5l8 5 8-5V7H4zm16 10V9.9l-8 5-8-5V17h16z"/></svg></a>
+      </div>
+    </div>
+    <nav class="f-col" aria-label="Điều hướng">
+      <h4>Điều hướng</h4>
+      <a href="#top">Trang chủ</a>
+      <a href="nien-bieu.html">Niên biểu hoạt động</a>
+      <a href="#tieu-chuan">Về phong trào SV5T</a>
+      <a href="#vinh-danh">Vinh danh tiêu biểu</a>
+    </nav>
+    <nav class="f-col" aria-label="Tham gia">
+      <h4>Tham gia</h4>
+      <a href="dang-ky.html" target="_blank" rel="noopener">Đăng ký phong trào SV5T</a>
+      <a href="https://www.facebook.com/groups/1129624948171351" target="_blank" rel="noopener">Group Cùng BIT chinh phục SV5T</a>
+      <a href="nien-bieu.html">Gửi yêu cầu xét duyệt hoạt động</a>
+    </nav>
+    <div class="f-col">
+      <h4>Liên hệ</h4>
+      <p>Đoàn TN – Hội SV khoa Công nghệ thông tin kinh doanh (BIT), UEH</p>
+      <a href="mailto:doanhoi.bit@ueh.edu.vn">doanhoi.bit@ueh.edu.vn</a>
     </div>
   </div>
 
-  <div class="container footer-main">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <span class="footer-logo-chip"><img src="assets/bit-logo.png" alt="Logo BIT"></span>
-        <p class="footer-desc">Cổng thông tin phong trào Sinh viên 5 Tốt khoa Công nghệ thông tin kinh doanh (BIT), Trường Đại học Kinh tế TP.HCM — nơi tra cứu hoạt động, theo dõi tiến trình và vinh danh sinh viên tiêu biểu.</p>
-        <div class="footer-social">
-          <a href="#" target="_blank" rel="noopener" aria-label="Facebook BIT">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.9h2.54V9.85c0-2.5 1.49-3.89 3.78-3.89 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.44 2.9h-2.34V22c4.78-.8 8.44-4.94 8.44-9.94z"/></svg>
-          </a>
-          <a href="#" aria-label="Email SV5T BIT">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m2 7 10 6 10-6"></path></svg>
-          </a>
-        </div>
-      </div>
-
-      <div class="footer-col">
-        <h4>Điều hướng</h4>
-        <ul>
-          <li><a href="index.html">Trang chủ</a></li>
-          <li><a href="nien-bieu.html">Niên biểu hoạt động</a></li>
-          <li><a href="index.html#gioi-thieu">Về phong trào SV5T</a></li>
-          <li><a href="index.html#vinh-danh">Vinh danh tiêu biểu</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Tham gia</h4>
-        <ul>
-          <li><a href="#" target="_blank" rel="noopener">Đăng ký phong trào SV5T</a></li>
-          <li><a href="https://www.facebook.com/groups/1129624948171351" target="_blank" rel="noopener">Group Cùng BIT chinh phục SV5T</a></li>
-          <li><a href="nien-bieu.html">Gửi yêu cầu xét duyệt hoạt động</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Liên hệ</h4>
-        <ul>
-          <li><address>Đoàn TN – Hội SV khoa Công nghệ thông tin kinh doanh (BIT), UEH</address></li>
-          <li><a href="mailto:doanhoi.bit@ueh.edu.vn">sv5t.bit@ueh.edu.vn</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="container footer-bottom">
-    <span>© 2026 Đoàn TN – Hội SV khoa Công nghệ thông tin kinh doanh (BIT), UEH</span>
-    <span>Cổng thông tin SV5T · Phase 1 · <a href="admin.html" style="color:rgba(255,255,255,0.55);">BCH đăng nhập</a></span>
-  </div>
+  <p class="f-bottom">© 2026 Đoàn TN – Hội SV khoa Công nghệ thông tin kinh doanh (BIT), UEH</p>
 </footer>
 
-<style>
-  /* Placeholder ảnh dùng tạm khi chưa có hình thật — chỉ phục vụ bản thiết kế */
-  .ph {
-    display:flex; align-items:center; justify-content:center; text-align:center;
-    background: repeating-linear-gradient(135deg, var(--color-dark-100), var(--color-dark-100) 10px, var(--color-bg-alt) 10px, var(--color-bg-alt) 20px);
-    color: var(--color-dark-300); font-size: var(--fs-tiny); font-weight: var(--fw-semibold);
-    border: 1px dashed var(--color-dark-300); border-radius: var(--radius-md); padding: var(--space-3);
-  }
-  .ph--hero { background: linear-gradient(135deg, var(--color-blue-700), var(--color-dark-900)); color: rgba(255,255,255,0.55); border: none; }
-</style>
-
 <script>
-// ---- Header: đổ bóng khi cuộn trang ----
+// ---- Header ----
 const siteHeader = document.querySelector('.site-header');
-window.addEventListener('scroll', () => {
-  siteHeader.classList.toggle('is-scrolled', window.scrollY > 8);
-}, { passive: true });
+window.addEventListener('scroll', () => siteHeader.classList.toggle('is-scrolled', window.scrollY > 8), { passive: true });
 
-// ---- Tabs "Về phong trào" (có ARIA + điều hướng bàn phím) ----
-(function aboutTabs(){
-  const nav = document.getElementById('aboutTabnav');
-  const tabs = [...nav.querySelectorAll('[role="tab"]')];
-  function activate(tab){
-    tabs.forEach(t => {
-      const isActive = t === tab;
-      t.classList.toggle('is-active', isActive);
-      t.setAttribute('aria-selected', isActive);
-      const panel = document.getElementById(t.dataset.panel);
-      panel.classList.toggle('is-active', isActive);
-      panel.hidden = !isActive;
-    });
-    tab.focus();
-  }
-  nav.addEventListener('click', (e) => {
-    const tab = e.target.closest('[role="tab"]');
-    if (tab) activate(tab);
-  });
-  nav.addEventListener('keydown', (e) => {
-    const idx = tabs.indexOf(document.activeElement);
-    if (idx === -1) return;
-    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); activate(tabs[(idx + 1) % tabs.length]); }
-    if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); activate(tabs[(idx - 1 + tabs.length) % tabs.length]); }
-  });
-})();
-
-// ---- Mobile nav ----
 const navToggle = document.getElementById('navToggle');
 const navMenu = document.getElementById('navMenu');
-navToggle?.addEventListener('click', () => {
+navToggle.addEventListener('click', () => {
   const open = navMenu.classList.toggle('is-open');
   navToggle.setAttribute('aria-expanded', open);
 });
 
-// ---- Icon tính năng LocalStorage (chưa triển khai — chỉ đặt chỗ theo tài liệu) ----
-document.getElementById('trackedBtn')?.addEventListener('click', () => {
-  alert('Tính năng theo dõi hoạt động đã tick (lưu LocalStorage) sẽ ra mắt ở giai đoạn sau của Phase 1.');
+document.getElementById('trackedBtn').addEventListener('click', (e) => {
+  e.preventDefault();
+  alert('Tính năng theo dõi hoạt động đã lưu (LocalStorage) sẽ ra mắt ở giai đoạn sau.');
 });
 
-// ---- Hero slider ----
-(function heroSlider(){
-  const slides = document.querySelectorAll('#heroSlider [data-slide]');
-  const dotsWrap = document.getElementById('heroDots');
-  let current = 0;
-  slides.forEach((_, i) => {
-    const dot = document.createElement('button');
-    dot.className = 'hero-dot' + (i === 0 ? ' is-active' : '');
-    dot.addEventListener('click', () => show(i));
-    dotsWrap.appendChild(dot);
-  });
-  function show(i){
-    slides[current].classList.remove('is-active');
-    dotsWrap.children[current].classList.remove('is-active');
-    current = i;
-    slides[current].classList.add('is-active');
-    dotsWrap.children[current].classList.add('is-active');
-  }
-  setInterval(() => show((current + 1) % slides.length), 5000);
-})();
+// ---- 5 tiêu chuẩn ----
+const TAB_DATA = {
+  'hoc-tap':     { title: 'Học tập tốt',     desc: 'Một trong hai tiêu chuẩn nền tảng, yêu cầu kết quả học tập ổn định.', badges: ['Cuộc thi kiến thức', 'Nghiên cứu khoa học'] },
+  'dao-duc':     { title: 'Đạo đức tốt',     desc: 'Tiêu chuẩn nền tảng còn lại, yêu cầu ý thức và tác phong tốt trong quá trình rèn luyện tại trường.', badges: ['Diễn đàn', 'Cuộc thi tìm hiểu'] },
+  'the-luc':     { title: 'Thể lực tốt',     desc: 'Đánh giá việc rèn luyện sức khỏe thông qua các hoạt động thể thao phong trào.', badges: ['Giải thể thao', 'Giải chạy phong trào'] },
+  'tinh-nguyen': { title: 'Tình nguyện tốt', desc: 'Ghi nhận đóng góp của sinh viên cho cộng đồng.', badges: ['Chiến dịch cộng đồng', 'Hiến máu'] },
+  'hoi-nhap':    { title: 'Hội nhập tốt',    desc: 'Ghi nhận khả năng thích ứng, giao lưu trong môi trường trong nước lẫn quốc tế.', badges: ['Giao lưu quốc tế', 'Hùng biện tiếng Anh'] }
+};
+const tabs = document.querySelectorAll('#tabs .tab');
+tabs.forEach(tab => tab.addEventListener('click', () => {
+  tabs.forEach(t => t.dataset.active = 'false');
+  tab.dataset.active = 'true';
+  const d = TAB_DATA[tab.dataset.tab];
+  document.getElementById('panel-title').textContent = d.title;
+  document.getElementById('panel-desc').textContent = d.desc;
+  document.getElementById('panel-badges').innerHTML = d.badges.map(b => `<span class="badge">${b}</span>`).join('');
+}));
 
-// ---- Vinh danh: dữ liệu mock + tabs + modal ----
+// ---- SV5T qua từng năm ----
+const YEAR_DATA = {
+  '2024': { count: '120', label: 'sinh viên đạt danh hiệu · 18 hoạt động', title: 'Phong trào Sinh viên 5 Tốt 2024', desc: 'Năm 2024 đánh dấu cột mốc phát triển mạnh mẽ của phong trào Sinh viên 5 Tốt tại khoa BIT với 120 sinh viên được tuyên dương các cấp cùng 18 hoạt động rèn luyện được tổ chức.' },
+  '2025': { count: '156', label: 'sinh viên đạt danh hiệu · 24 hoạt động', title: 'Phong trào Sinh viên 5 Tốt 2025', desc: 'Năm 2025 ghi nhận sự bứt phá về cả số lượng lẫn chất lượng với 156 sinh viên đạt danh hiệu và chuỗi 24 hoạt động phủ rộng 5 tiêu chuẩn.' },
+  '2026': { count: '4', label: 'chặng hoạt động · đang diễn ra', title: 'Phong trào Sinh viên 5 Tốt 2026', desc: 'Hành trình 2026 đang diễn ra sôi nổi với 4 chặng hoạt động dự kiến. Năm nay tiếp tục đẩy mạnh ứng dụng công nghệ trong việc theo dõi và hỗ trợ sinh viên hoàn thiện hồ sơ.' }
+};
+const yearBtns = document.querySelectorAll('#year-tabs .year-btn');
+yearBtns.forEach(btn => btn.addEventListener('click', () => {
+  yearBtns.forEach(b => b.dataset.active = 'false');
+  btn.dataset.active = 'true';
+  const d = YEAR_DATA[btn.dataset.year];
+  document.getElementById('year-count').textContent = d.count;
+  document.getElementById('year-count-label').textContent = d.label;
+  document.getElementById('year-title').textContent = d.title;
+  document.getElementById('year-desc').textContent = d.desc;
+}));
+
+// ---- Vinh danh ----
 const HONORS = {
   UEH: [
     { name: 'Nguyễn Văn A', achievement: 'Đạt danh hiệu Sinh viên 5 Tốt cấp UEH năm 2026, thành viên CLB Học thuật BIT, IELTS 7.5.' },
     { name: 'Trần Thị B', achievement: 'Trưởng ban Tình nguyện khoa, tham gia 5 chiến dịch Mùa hè xanh, GPA 3.7/4.' },
-    { name: 'Lê Văn C', achievement: 'Quán quân cuộc thi Khởi nghiệp UEH 2026, đại diện khoa BIT tham dự giao lưu sinh viên toàn trường.' },
+    { name: 'Lê Văn C', achievement: 'Quán quân cuộc thi Khởi nghiệp UEH 2026, đại diện khoa BIT tham dự giao lưu sinh viên toàn trường.' }
   ],
   TP: [
     { name: 'Phạm Thị D', achievement: 'Đạt danh hiệu Sinh viên 5 Tốt cấp Thành phố, đại diện UEH tham gia Liên hoan SV5T TP.HCM.' },
     { name: 'Hoàng Văn E', achievement: 'Giải Nhì Nghiên cứu khoa học cấp Thành, thành viên đội tuyển Case Competition.' },
-    { name: 'Đỗ Thị F', achievement: 'Vận động viên tiêu biểu giải Điền kinh sinh viên TP.HCM, đạt Huy chương Vàng 100m.' },
+    { name: 'Đỗ Thị F', achievement: 'Vận động viên tiêu biểu giải Điền kinh sinh viên TP.HCM, đạt Huy chương Vàng 100m.' }
   ],
   Khoa: [
     { name: 'Vũ Văn G', achievement: 'Sinh viên tiêu biểu cấp Khoa BIT, tích cực tham gia hoạt động Đoàn – Hội, GPA 3.5/4.' },
     { name: 'Ngô Thị H', achievement: 'Thành viên Ban tổ chức chuỗi sự kiện BIT Fest 2026, tình nguyện viên tích cực.' },
-    { name: 'Bùi Văn I', achievement: 'Đạt học bổng khuyến khích học tập 4 học kỳ liên tiếp, hỗ trợ mentor tân sinh viên.' },
-  ],
+    { name: 'Bùi Văn I', achievement: 'Đạt học bổng khuyến khích học tập 4 học kỳ liên tiếp, hỗ trợ mentor tân sinh viên.' }
+  ]
 };
+const levelName = l => 'Cấp ' + (l === 'TP' ? 'Thành phố' : l);
+const honorModal = document.getElementById('honorModal');
 
-function renderHonors(level){
+function renderHonors(level) {
   const grid = document.getElementById('honorGrid');
   grid.innerHTML = '';
   const list = HONORS[level] || [];
-  const fullList = [...list, ...list, ...list].slice(0, 9); // đủ lưới 3x3 cho bản demo
-  fullList.forEach((person, idx) => {
+  [...list, ...list, ...list].slice(0, 9).forEach(p => {
     const card = document.createElement('button');
     card.type = 'button';
     card.className = 'honor-card';
     card.innerHTML = `
-      <div class="photo"><div class="ph" style="width:100%;height:100%;border-radius:0;border:none;">Ảnh chân dung</div></div>
+      <div class="photo"><div class="ph">Ảnh chân dung</div></div>
       <div class="body">
-        <span class="level-tag">Cấp ${level === 'TP' ? 'Thành phố' : level}</span>
-        <h4>${person.name}</h4>
-        <p class="achievement">${person.achievement.slice(0, 60)}...</p>
+        <span class="level-tag">${levelName(level)}</span>
+        <h4>${p.name}</h4>
+        <p class="achievement">${p.achievement.slice(0, 60)}...</p>
       </div>`;
-    card.addEventListener('click', () => openHonorModal(level, person));
+    card.addEventListener('click', () => {
+      document.getElementById('modalLevel').textContent = levelName(level);
+      document.getElementById('modalName').textContent = p.name;
+      document.getElementById('modalAchievement').textContent = p.achievement;
+      honorModal.classList.add('is-open');
+    });
     grid.appendChild(card);
   });
 }
-
 document.getElementById('honorTabs').addEventListener('click', (e) => {
   const btn = e.target.closest('.tab-btn');
   if (!btn) return;
@@ -431,64 +457,10 @@ document.getElementById('honorTabs').addEventListener('click', (e) => {
   btn.classList.add('is-active');
   renderHonors(btn.dataset.level);
 });
-
-const honorModal = document.getElementById('honorModal');
-function openHonorModal(level, person){
-  document.getElementById('modalLevel').textContent = 'Cấp ' + (level === 'TP' ? 'Thành phố' : level);
-  document.getElementById('modalName').textContent = person.name;
-  document.getElementById('modalAchievement').textContent = person.achievement;
-  honorModal.classList.add('is-open');
-}
 document.getElementById('honorModalClose').addEventListener('click', () => honorModal.classList.remove('is-open'));
 honorModal.addEventListener('click', (e) => { if (e.target === honorModal) honorModal.classList.remove('is-open'); });
-
-renderHonors('UEH'); // mặc định cấp cao nhất (theo FE-01.3)
-// ---- Dữ liệu các năm từ bảng quản trị ----
-const YEAR_DATA = {
-  '2024': {
-    year: '2024',
-    identity: 'Bộ nhận diện SV5T 2024 (vuông)',
-    highlight: '120 sinh viên đạt danh hiệu · 18 hoạt động',
-    desc: 'Năm 2024 đánh dấu cột mốc phát triển mạnh mẽ của phong trào Sinh viên 5 Tốt tại Khoa BIT với 120 sinh viên được tuyên dương các cấp cùng 18 hoạt động rèn luyện được tổ chức.'
-  },
-  '2025': {
-    year: '2025',
-    identity: 'Bộ nhận diện SV5T 2025 (vuông)',
-    highlight: '156 sinh viên đạt danh hiệu · 24 hoạt động',
-    desc: 'Năm 2025 ghi nhận sự bứt phá vượt bậc về cả số lượng lẫn chất lượng với 156 sinh viên xuất sắc đạt danh hiệu và chuỗi 24 hoạt động phủ rộng 5 tiêu chuẩn.'
-  },
-  '2026': {
-    year: '2026',
-    identity: 'Bộ nhận diện SV5T 2026 (vuông)',
-    highlight: 'Đang diễn ra · 30+ hoạt động dự kiến',
-    desc: 'Hành trình 2026 đang diễn ra sôi nổi với hơn 30 hoạt động dự kiến. Đây là năm tiếp tục đẩy mạnh ứng dụng công nghệ trong việc theo dõi và hỗ trợ sinh viên hoàn thiện hồ sơ.'
-  }
-};
-
-// ---- Modal Chi tiết năm ----
-const yearModal = document.getElementById('yearModal');
-const yearModalClose = document.getElementById('yearModalClose');
-
-document.querySelectorAll('.history-card').forEach(card => {
-  card.addEventListener('click', (e) => {
-    e.preventDefault();
-    const year = card.dataset.year;
-    const data = YEAR_DATA[year];
-    if (!data) return;
-
-    document.getElementById('yearModalTitle').textContent = 'Phong trào Sinh viên 5 Tốt ' + data.year;
-    document.getElementById('yearModalPhoto').textContent = data.identity;
-    document.getElementById('yearModalHighlight').textContent = data.highlight;
-    document.getElementById('yearModalDesc').textContent = data.desc;
-
-    yearModal.classList.add('is-open');
-  });
-});
-
-yearModalClose?.addEventListener('click', () => yearModal.classList.remove('is-open'));
-yearModal?.addEventListener('click', (e) => { 
-  if (e.target === yearModal) yearModal.classList.remove('is-open'); 
-});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') honorModal.classList.remove('is-open'); });
+renderHonors('UEH');
 </script>
 </body>
 </html>
