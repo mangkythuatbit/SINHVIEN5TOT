@@ -242,9 +242,9 @@ const FORMS = {
     note: ''
   },
   'ho-so': {
-    label: 'Thu nhận hồ sơ xét Sinh viên 5 tốt cấp khoa',
+    label: 'Thu nhận hồ sơ xét danh hiệu Sinh viên 5 tốt khoa Công nghệ thông tin kinh doanh năm 2026',
     url: '',
-    title: 'Hướng dẫn đăng ký xét danh hiệu Sinh viên 5 tốt khoa Công nghệ thông tin kinh doanh năm 2026',
+    title: 'Hướng dẫn đăng ký xét danh hiệu Sinh viên 5 tốt khoa Công nghệ thông tin kinh doanh 2026',
     intro: 'Đăng ký để nhận thông tin, thông báo của phong trào Sinh viên 5 Tốt khoa BIT.',
     steps: [
       '<strong>Đăng nhập Email UEH:</strong> Đảm bảo trình duyệt đã đăng nhập tài khoản Google sinh viên (<code>@st.ueh.edu.vn</code>).',
@@ -291,7 +291,7 @@ function showForm(key, updateHash) {
   Object.values(frames).forEach(el => el.hidden = true);
   host.querySelectorAll('.form-missing').forEach(el => el.remove());
   if (!ready(f.url)) {
-    host.insertAdjacentHTML('beforeend', `<div class="form-missing"><div><h4>Biểu mẫu chưa sẵn sàng</h4><p>Biểu mẫu “${f.label}” đang được cập nhật. Vui lòng quay lại sau hoặc liên hệ BCH qua <a href="mailto:doanhoi.bit@ueh.edu.vn">doanhoi.bit@ueh.edu.vn</a>.</p></div></div>`);
+    host.insertAdjacentHTML('beforeend', `<div class="form-missing"><div><h4>Biểu mẫu chưa sẵn sàng</h4><p>Biểu mẫu “${f.label}” đang được cập nhật. Vui lòng quay lại sau hoặc liên hệ BTC qua <a href="mailto:doanhoi.bit@ueh.edu.vn">doanhoi.bit@ueh.edu.vn</a>.</p></div></div>`);
   } else {
     if (!frames[key]) {
       const ifr = document.createElement('iframe');
