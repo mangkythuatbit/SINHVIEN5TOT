@@ -46,7 +46,8 @@ a{color:var(--primary-color)}
 
 /* ---------- Bộ lọc ---------- */
 .list-section{padding:var(--space-6) 0 var(--space-8)}
-.toolbar{display:grid;grid-template-columns:2fr 1fr 1fr;gap:var(--gap-col-cards)}
+.toolbar{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:var(--gap-col-cards)}
+.toolbar--3{grid-template-columns:2fr 1fr 1fr}
 .field{display:flex;flex-direction:column;gap:var(--space-1)}
 .field label{font-size:14px;font-weight:var(--fw-bold);color:var(--color-blue-700)}
 .input{width:100%;min-height:var(--button-height);padding:var(--space-2) var(--space-3);border:1px solid var(--color-dark-100);border-radius:var(--radius-button);background:var(--bg-color);color:var(--text-color);transition:var(--transition-base)}
@@ -77,6 +78,10 @@ textarea.input{min-height:96px;resize:vertical}
 .c-name{min-width:220px;font-size:15px;line-height:1.35;font-weight:var(--fw-bold);color:var(--color-dark-700)}
 .c-text{min-width:200px;white-space:pre-line}
 .c-note{color:var(--color-dark-500)}
+.c-level{min-width:110px}
+.lv-list{display:flex;flex-wrap:wrap;gap:var(--space-1)}
+.lv-list .badge{margin-top:0}
+.badge-level{background:var(--primary-color-2);color:var(--color-blue-700);border:1px solid var(--color-blue-100)}
 .c-time{min-width:120px;font-weight:var(--fw-medium);color:var(--color-dark-700)}
 .c-save{width:64px;text-align:center}
 .clamp{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;overflow:hidden}
@@ -106,8 +111,8 @@ textarea.input{min-height:96px;resize:vertical}
   .act-table td{padding:var(--space-1) 0;border:0}
   .c-stt{width:auto;text-align:left;font-size:13px}
   .c-stt::before{content:"Hoạt động số "}
-  .c-name,.c-text,.c-time{min-width:0}
-  .c-text::before,.c-time::before{content:attr(data-label);display:block;margin-top:var(--space-2);font-size:13px;font-weight:var(--fw-bold);color:var(--color-blue-700)}
+  .c-name,.c-text,.c-time,.c-level{min-width:0}
+  .c-text::before,.c-time::before,.c-level::before{content:attr(data-label);display:block;margin-top:var(--space-2);font-size:13px;font-weight:var(--fw-bold);color:var(--color-blue-700)}
   .c-save{position:absolute;top:var(--space-3);right:var(--space-3);width:auto;padding:0}
 }
 
@@ -151,6 +156,18 @@ textarea.input{min-height:96px;resize:vertical}
 .data-table td{padding:var(--space-3) var(--space-4);border-top:1px solid var(--color-dark-100);vertical-align:middle}
 .data-table td.state{text-align:center;color:var(--text-muted)}
 
+.btn--outline{background:transparent;color:var(--primary-color)}
+.btn--outline:hover{background:var(--primary-color-2)}
+body.modal-open{overflow:hidden}
+.modal{position:fixed;inset:0;z-index:300;display:grid;place-items:center;padding:var(--space-5);background:var(--color-overlay-dark)}
+.modal[hidden]{display:none}
+.modal__box{width:min(520px,100%);padding:var(--space-6);border-radius:var(--radius-card);background:var(--bg-color);box-shadow:var(--shadow-lg)}
+.modal__box h3{font-size:20px;color:var(--color-blue-700)}
+.modal__name{margin:var(--space-2) 0 var(--space-4);font-weight:var(--fw-medium);color:var(--color-dark-700)}
+.modal__box label{display:block;margin-bottom:var(--space-1);font-size:14px;font-weight:var(--fw-bold);color:var(--color-blue-700)}
+.modal__hint{display:flex;gap:var(--space-2);margin-top:var(--space-2);font-size:13px;color:var(--color-dark-500)}
+.modal__hint svg{flex:none;width:16px;height:16px;margin-top:2px;color:var(--primary-color)}
+.modal__actions{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:var(--space-3);margin-top:var(--space-5)}
 .toast{position:fixed;left:50%;bottom:var(--space-5);z-index:200;transform:translate(-50%,24px);max-width:calc(100% - 2*var(--space-5));padding:var(--space-3) var(--space-5);border-radius:var(--radius-button);background:var(--color-dark-900);color:var(--color-text-on-dark);opacity:0;pointer-events:none;transition:var(--transition-base)}
 .toast.is-visible{opacity:1;transform:translate(-50%,0)}
 
@@ -219,13 +236,17 @@ textarea.input{min-height:96px;resize:vertical}
   <div class="container">
     <div class="notice" id="sheetNotice" role="status"></div>
 
-    <div class="toolbar">
+    <div class="toolbar" id="toolbar">
       <div class="field">
         <label for="searchInput">Tìm theo tên hoạt động</label>
         <div class="search-box">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
           <input class="input" id="searchInput" type="search" placeholder="VD: Giải chạy bộ" autocomplete="off">
         </div>
+      </div>
+      <div class="field" id="levelField">
+        <label for="levelSelect">Ghi nhận cấp</label>
+        <select class="input" id="levelSelect"><option value="">Tất cả cấp</option></select>
       </div>
       <div class="field">
         <label for="groupSelect">Nhóm tiêu chí</label>
@@ -323,6 +344,24 @@ textarea.input{min-height:96px;resize:vertical}
 </section>
 </main>
 
+<!-- ================= MINH CHỨNG (link Google Drive, chỉ lưu trên trình duyệt này) ================= -->
+<div class="modal" id="evidenceModal" hidden>
+  <div class="modal__box" role="dialog" aria-modal="true" aria-labelledby="evTitle">
+    <h3 id="evTitle">Đã lưu hoạt động</h3>
+    <p class="modal__name" id="evName"></p>
+    <form id="evidenceForm" novalidate>
+      <label for="evLink">Link minh chứng trên Google Drive (không bắt buộc)</label>
+      <input class="input" id="evLink" type="url" placeholder="https://drive.google.com/..." autocomplete="off" aria-describedby="err-ev">
+      <span class="field__error" id="err-ev"></span>
+      <p class="modal__hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span>Chỉ lưu trên trình duyệt của bạn, trang web không gửi link này cho ai. Có nhiều file thì hãy dùng link thư mục. Hãy tự kiểm tra quyền chia sẻ trên Drive trước khi nộp hồ sơ.</span></p>
+      <div class="modal__actions">
+        <button type="button" class="btn btn--outline" id="evSkip">Để sau</button>
+        <button type="submit" class="btn btn--primary">Lưu minh chứng</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <div class="toast" id="toast" role="status"></div>
 
 <!-- ================= FOOTER (footer.html của nhóm) ================= -->
@@ -412,12 +451,12 @@ const PAGE_SIZE = 5; // mỗi trang hiển thị tối đa 5 hoạt động
 
 const DEMO_ROWS = {
   'the-luc': [
-    { group: 'other', groupLabel: 'TIÊU CHÍ KHÁC (ĐẠT 1)', stt: '1', name: 'GIẢI CHẠY BỘ HỌC SINH, SINH VIÊN, THANH NIÊN CÔNG NHÂN 2025', record: '', req: 'Cự ly: \n- Nam: 5.000m (30 phút) \n- Nữ: 3.000m (30 phút)', time: '22/03', note: 'Được cấp giấy chứng nhận "Thanh niên khỏe"' },
-    { group: 'other', groupLabel: 'TIÊU CHÍ KHÁC (ĐẠT 1)', stt: '2', name: 'HOẠT ĐỘNG SÁT HẠCH THỂ LỰC, CÔNG NHẬN DANH HIỆU “SINH VIÊN KHỎE', record: '', req: 'Các nội dung kiểm tra từ loại đạt trở lên.\n- Nữ (chọn 3/4 nội dung): chạy 100m, chạy 800m, bật xa tại chỗ, nhảy xa.\n- Nam (chọn 4/5 nội dung): chạy 100m, chạy 800m, bật xa tại chỗ, nhảy xa, kéo tay xà đơn.', time: '22/03', note: 'Nội dung chi tiết' },
-    { group: 'other', groupLabel: 'TIÊU CHÍ KHÁC (ĐẠT 1)', stt: '3', name: '[BIT][TÌM KIẾM VẬN ĐỘNG VIÊN THAM GIA HỘI THAO TRUYỀN THỐNG SINH VIÊN UEH]', record: '', req: 'Tham gia vào đội hình thi đấu chính thức.', time: '01/04 - 18/05', note: '' },
-    { group: 'other', groupLabel: 'TIÊU CHÍ KHÁC (ĐẠT 1)', stt: '4', name: 'MỞ ĐƠN ĐĂNG KÝ THAM GIA HỘI THAO “SINH VIÊN KHỎE”', record: '', req: 'Đạt 4/5 nội dung đối với nữ và 5/5 nội dung đối với nam.\nNội dung tổ chức sát hạch: Chạy 30m, Lực kế bóp tay, Bật xa tại chỗ, Hít đất, Gập bụng.', time: '13 - 14/05', note: '' },
-    { group: 'other', groupLabel: 'TIÊU CHÍ KHÁC (ĐẠT 1)', stt: '5', name: 'GIẢI VIỆT DÃ HỌC SINH, SINH VIÊN TP.HCM MỞ RỘNG 2025', record: '', req: 'Hoàn thành đường chạy ', time: '20/9 - 26/9/2025', note: 'Được cấp giấy chứng nhận "Thanh niên khỏe"' },
-    { group: 'other', groupLabel: 'TIÊU CHÍ KHÁC (ĐẠT 1)', stt: '6', name: 'GIẢI CHẠY MINH HỌA SỐ 6 (DÙNG ĐỂ XEM PHÂN TRANG)', record: '', req: 'Hoàn thành cự ly 3.000m.', time: '15/12', note: '' }
+    { group: 'other', groupLabel: 'TIÊU CHÍ KHÁC (ĐẠT 1)', stt: '1', name: 'GIẢI CHẠY BỘ HỌC SINH, SINH VIÊN, THANH NIÊN CÔNG NHÂN 2025', record: 'Cấp Thành phố', req: 'Cự ly: \n- Nam: 5.000m (30 phút) \n- Nữ: 3.000m (30 phút)', time: '22/03', note: 'Được cấp giấy chứng nhận "Thanh niên khỏe"' },
+    { group: 'other', groupLabel: 'TIÊU CHÍ KHÁC (ĐẠT 1)', stt: '2', name: 'HOẠT ĐỘNG SÁT HẠCH THỂ LỰC, CÔNG NHẬN DANH HIỆU “SINH VIÊN KHỎE', record: 'Cấp UEH', req: 'Các nội dung kiểm tra từ loại đạt trở lên.\n- Nữ (chọn 3/4 nội dung): chạy 100m, chạy 800m, bật xa tại chỗ, nhảy xa.\n- Nam (chọn 4/5 nội dung): chạy 100m, chạy 800m, bật xa tại chỗ, nhảy xa, kéo tay xà đơn.', time: '22/03', note: 'Nội dung chi tiết' },
+    { group: 'other', groupLabel: 'TIÊU CHÍ KHÁC (ĐẠT 1)', stt: '3', name: '[BIT][TÌM KIẾM VẬN ĐỘNG VIÊN THAM GIA HỘI THAO TRUYỀN THỐNG SINH VIÊN UEH]', record: 'Cấp Khoa', req: 'Tham gia vào đội hình thi đấu chính thức.', time: '01/04 - 18/05', note: '' },
+    { group: 'other', groupLabel: 'TIÊU CHÍ KHÁC (ĐẠT 1)', stt: '4', name: 'MỞ ĐƠN ĐĂNG KÝ THAM GIA HỘI THAO “SINH VIÊN KHỎE”', record: 'Cấp UEH', req: 'Đạt 4/5 nội dung đối với nữ và 5/5 nội dung đối với nam.\nNội dung tổ chức sát hạch: Chạy 30m, Lực kế bóp tay, Bật xa tại chỗ, Hít đất, Gập bụng.', time: '13 - 14/05', note: '' },
+    { group: 'other', groupLabel: 'TIÊU CHÍ KHÁC (ĐẠT 1)', stt: '5', name: 'GIẢI VIỆT DÃ HỌC SINH, SINH VIÊN TP.HCM MỞ RỘNG 2025', record: 'Cấp Thành phố', req: 'Hoàn thành đường chạy ', time: '20/9 - 26/9/2025', note: 'Được cấp giấy chứng nhận "Thanh niên khỏe"' },
+    { group: 'other', groupLabel: 'TIÊU CHÍ KHÁC (ĐẠT 1)', stt: '6', name: 'GIẢI CHẠY MINH HỌA SỐ 6 (DÙNG ĐỂ XEM PHÂN TRANG)', record: 'Cấp Khoa', req: 'Hoàn thành cự ly 3.000m.', time: '15/12', note: '' }
   ]
 };
 const DEMO_REQUESTS = [
@@ -495,14 +534,20 @@ async function loadCriterion(key) {
 /* ---------- Lưu hoạt động để theo dõi (Web Storage) ----------
    Đổi sang sessionStorage nếu chỉ muốn lưu trong phiên duyệt web hiện tại.
    Dữ liệu: mảng JSON dưới khóa SAVED_KEY, mỗi phần tử:
-   { id, criterion, group, groupLabel, name, time, record, req, note, savedAt }
+   { id, criterion, group, groupLabel, name, time, record, req, note, evidence, savedAt }
    Trang "hoat-dong-dang-ky.html" chỉ cần đọc cùng khóa này. */
 const STORAGE = window.localStorage;
 const SAVED_KEY = 'sv5t_tracked_activities';
 const keyOf = a => current + '::' + fold(a.name);
 function readSaved() {
-  try { const v = JSON.parse(STORAGE.getItem(SAVED_KEY) || '[]'); return Array.isArray(v) ? v : []; }
-  catch (e) { return []; }
+  try {
+    const v = JSON.parse(STORAGE.getItem(SAVED_KEY) || '[]');
+    if (!Array.isArray(v)) return [];
+    // Bỏ bản ghi cũ sai cấu trúc (VD: dữ liệu mẫu của phiên bản trang trước)
+    const ok = v.filter(x => x && x.id && x.name && SHEET_CONFIG.TABS[x.criterion]);
+    if (ok.length !== v.length) writeSaved(ok);
+    return ok;
+  } catch (e) { return []; }
 }
 function writeSaved(list) {
   try { STORAGE.setItem(SAVED_KEY, JSON.stringify(list)); return true; }
@@ -518,15 +563,75 @@ function updateSavedBadge() {
 }
 function toggleSaved(a) {
   const list = readSaved(), id = keyOf(a), i = list.findIndex(x => x.id === id);
-  if (i >= 0) list.splice(i, 1);
-  else list.unshift({ id, criterion: current, group: a.group, groupLabel: a.groupLabel, name: a.name, time: a.time, record: a.record, req: a.req, note: a.note, savedAt: new Date().toISOString() });
+  if (i >= 0) {
+    if (evUrlOf(list[i]) && !confirm('Bỏ lưu sẽ xóa link minh chứng đã gắn cho hoạt động này. Tiếp tục?')) return;
+    list.splice(i, 1);
+  } else list.unshift({ id, criterion: current, group: a.group, groupLabel: a.groupLabel, name: a.name, time: a.time, record: a.record, req: a.req, note: a.note, evidence: '', savedAt: new Date().toISOString() });
   if (!writeSaved(list)) { toast('Không lưu được. Trình duyệt đang chặn lưu trữ cục bộ.'); return; }
   updateSavedBadge();
-  toast(i >= 0 ? 'Đã bỏ lưu hoạt động.' : 'Đã lưu hoạt động. Xem tại "Theo dõi hoạt động đã lưu".', 3000);
   render();
+  if (i >= 0) toast('Đã bỏ lưu hoạt động.', 3000);
+  else openEvidence(id);   // vừa lưu xong: mời gắn link minh chứng (có thể bỏ qua)
 }
 window.addEventListener('storage', e => { if (e.key === SAVED_KEY) { updateSavedBadge(); render(); } });
 updateSavedBadge();
+
+/* ---------- Minh chứng: link Google Drive (chỉ lưu trong trình duyệt này, không gửi đi đâu) ---------- */
+function parseDriveLink(raw) {
+  const v = String(raw || '').trim();
+  if (!v) return { ok: true, url: '' };
+  let u;
+  try { u = new URL(v); } catch (e) { return { ok: false, error: 'Link chưa đúng định dạng. Hãy dán nguyên link từ Google Drive.' }; }
+  if (u.protocol !== 'https:' || !['drive.google.com', 'docs.google.com'].includes(u.hostname.toLowerCase()))
+    return { ok: false, error: 'Chỉ nhận link Google Drive (drive.google.com hoặc docs.google.com).' };
+  return { ok: true, url: u.href };
+}
+function evUrlOf(a) { const r = parseDriveLink(a && a.evidence); return r.ok ? r.url : ''; }
+
+const evModal = $('evidenceModal');
+let evId = null;
+function openEvidence(id) {
+  const rec = readSaved().find(x => x.id === id);
+  if (!rec) return;
+  evId = id;
+  $('evName').textContent = rec.name;
+  $('evLink').value = evUrlOf(rec);
+  $('err-ev').textContent = ''; $('evLink').setAttribute('aria-invalid', 'false');
+  evModal.hidden = false; document.body.classList.add('modal-open');
+  setTimeout(() => $('evLink').focus(), 0);
+}
+function closeEvidence(msg) {
+  const id = evId; evId = null;
+  evModal.hidden = true; document.body.classList.remove('modal-open');
+  if (msg) toast(msg, 3500);
+  const back = [...document.querySelectorAll('.save-btn')].find(b => b.dataset.key === id);
+  if (back) back.focus();
+}
+const skipEvidence = () => closeEvidence('Đã lưu hoạt động. Bạn có thể thêm minh chứng sau ở trang "Theo dõi hoạt động đã lưu".');
+$('evSkip').addEventListener('click', skipEvidence);
+evModal.addEventListener('mousedown', e => { if (e.target === evModal) skipEvidence(); });
+evModal.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { e.preventDefault(); skipEvidence(); return; }
+  if (e.key !== 'Tab') return;
+  const f = [...evModal.querySelectorAll('input,button')].filter(x => !x.disabled);
+  const first = f[0], last = f[f.length - 1];
+  if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+});
+$('evidenceForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const r = parseDriveLink($('evLink').value);
+  $('err-ev').textContent = r.ok ? '' : r.error;
+  $('evLink').setAttribute('aria-invalid', r.ok ? 'false' : 'true');
+  if (!r.ok) { $('evLink').focus(); return; }
+  const list = readSaved(), rec = list.find(x => x.id === evId);
+  if (rec) {
+    rec.evidence = r.url; rec.evidenceAt = r.url ? new Date().toISOString() : '';
+    if (!writeSaved(list)) { toast('Không lưu được. Trình duyệt đang chặn lưu trữ cục bộ.'); return; }
+  }
+  
+  closeEvidence(r.url ? 'Đã lưu link minh chứng.' : 'Đã xóa link minh chứng.');
+});
 
 /* ---------- Hiển thị danh sách + phân trang ---------- */
 let current = 'hoc-tap', all = [], page = 1, loading = false;
@@ -535,10 +640,22 @@ const GROUPS = {
   other:    { label: 'Tiêu chí khác',     hint: 'Cần đạt 1 trong các tiêu chí' }
 };
 
+/* Cột GHI NHẬN trên Sheet = hoạt động được ghi nhận ở cấp nào (Khoa / UEH / Thành phố ...).
+   Một ô có thể ghi nhiều cấp, ngăn cách bằng xuống dòng, dấu ; hoặc dấu phẩy. */
+const levelsOf = text => String(text || '').split(/[\n;,]+/).map(s => s.trim()).filter(Boolean);
+function buildLevelOptions() {
+  const map = new Map();
+  all.forEach(a => levelsOf(a.record).forEach(t => { const k = fold(t); if (!map.has(k)) map.set(k, t); }));
+  const rank = k => /khoa/.test(k) ? 1 : /truong|ueh/.test(k) ? 2 : /thanh|tp/.test(k) ? 3 : /trung uong|tw/.test(k) ? 4 : 5;
+  const items = [...map].sort((x, y) => rank(x[0]) - rank(y[0]) || x[1].localeCompare(y[1], 'vi'));
+  $('levelSelect').innerHTML = '<option value="">Tất cả cấp</option>' + items.map(([k, l]) => `<option value="${esc(k)}">${esc(l)}</option>`).join('');
+  $('levelField').hidden = items.length === 0;
+  $('toolbar').classList.toggle('toolbar--3', items.length === 0);
+}
 function filtered() {
   const q = fold($('searchInput').value.trim());
-  const g = $('groupSelect').value, s = $('statusSelect').value;
-  return all.filter(a => (!q || fold(a.name).includes(q)) && (!g || a.group === g) && (!s || statusOf(a.time) === s));
+  const g = $('groupSelect').value, s = $('statusSelect').value, lv = $('levelSelect').value;
+  return all.filter(a => (!q || fold(a.name).includes(q)) && (!lv || levelsOf(a.record).some(t => fold(t) === lv)) && (!g || a.group === g) && (!s || statusOf(a.time) === s));
 }
 const ICON_SAVE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>';
 const LONG_TEXT = 140; // ô dài hơn mức này (hoặc hơn 3 dòng) sẽ thu gọn kèm nút "Xem thêm"
@@ -547,6 +664,10 @@ function textCell(text, cls, label) {
   if (!t) return `<td class="${cls}" data-label="${label}">—</td>`;
   const long = t.length > LONG_TEXT || t.split('\n').length > 3;
   return `<td class="${cls}" data-label="${label}"><div class="${long ? 'clamp' : ''}">${esc(t)}</div>${long ? '<button type="button" class="more-btn" aria-expanded="false">Xem thêm</button>' : ''}</td>`;
+}
+function levelCell(rec) {
+  const lv = levelsOf(rec);
+  return `<td class="c-level" data-label="Ghi nhận">${lv.length ? '<div class="lv-list">' + lv.map(t => `<span class="badge badge-level">${esc(t)}</span>`).join('') + '</div>' : '—'}</td>`;
 }
 function actRow(a, cols) {
   const st = statusOf(a.time);
@@ -557,7 +678,7 @@ function actRow(a, cols) {
   return `<tr class="row">
     <td class="c-stt">${esc(a.stt)}</td>
     <td class="c-name">${esc(a.name)}</td>
-    ${cols.record ? textCell(a.record, 'c-text', 'Ghi nhận') : ''}
+    ${cols.record ? levelCell(a.record) : ''}
     ${textCell(a.req, 'c-text', 'Yêu cầu')}
     <td class="c-time" data-label="Thời gian">${esc(a.time) || '—'}${badge}</td>
     ${cols.note ? textCell(a.note, 'c-text c-note', 'Ghi chú') : ''}
@@ -577,7 +698,7 @@ function render() {
   const start = (page - 1) * PAGE_SIZE, slice = list.slice(start, start + PAGE_SIZE);
 
   // Chỉ hiện cột Ghi nhận / Ghi chú khi tab này có dữ liệu ở cột đó (bảng gọn hơn)
-  const cols = { record: all.some(a => a.record), note: all.some(a => a.note) };
+  const cols = { record: true, note: all.some(a => a.note) };  // cột Ghi nhận (cấp) luôn hiện
   const span = 5 + (cols.record ? 1 : 0) + (cols.note ? 1 : 0);
   let body = '', open;
   slice.forEach((a, i) => {
@@ -594,7 +715,7 @@ function render() {
   $('activityList').innerHTML = html;
   $('emptyState').classList.toggle('is-visible', !loading && list.length === 0);
 
-  const isFiltered = !!($('searchInput').value.trim() || $('groupSelect').value || $('statusSelect').value);
+  const isFiltered = !!($('searchInput').value.trim() || $('groupSelect').value || $('levelSelect').value || $('statusSelect').value);
   $('clearFilters').hidden = !isFiltered;
   $('resultSummary').textContent = list.length
     ? `Hiển thị ${start + 1}–${start + slice.length} trong ${list.length} hoạt động` + (isFiltered ? ` (lọc từ ${all.length})` : '')
@@ -619,7 +740,7 @@ function setCount(key, n) { const el = document.querySelector(`[data-count="${ke
 
 async function showCriterion(key) {
   current = key; page = 1; loading = true; all = [];
-  $('searchInput').value = ''; $('groupSelect').value = ''; $('statusSelect').value = '';
+  $('searchInput').value = ''; $('groupSelect').value = ''; $('levelSelect').value = ''; $('statusSelect').value = '';
   $('listTop').setAttribute('aria-labelledby', 'tab-' + key);
   $('activityList').innerHTML = '<div class="table-card"><div class="skeleton-rows"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div></div>';
   $('emptyState').classList.remove('is-visible'); $('pager').hidden = true; $('resultSummary').textContent = '';
@@ -627,12 +748,12 @@ async function showCriterion(key) {
   try {
     const { rows, demo } = await loadCriterion(key);
     if (key !== current) return;
-    all = rows; loading = false; setCount(key, rows.length);
+    all = rows; loading = false; setCount(key, rows.length); buildLevelOptions();
     if (demo) setNotice('Đang hiển thị dữ liệu minh họa. Điền SHEET_ID trong SHEET_CONFIG để lấy dữ liệu thật từ Google Sheet.');
     render();
   } catch (err) {
     if (key !== current) return;
-    all = []; loading = false; $('activityList').innerHTML = '';
+    all = []; loading = false; buildLevelOptions(); $('activityList').innerHTML = '';
     setNotice('Không tải được dữ liệu từ Google Sheet (' + err.message + '). Kiểm tra quyền chia sẻ, SHEET_ID và tên tab.', true);
   }
 }
@@ -655,8 +776,9 @@ const onFilter = () => { page = 1; render(); };
 $('searchInput').addEventListener('input', onFilter);
 $('groupSelect').addEventListener('change', onFilter);
 $('statusSelect').addEventListener('change', onFilter);
+$('levelSelect').addEventListener('change', onFilter);
 $('clearFilters').addEventListener('click', () => {
-  $('searchInput').value = ''; $('groupSelect').value = ''; $('statusSelect').value = ''; onFilter();
+  $('searchInput').value = ''; $('groupSelect').value = ''; $('levelSelect').value = ''; $('statusSelect').value = ''; onFilter();
 });
 $('pager').addEventListener('click', e => {
   const b = e.target.closest('button[data-page]');
