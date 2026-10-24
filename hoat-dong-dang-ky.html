@@ -184,7 +184,7 @@ a{color:var(--primary-color)}
     </div>
 
     <div class="notice" id="backupNote" role="note">
-      <p><strong>Lưu ý: Hãy xuất định kỳ 2 tuần/lần để tránh mất dữ liệu.</strong></p>
+      <p><strong>BIT khuyến khích bạn xuất file định kì 2 tuần/lần</strong></p>
       <p id="backupStatus"></p>
     </div>
 
@@ -349,7 +349,7 @@ function renderBackupNote(total) {
   const last = STORAGE.getItem(EXPORT_KEY);
   const d = last ? new Date(last) : null;
   let warn = false, text;
-  if (!d || isNaN(d)) { text = 'Bạn chưa xuất file lần nào. Dữ liệu chỉ nằm trên trình duyệt này và sẽ mất nếu xóa dữ liệu duyệt web hoặc đổi thiết bị.'; warn = total > 0; }
+  if (!d || isNaN(d)) { text = 'Để giữ trải nghiệm tốt nhất, BIT khuyến khích bạn hãy định kì lưu trữ và hẹn bạn tại Lễ tuyên dương Sinh viên 5 tốt các cấp nhé!'; warn = total > 0; }
   else {
     const days = Math.floor((Date.now() - d.getTime()) / 86400000);
     text = `Lần xuất gần nhất: ${fmtDate(d)} (${days === 0 ? 'hôm nay' : days + ' ngày trước'}).`;
