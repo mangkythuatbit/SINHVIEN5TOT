@@ -45,7 +45,7 @@ a{color:var(--primary-color)}
 .tab[aria-selected="true"] .tab__count{background:var(--color-blue-700);color:var(--color-text-on-dark)}
 
 /* ---------- Bộ lọc ---------- */
-.main{padding:var(--space-6) 0 var(--space-8)}
+.list-section{padding:var(--space-6) 0 var(--space-8)}
 .toolbar{display:grid;grid-template-columns:2fr 1fr 1fr;gap:var(--gap-col-cards)}
 .field{display:flex;flex-direction:column;gap:var(--space-1)}
 .field label{font-size:14px;font-weight:var(--fw-bold);color:var(--color-blue-700)}
@@ -199,7 +199,7 @@ textarea.input{min-height:96px;resize:vertical}
 </section>
 
 <!-- ================= DANH SÁCH HOẠT ĐỘNG ================= -->
-<section class="main">
+<section class="list-section">
   <div class="container">
     <div class="notice" id="sheetNotice" role="status"></div>
 
@@ -370,7 +370,7 @@ textarea.input{min-height:96px;resize:vertical}
 
 <script>
 /* =====================================================================
-   CẤU HÌNH, chỉ cần sửa 2 khối này
+   CẤU HÌNH — chỉ cần sửa 2 khối này
    ---------------------------------------------------------------------
    (1) SHEET NIÊN BIỂU (đọc): Chia sẻ "Bất kỳ ai có đường liên kết" = Người xem.
        SHEET_ID là đoạn giữa /d/ và /edit trong URL. Tên tab phải trùng khớp.
@@ -396,12 +396,12 @@ const PAGE_SIZE = 5; // mỗi trang hiển thị tối đa 5 hoạt động
 
 const DEMO_ROWS = {
   'the-luc': [
-    { group: 'other', stt: '1', name: 'GIẢI CHẠY BỘ HỌC SINH, SINH VIÊN, THANH NIÊN CÔNG NHÂN 2025', record: '', req: 'Cự ly: \n- Nam: 5.000m (30 phút) \n- Nữ: 3.000m (30 phút)', time: '22/03', note: 'Được cấp giấy chứng nhận "Thanh niên khỏe"' },
-    { group: 'other', stt: '2', name: 'HOẠT ĐỘNG SÁT HẠCH THỂ LỰC, CÔNG NHẬN DANH HIỆU “SINH VIÊN KHỎE', record: '', req: 'Các nội dung kiểm tra từ loại đạt trở lên.\n- Nữ (chọn 3/4 nội dung): chạy 100m, chạy 800m, bật xa tại chỗ, nhảy xa.\n- Nam (chọn 4/5 nội dung): chạy 100m, chạy 800m, bật xa tại chỗ, nhảy xa, kéo tay xà đơn.', time: '22/03', note: 'Nội dung chi tiết' },
-    { group: 'other', stt: '3', name: '[BIT][TÌM KIẾM VẬN ĐỘNG VIÊN THAM GIA HỘI THAO TRUYỀN THỐNG SINH VIÊN UEH]', record: '', req: 'Tham gia vào đội hình thi đấu chính thức.', time: '01/04 - 18/05', note: '' },
-    { group: 'other', stt: '4', name: 'MỞ ĐƠN ĐĂNG KÝ THAM GIA HỘI THAO “SINH VIÊN KHỎE”', record: '', req: 'Đạt 4/5 nội dung đối với nữ và 5/5 nội dung đối với nam.\nNội dung tổ chức sát hạch: Chạy 30m, Lực kế bóp tay, Bật xa tại chỗ, Hít đất, Gập bụng.', time: '13 - 14/05', note: '' },
-    { group: 'other', stt: '5', name: 'GIẢI VIỆT DÃ HỌC SINH, SINH VIÊN TP.HCM MỞ RỘNG 2025', record: '', req: 'Hoàn thành đường chạy ', time: '20/9 - 26/9/2025', note: 'Được cấp giấy chứng nhận "Thanh niên khỏe"' },
-    { group: 'other', stt: '6', name: 'GIẢI CHẠY MINH HỌA SỐ 6 (DÙNG ĐỂ XEM PHÂN TRANG)', record: '', req: 'Hoàn thành cự ly 3.000m.', time: '15/12', note: '' }
+    { group: 'other', groupLabel: 'TIÊU CHÍ KHÁC (ĐẠT 1)', stt: '1', name: 'GIẢI CHẠY BỘ HỌC SINH, SINH VIÊN, THANH NIÊN CÔNG NHÂN 2025', record: '', req: 'Cự ly: \n- Nam: 5.000m (30 phút) \n- Nữ: 3.000m (30 phút)', time: '22/03', note: 'Được cấp giấy chứng nhận "Thanh niên khỏe"' },
+    { group: 'other', groupLabel: 'TIÊU CHÍ KHÁC (ĐẠT 1)', stt: '2', name: 'HOẠT ĐỘNG SÁT HẠCH THỂ LỰC, CÔNG NHẬN DANH HIỆU “SINH VIÊN KHỎE', record: '', req: 'Các nội dung kiểm tra từ loại đạt trở lên.\n- Nữ (chọn 3/4 nội dung): chạy 100m, chạy 800m, bật xa tại chỗ, nhảy xa.\n- Nam (chọn 4/5 nội dung): chạy 100m, chạy 800m, bật xa tại chỗ, nhảy xa, kéo tay xà đơn.', time: '22/03', note: 'Nội dung chi tiết' },
+    { group: 'other', groupLabel: 'TIÊU CHÍ KHÁC (ĐẠT 1)', stt: '3', name: '[BIT][TÌM KIẾM VẬN ĐỘNG VIÊN THAM GIA HỘI THAO TRUYỀN THỐNG SINH VIÊN UEH]', record: '', req: 'Tham gia vào đội hình thi đấu chính thức.', time: '01/04 - 18/05', note: '' },
+    { group: 'other', groupLabel: 'TIÊU CHÍ KHÁC (ĐẠT 1)', stt: '4', name: 'MỞ ĐƠN ĐĂNG KÝ THAM GIA HỘI THAO “SINH VIÊN KHỎE”', record: '', req: 'Đạt 4/5 nội dung đối với nữ và 5/5 nội dung đối với nam.\nNội dung tổ chức sát hạch: Chạy 30m, Lực kế bóp tay, Bật xa tại chỗ, Hít đất, Gập bụng.', time: '13 - 14/05', note: '' },
+    { group: 'other', groupLabel: 'TIÊU CHÍ KHÁC (ĐẠT 1)', stt: '5', name: 'GIẢI VIỆT DÃ HỌC SINH, SINH VIÊN TP.HCM MỞ RỘNG 2025', record: '', req: 'Hoàn thành đường chạy ', time: '20/9 - 26/9/2025', note: 'Được cấp giấy chứng nhận "Thanh niên khỏe"' },
+    { group: 'other', groupLabel: 'TIÊU CHÍ KHÁC (ĐẠT 1)', stt: '6', name: 'GIẢI CHẠY MINH HỌA SỐ 6 (DÙNG ĐỂ XEM PHÂN TRANG)', record: '', req: 'Hoàn thành cự ly 3.000m.', time: '15/12', note: '' }
   ]
 };
 const DEMO_REQUESTS = [
@@ -433,16 +433,23 @@ function parseCSV(text) {
   return rows;
 }
 function rowsToActivities(rows) {
-  const out = []; let group = null;
+  const out = []; let group = null, groupLabel = '';
   rows.forEach(r => {
     const c = r.map(x => (x || '').trim());
-    if (/^\d+$/.test(c[0])) {            // dòng có STT là một hoạt động
-      if (c[1]) out.push({ group, stt: c[0], name: c[1], record: c[2] || '', req: c[3] || '', time: c[4] || '', note: c[5] || '' });
+    // Dòng tiêu đề nhóm: có chữ "TIÊU CHÍ" (so khớp không dấu để tránh lỗi mã hóa tiếng Việt)
+    const marker = c.find(x => /tieu\s*chi/.test(fold(x)));
+    if (marker && !/^\d+$/.test(c[0])) {
+      group = /bat\s*buoc/.test(fold(marker)) ? 'required' : 'other';
+      const m = marker.normalize('NFC').match(/TIÊU\s*CHÍ.*/i);
+      groupLabel = m ? m[0] : marker;   // giữ nguyên chữ trên Sheet
       return;
     }
-    // dòng tiêu đề nhóm: so khớp không dấu, lấy chữ ngay sau "TIÊU CHÍ"
-    const m = fold(c.join(' ')).match(/tieu\s*chi\s*(bat\s*buoc|khac)/);
-    if (m) group = m[1].startsWith('bat') ? 'required' : 'other';
+    if (fold(c[0]) === 'stt') return;     // dòng tiêu đề cột
+    const hasNum = /^\d+$/.test(c[0]);
+    // Hoạt động: có STT là số, hoặc nằm dưới một dòng nhóm và có yêu cầu / thời gian
+    if (c[1] && (hasNum || (group && (c[3] || c[4])))) {
+      out.push({ group, groupLabel, stt: c[0] || '•', name: c[1], record: c[2] || '', req: c[3] || '', time: c[4] || '', note: c[5] || '' });
+    }
   });
   return out;
 }
@@ -472,7 +479,7 @@ async function loadCriterion(key) {
 /* ---------- Lưu hoạt động để theo dõi (Web Storage) ----------
    Đổi sang sessionStorage nếu chỉ muốn lưu trong phiên duyệt web hiện tại.
    Dữ liệu: mảng JSON dưới khóa SAVED_KEY, mỗi phần tử:
-   { id, criterion, name, time, record, req, note, savedAt }
+   { id, criterion, group, groupLabel, name, time, record, req, note, savedAt }
    Trang "hoat-dong-dang-ky.html" chỉ cần đọc cùng khóa này. */
 const STORAGE = window.localStorage;
 const SAVED_KEY = 'sv5t_tracked_activities';
@@ -496,7 +503,7 @@ function updateSavedBadge() {
 function toggleSaved(a) {
   const list = readSaved(), id = keyOf(a), i = list.findIndex(x => x.id === id);
   if (i >= 0) list.splice(i, 1);
-  else list.unshift({ id, criterion: current, group: a.group, name: a.name, time: a.time, record: a.record, req: a.req, note: a.note, savedAt: new Date().toISOString() });
+  else list.unshift({ id, criterion: current, group: a.group, groupLabel: a.groupLabel, name: a.name, time: a.time, record: a.record, req: a.req, note: a.note, savedAt: new Date().toISOString() });
   if (!writeSaved(list)) { toast('Không lưu được. Trình duyệt đang chặn lưu trữ cục bộ.'); return; }
   updateSavedBadge();
   toast(i >= 0 ? 'Đã bỏ lưu hoạt động.' : 'Đã lưu hoạt động. Xem tại "Theo dõi hoạt động đã lưu".', 3000);
@@ -555,7 +562,7 @@ function render() {
     if (i === 0 || a.group !== open) {
       if (i) html += '</ul>';
       const g = GROUPS[a.group];
-      if (g) html += `<div class="group"><span class="group__label group__label--${a.group}">${g.label}</span><span class="group__hint">${g.hint}</span></div>`;
+      if (g) html += `<div class="group"><span class="group__label group__label--${a.group}">${esc(a.groupLabel || g.label)}</span>${a.groupLabel ? '' : `<span class="group__hint">${g.hint}</span>`}</div>`;
       html += '<ul class="act-list">'; open = a.group;
     }
     html += actCard(a);
