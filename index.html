@@ -83,6 +83,15 @@ h3,h4{margin:0}
 .modal .achievement-text{margin:0}
 .modal-close{position:absolute;top:var(--space-3);right:var(--space-3);width:36px;height:36px;border:0;border-radius:var(--radius-pill);background:var(--color-dark-50);font-size:22px;cursor:pointer}
 
+/* ===== Vinh danh: ảnh từ Google Drive + trạng thái tải ===== */
+.honor-img{display:block;width:100%;height:100%;object-fit:cover}
+.modal .photo{min-height:280px;background:var(--color-bg-alt)}
+.honor-notice{margin:0 0 var(--space-4);padding:var(--space-3) var(--space-4);border-radius:var(--radius-sm);background:var(--bg-color);color:var(--color-blue-700);font-size:14px}
+.honor-notice[hidden]{display:none}
+.honor-notice.is-error{color:var(--error-color)}
+.honor-more{display:flex;justify-content:center;margin-top:var(--space-5)}
+.honor-more[hidden]{display:none}
+
 /* ===== Responsive ===== */
 @media (max-width:900px){
   h1{font-size:var(--font-size-h1-mobile)} h2{font-size:var(--font-size-h2-mobile)}
@@ -245,19 +254,17 @@ h3,h4{margin:0}
 <section class="section section--alt" id="vinh-danh">
   <div class="container">
     <h2>Vinh danh Sinh viên 5 Tốt tiêu biểu</h2>
-    <div class="pill-tabs" role="tablist" id="honorTabs">
-      <button class="tab-btn is-active" data-level="UEH" type="button">Cấp UEH</button>
-      <button class="tab-btn" data-level="TP" type="button">Cấp Thành phố</button>
-      <button class="tab-btn" data-level="Khoa" type="button">Cấp Khoa</button>
-    </div>
+    <div class="pill-tabs" role="tablist" id="honorTabs" aria-label="Cấp vinh danh"></div>
+    <p class="honor-notice" id="honorNotice" role="status" hidden></p>
     <div class="honor-grid" id="honorGrid"></div>
+    <div class="honor-more" id="honorMore" hidden><button type="button" class="btn btn--outline" id="honorMoreBtn">Xem thêm</button></div>
   </div>
 </section>
 
 <div class="modal-backdrop" id="honorModal">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalName">
     <button class="modal-close" id="honorModalClose" aria-label="Đóng">×</button>
-    <div class="photo"><div class="ph">Ảnh chân dung</div></div>
+    <div class="photo" id="modalPhoto"><div class="ph">Ảnh chân dung</div></div>
     <div class="content">
       <span class="level-tag" id="modalLevel">Cấp UEH</span>
       <h3 id="modalName">Họ và tên</h3>
@@ -278,7 +285,7 @@ h3,h4{margin:0}
             <p>Đăng ký tham gia phong trào ngay hôm nay để BIT đồng hành cùng bạn suốt năm học.</p>
         </div>
         <div class="btns">
-            <a class="fb main" href="#dang-ki">Đăng ký phong trào SV5T</a>
+            <a class="fb main" href="./dang-ky.html">Đăng ký phong trào SV5T</a>
             <a class="fb ghost" href="https://www.facebook.com/groups/1129624948171351">Tham gia group Facebook</a>
         </div>
     </section>
@@ -306,16 +313,16 @@ h3,h4{margin:0}
     <nav class="f-col f-nav" aria-label="Điều hướng">
         <h4>Điều hướng</h4>
         <a href="#top">Trang chủ</a>
-        <a href="#nien-bieu">Niên biểu hoạt động</a>
+        <a href="./nien-bieu.html">Niên biểu hoạt động</a>
         <a href="#tieu-chuan">Về phong trào SV5T</a>
         <a href="#vinh-danh">Vinh danh tiêu biểu</a>
     </nav>
 
     <nav class="f-col f-join" aria-label="Tham gia">
         <h4>Tham gia</h4>
-        <a href="#dang-ki">Đăng ký phong trào SV5T</a>
+        <a href="./dang-ky.html">Đăng ký phong trào SV5T</a>
         <a href="https://www.facebook.com/groups/1129624948171351">Group Cùng BIT chinh phục SV5T</a>
-        <a href="#nien-bieu">Gửi yêu cầu xét duyệt hoạt động</a>
+        <a href="./nien-bieu.html#dong-gop">Gửi yêu cầu xét duyệt hoạt động</a>
     </nav>
 
     <div class="f-col f-contact">
@@ -367,62 +374,173 @@ yearBtns.forEach(btn => btn.addEventListener('click', () => {
   document.getElementById('year-desc').textContent = d.desc;
 }));
 
-// ---- Vinh danh ----
-const HONORS = {
-  UEH: [
-    { name: 'Nguyễn Văn A', achievement: 'Đạt danh hiệu Sinh viên 5 Tốt cấp UEH năm 2026, thành viên CLB Học thuật BIT, IELTS 7.5.' },
-    { name: 'Trần Thị B', achievement: 'Trưởng ban Tình nguyện khoa, tham gia 5 chiến dịch Mùa hè xanh, GPA 3.7/4.' },
-    { name: 'Lê Văn C', achievement: 'Quán quân cuộc thi Khởi nghiệp UEH 2026, đại diện khoa BIT tham dự giao lưu sinh viên toàn trường.' }
-  ],
-  TP: [
-    { name: 'Phạm Thị D', achievement: 'Đạt danh hiệu Sinh viên 5 Tốt cấp Thành phố, đại diện UEH tham gia Liên hoan SV5T TP.HCM.' },
-    { name: 'Hoàng Văn E', achievement: 'Giải Nhì Nghiên cứu khoa học cấp Thành, thành viên đội tuyển Case Competition.' },
-    { name: 'Đỗ Thị F', achievement: 'Vận động viên tiêu biểu giải Điền kinh sinh viên TP.HCM, đạt Huy chương Vàng 100m.' }
-  ],
-  Khoa: [
-    { name: 'Vũ Văn G', achievement: 'Sinh viên tiêu biểu cấp Khoa BIT, tích cực tham gia hoạt động Đoàn – Hội, GPA 3.5/4.' },
-    { name: 'Ngô Thị H', achievement: 'Thành viên Ban tổ chức chuỗi sự kiện BIT Fest 2026, tình nguyện viên tích cực.' },
-    { name: 'Bùi Văn I', achievement: 'Đạt học bổng khuyến khích học tập 4 học kỳ liên tiếp, hỗ trợ mentor tân sinh viên.' }
-  ]
-};
-const levelName = l => 'Cấp ' + (l === 'TP' ? 'Thành phố' : l);
-const honorModal = document.getElementById('honorModal');
+// ---- Vinh danh: đọc từ Google Sheet ----
+/* Sheet (1 tab, ví dụ tên "VINH DANH") có 4 cột, dòng đầu là tiêu đề:
+     A = CẤP (UEH / Thành phố / Khoa / Trung ương)   B = HỌ VÀ TÊN
+     C = THÀNH TÍCH                                   D = LINK ẢNH (Google Drive)
+   Ảnh phải để chế độ chia sẻ "Bất kỳ ai có đường liên kết" thì mới hiện được.
+   Có thể dùng chung SHEET_ID với trang Niên biểu, chỉ cần thêm tab mới. Chưa điền thì hiện dữ liệu minh họa. */
+const HONOR_CONFIG = { SHEET_ID: 'PASTE_HONOR_SHEET_ID_HERE', TAB: 'VINH DANH', PAGE_SIZE: 9 };
 
-function renderHonors(level) {
-  const grid = document.getElementById('honorGrid');
-  grid.innerHTML = '';
-  const list = HONORS[level] || [];
-  [...list, ...list, ...list].slice(0, 9).forEach(p => {
-    const card = document.createElement('button');
-    card.type = 'button';
-    card.className = 'honor-card';
-    card.innerHTML = `
-      <div class="photo"><div class="ph">Ảnh chân dung</div></div>
-      <div class="body">
-        <span class="level-tag">${levelName(level)}</span>
-        <h4>${p.name}</h4>
-        <p class="achievement">${p.achievement.slice(0, 60)}...</p>
-      </div>`;
-    card.addEventListener('click', () => {
-      document.getElementById('modalLevel').textContent = levelName(level);
-      document.getElementById('modalName').textContent = p.name;
-      document.getElementById('modalAchievement').textContent = p.achievement;
-      honorModal.classList.add('is-open');
-    });
-    grid.appendChild(card);
-  });
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fold = s => String(s ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/gi, 'd').toLowerCase();
+const $ = id => document.getElementById(id);
+const honorReady = () => HONOR_CONFIG.SHEET_ID && !HONOR_CONFIG.SHEET_ID.startsWith('PASTE_');
+
+const LEVELS = [
+  { key: 'TW',   label: 'Cấp Trung ương', re: /trung uong|tw/ },
+  { key: 'UEH',  label: 'Cấp UEH',        re: /ueh|truong/ },
+  { key: 'TP',   label: 'Cấp Thành phố',  re: /thanh|tp/ },
+  { key: 'Khoa', label: 'Cấp Khoa',       re: /khoa/ }
+];
+const levelKeyOf = t => { const f = fold(t); const l = LEVELS.find(x => x.re.test(f)); return l ? l.key : 'Khac'; };
+const levelLabel = k => (LEVELS.find(x => x.key === k) || { label: 'Khác' }).label;
+
+const DEMO_HONORS = [
+  { level: 'UEH', name: 'Nguyễn Văn A', achievement: 'Đạt danh hiệu Sinh viên 5 Tốt cấp UEH năm 2026, thành viên CLB Học thuật BIT, IELTS 7.5.', photo: '' },
+  { level: 'UEH', name: 'Trần Thị B', achievement: 'Trưởng ban Tình nguyện khoa, tham gia 5 chiến dịch Mùa hè xanh, GPA 3.7/4.', photo: '' },
+  { level: 'UEH', name: 'Lê Văn C', achievement: 'Quán quân cuộc thi Khởi nghiệp UEH 2026, đại diện khoa BIT tham dự giao lưu sinh viên toàn trường.', photo: '' },
+  { level: 'TP', name: 'Phạm Thị D', achievement: 'Đạt danh hiệu Sinh viên 5 Tốt cấp Thành phố, đại diện UEH tham gia Liên hoan SV5T TP.HCM.', photo: '' },
+  { level: 'TP', name: 'Hoàng Văn E', achievement: 'Giải Nhì Nghiên cứu khoa học cấp Thành, thành viên đội tuyển Case Competition.', photo: '' },
+  { level: 'TP', name: 'Đỗ Thị F', achievement: 'Vận động viên tiêu biểu giải Điền kinh sinh viên TP.HCM, đạt Huy chương Vàng 100m.', photo: '' },
+  { level: 'Khoa', name: 'Vũ Văn G', achievement: 'Sinh viên tiêu biểu cấp Khoa BIT, tích cực tham gia hoạt động Đoàn – Hội, GPA 3.5/4.', photo: '' },
+  { level: 'Khoa', name: 'Ngô Thị H', achievement: 'Thành viên Ban tổ chức chuỗi sự kiện BIT Fest 2026, tình nguyện viên tích cực.', photo: '' },
+  { level: 'Khoa', name: 'Bùi Văn I', achievement: 'Đạt học bổng khuyến khích học tập 4 học kỳ liên tiếp, hỗ trợ mentor tân sinh viên.', photo: '' }
+];
+
+function parseCSV(text) {
+  const rows = []; let row = [], cell = '', q = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (q) { if (c === '"') { if (text[i + 1] === '"') { cell += '"'; i++; } else q = false; } else cell += c; }
+    else if (c === '"') q = true;
+    else if (c === ',') { row.push(cell); cell = ''; }
+    else if (c === '\n' || c === '\r') { if (c === '\r' && text[i + 1] === '\n') i++; row.push(cell); rows.push(row); row = []; cell = ''; }
+    else cell += c;
+  }
+  if (cell !== '' || row.length) { row.push(cell); rows.push(row); }
+  return rows;
 }
-document.getElementById('honorTabs').addEventListener('click', (e) => {
-  const btn = e.target.closest('.tab-btn');
-  if (!btn) return;
-  document.querySelectorAll('#honorTabs .tab-btn').forEach(b => b.classList.remove('is-active'));
-  btn.classList.add('is-active');
-  renderHonors(btn.dataset.level);
+
+/* Link chia sẻ Drive (…/file/d/ID/view, …/open?id=ID, …/uc?id=ID) hoặc chỉ dán ID → địa chỉ ảnh hiển thị được */
+function driveImageUrl(raw) {
+  const v = String(raw || '').trim();
+  if (!v) return '';
+  let id = '';
+  const m = v.match(/\/d\/([\w-]{20,})/) || v.match(/[?&]id=([\w-]{20,})/);
+  if (m) {
+    try { if (!['drive.google.com', 'docs.google.com', 'drive.usercontent.google.com', 'lh3.googleusercontent.com'].includes(new URL(v).hostname.toLowerCase())) return ''; }
+    catch (e) { return ''; }
+    id = m[1];
+  } else if (/^[\w-]{25,}$/.test(v)) id = v;
+  return id ? `https://drive.google.com/thumbnail?id=${id}&sz=w800` : '';
+}
+
+function rowsToHonors(rows) {
+  const isHeader = r => r.some(x => /^ho (va )?ten/.test(fold(x).trim()));
+  let h = rows.findIndex(isHeader);
+  let col = { level: 0, name: 1, ach: 2, photo: 3 };
+  if (h >= 0) {
+    const f = rows[h].map(x => fold(x).trim());
+    col = { level: f.findIndex(x => /^cap/.test(x)), name: f.findIndex(x => /^ho (va )?ten/.test(x)),
+            ach: f.findIndex(x => /thanh tich/.test(x)), photo: f.findIndex(x => /\banh\b|link|hinh/.test(x)) };
+  }
+  return rows.slice(h + 1).map(r => r.map(x => (x || '').trim())).filter(c => c[col.name]).map(c => ({
+    level: levelKeyOf(c[col.level]), name: c[col.name], achievement: c[col.ach] || '', photo: driveImageUrl(c[col.photo])
+  }));
+}
+
+async function loadHonors() {
+  if (!honorReady()) return { rows: DEMO_HONORS, demo: true };
+  const url = `https://docs.google.com/spreadsheets/d/${HONOR_CONFIG.SHEET_ID}/gviz/tq?tqx=out:csv&headers=0&sheet=${encodeURIComponent(HONOR_CONFIG.TAB)}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  return { rows: rowsToHonors(parseCSV(await res.text())), demo: false };
+}
+
+const photoHTML = (url, name) => url
+  ? `<img class="honor-img" src="${esc(url)}" alt="Ảnh chân dung ${esc(name)}" loading="lazy" referrerpolicy="no-referrer">`
+  : '<div class="ph">Ảnh chân dung</div>';
+// Ảnh Drive lỗi (chưa chia sẻ công khai, ID sai...) thì quay về khung giữ chỗ
+document.addEventListener('error', e => {
+  const el = e.target;
+  if (el && el.classList && el.classList.contains('honor-img')) {
+    const ph = document.createElement('div'); ph.className = 'ph'; ph.textContent = 'Ảnh chân dung'; el.replaceWith(ph);
+  }
+}, true);
+
+let honors = [], activeLevel = '', shown = HONOR_CONFIG.PAGE_SIZE;
+const honorModal = $('honorModal');
+
+function setHonorNotice(msg, isError) {
+  const n = $('honorNotice'); n.textContent = msg || ''; n.hidden = !msg; n.classList.toggle('is-error', !!isError);
+}
+function renderHonorTabs() {
+  const present = [...LEVELS.map(l => l.key), 'Khac'].filter(k => honors.some(h => h.level === k));
+  if (!present.includes(activeLevel)) activeLevel = present[0] || '';
+  $('honorTabs').innerHTML = present.map(k =>
+    `<button class="tab-btn ${k === activeLevel ? 'is-active' : ''}" role="tab" aria-selected="${k === activeLevel}" data-level="${k}" type="button">${levelLabel(k)}</button>`).join('');
+}
+function renderHonors() {
+  const list = honors.map((h, i) => ({ h, i })).filter(x => x.h.level === activeLevel);
+  $('honorGrid').innerHTML = list.slice(0, shown).map(({ h, i }) => `
+    <button type="button" class="honor-card" data-i="${i}">
+      <div class="photo">${photoHTML(h.photo, h.name)}</div>
+      <div class="body">
+        <span class="level-tag">${levelLabel(h.level)}</span>
+        <h4>${esc(h.name)}</h4>
+        <p class="achievement">${esc(h.achievement.length > 60 ? h.achievement.slice(0, 60) + '…' : h.achievement)}</p>
+      </div>
+    </button>`).join('');
+  const more = list.length - shown;
+  $('honorMore').hidden = more <= 0;
+  if (more > 0) $('honorMoreBtn').textContent = `Xem thêm (${more})`;
+}
+function openHonor(i) {
+  const h = honors[i]; if (!h) return;
+  $('modalLevel').textContent = levelLabel(h.level);
+  $('modalName').textContent = h.name;
+  $('modalAchievement').textContent = h.achievement;
+  $('modalPhoto').innerHTML = photoHTML(h.photo, h.name);
+  honorModal.classList.add('is-open');
+}
+
+$('honorTabs').addEventListener('click', e => {
+  const b = e.target.closest('.tab-btn'); if (!b) return;
+  activeLevel = b.dataset.level; shown = HONOR_CONFIG.PAGE_SIZE; renderHonorTabs(); renderHonors();
 });
-document.getElementById('honorModalClose').addEventListener('click', () => honorModal.classList.remove('is-open'));
-honorModal.addEventListener('click', (e) => { if (e.target === honorModal) honorModal.classList.remove('is-open'); });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') honorModal.classList.remove('is-open'); });
-renderHonors('UEH');
+$('honorGrid').addEventListener('click', e => { const c = e.target.closest('.honor-card'); if (c) openHonor(+c.dataset.i); });
+$('honorMoreBtn').addEventListener('click', () => { shown += HONOR_CONFIG.PAGE_SIZE; renderHonors(); });
+$('honorModalClose').addEventListener('click', () => honorModal.classList.remove('is-open'));
+honorModal.addEventListener('click', e => { if (e.target === honorModal) honorModal.classList.remove('is-open'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') honorModal.classList.remove('is-open'); });
+
+setHonorNotice('Đang tải danh sách vinh danh...');
+loadHonors().then(({ rows, demo }) => {
+  honors = rows;
+  setHonorNotice(demo ? 'Đang hiển thị dữ liệu minh họa. Điền SHEET_ID trong HONOR_CONFIG để lấy dữ liệu thật từ Google Sheet.'
+                      : rows.length ? '' : 'Chưa có thông tin vinh danh.');
+  renderHonorTabs(); renderHonors();
+}).catch(err => setHonorNotice('Không tải được danh sách vinh danh (' + err.message + '). Kiểm tra quyền chia sẻ Sheet, SHEET_ID và tên tab.', true));
+
+// ---- Số trên "Theo dõi hoạt động đã lưu" (đọc cùng khóa với trang Niên biểu) ----
+(function savedBadge() {
+  const KEY = 'sv5t_tracked_activities';
+  function count() {
+    try { const v = JSON.parse(localStorage.getItem(KEY) || '[]'); return Array.isArray(v) ? v.filter(x => x && x.id && x.name).length : 0; }
+    catch (e) { return 0; }
+  }
+  function update() {
+    const b = document.querySelector('.saved__badge');
+    if (!b) return;
+    const n = count();
+    b.textContent = n;
+    b.setAttribute('aria-label', n + ' hoạt động đã lưu');
+  }
+  update();
+  window.addEventListener('storage', e => { if (e.key === KEY) update(); });  // tab khác vừa lưu / bỏ lưu
+  window.addEventListener('pageshow', update);                                 // quay lại bằng nút Back
+})();
 </script>
 </body>
 </html>
