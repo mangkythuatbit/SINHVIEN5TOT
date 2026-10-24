@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="./css/root.css">
 <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/footer.css">
 
 <style>
   /* Style riêng cho trang Đăng ký Form */
@@ -195,36 +196,63 @@
   </div>
 </main>
 
-<footer class="site-footer">
-  <div class="container footer-main">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <span class="footer-logo-chip"><img src="assets/bit-logo.png" alt="Logo BIT"></span>
-        <p class="footer-desc">Cổng thông tin phong trào Sinh viên 5 Tốt khoa Công nghệ thông tin kinh doanh (BIT), UEH.</p>
-      </div>
+<!-- ================= FOOTER (footer.html của nhóm) ================= -->
+<footer>
+    <div class="f-top"></div>
 
-      <div class="footer-col">
-        <h4>Điều hướng</h4>
-        <ul>
-          <li><a href="index.html">Trang chủ</a></li>
-          <li><a href="nien-bieu.html">Niên biểu hoạt động</a></li>
-          <li><a href="dang-ky.html">Đăng ký phong trào</a></li>
-        </ul>
-      </div>
+    <section class="f-cta">
+        <div>
+            <h2>Sẵn sàng chinh phục danh hiệu SV5T 2026?</h2>
+            <p>Đăng ký tham gia phong trào ngay hôm nay để BIT đồng hành cùng bạn suốt năm học.</p>
+        </div>
+        <div class="btns">
+            <a class="fb main" href="./dang-ky.html">Đăng ký phong trào SV5T</a>
+            <a class="fb ghost" href="https://www.facebook.com/groups/1129624948171351">Tham gia group Facebook</a>
+        </div>
+    </section>
 
-      <div class="footer-col">
-        <h4>Liên hệ</h4>
-        <ul>
-          <li><address>Đoàn TN – Hội SV khoa BIT</address></li>
-          <li><a href="mailto:doanhoi.bit@ueh.edu.vn">sv5t.bit@ueh.edu.vn</a></li>
-        </ul>
-      </div>
+    <div class="f-col f-brand">
+        <img class="logo" src="assets/bit-logo.png" alt="Logo BIT">
+        <div>
+            <p>Cổng thông tin Sinh viên 5 Tốt khoa BIT, UEH: tra cứu hoạt động, theo dõi tiến trình và vinh danh
+                sinh viên tiêu biểu.</p>
+            <div class="soc">
+                <a href="https://www.facebook.com/groups/1129624948171351" aria-label="Facebook"><svg
+                        viewBox="0 0 24 24">
+                        <path
+                            d="M12 2a10 10 0 0 0-1.6 19.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0 0 12 2z" />
+                    </svg></a>
+                <a href="mailto:doanhoi.bit@ueh.edu.vn" aria-label="Email"><svg viewBox="0 0 24 24">
+                        <path
+                            d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zm0 2v.5l8 5 8-5V7H4zm16 10V9.9l-8 5-8-5V17h16z" />
+                    </svg></a>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <div class="container footer-bottom">
-    <span>© 2026 Đoàn TN – Hội SV khoa BIT, UEH</span>
-  </div>
+    <nav class="f-col f-nav" aria-label="Điều hướng">
+        <h4>Điều hướng</h4>
+        <a href="./index.html">Trang chủ</a>
+        <a href="./nien-bieu.html">Niên biểu hoạt động</a>
+        <a href="./index.html#tieu-chuan">Về phong trào SV5T</a>
+        <a href="./index.html#vinh-danh">Vinh danh tiêu biểu</a>
+    </nav>
+
+    <nav class="f-col f-join" aria-label="Tham gia">
+        <h4>Tham gia</h4>
+        <a href="./dang-ky.html">Đăng ký phong trào SV5T</a>
+        <a href="https://www.facebook.com/groups/1129624948171351">Group Cùng BIT chinh phục SV5T</a>
+        <a href="#dong-gop">Gửi yêu cầu xét duyệt hoạt động</a>
+    </nav>
+
+    <div class="f-col f-contact">
+        <h4>Liên hệ</h4>
+        <p>Đoàn TN – Hội SV khoa Công nghệ thông tin kinh doanh (BIT), UEH</p>
+        <a href="mailto:doanhoi.bit@ueh.edu.vn">doanhoi.bit@ueh.edu.vn</a>
+    </div>
+
+    <div class="f-divider"></div>
+    <p class="f-copy">© 2026 Đoàn TN – Hội SV khoa Công nghệ thông tin kinh doanh (BIT), UEH</p>
 </footer>
 
 <script>
