@@ -89,8 +89,14 @@ h3,h4{margin:0}
 .honor-notice{margin:0 0 var(--space-4);padding:var(--space-3) var(--space-4);border-radius:var(--radius-sm);background:var(--bg-color);color:var(--color-blue-700);font-size:14px}
 .honor-notice[hidden]{display:none}
 .honor-notice.is-error{color:var(--error-color)}
-.honor-more{display:flex;justify-content:center;margin-top:var(--space-5)}
-.honor-more[hidden]{display:none}
+.pager{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:var(--space-2);margin-top:var(--space-6)}
+.pager[hidden]{display:none}
+.pager button{min-width:var(--button-height);height:var(--button-height);padding:0 var(--space-3);border:1px solid var(--color-dark-100);border-radius:var(--radius-button);background:var(--bg-color);color:var(--text-color);font:inherit;font-weight:var(--fw-medium);cursor:pointer;transition:var(--transition-base)}
+.pager button:hover:not(:disabled):not([aria-current]){border-color:var(--primary-color);color:var(--primary-color)}
+.pager button[aria-current="page"]{background:var(--primary-color);border-color:var(--primary-color);color:var(--color-text-on-primary)}
+.pager button:disabled{opacity:.4;cursor:not-allowed}
+.pager__gap{padding:0 var(--space-1);color:var(--text-muted)}
+#honorTabs{scroll-margin-top:var(--space-8)}
 
 /* ===== Responsive ===== */
 @media (max-width:900px){
@@ -257,7 +263,7 @@ h3,h4{margin:0}
     <div class="pill-tabs" role="tablist" id="honorTabs" aria-label="Cấp vinh danh"></div>
     <p class="honor-notice" id="honorNotice" role="status" hidden></p>
     <div class="honor-grid" id="honorGrid"></div>
-    <div class="honor-more" id="honorMore" hidden><button type="button" class="btn btn--outline" id="honorMoreBtn">Xem thêm</button></div>
+    <nav class="pager" id="honorPager" aria-label="Phân trang vinh danh" hidden></nav>
   </div>
 </section>
 
@@ -380,7 +386,7 @@ yearBtns.forEach(btn => btn.addEventListener('click', () => {
      C = THÀNH TÍCH                                   D = LINK ẢNH (Google Drive)
    Ảnh phải để chế độ chia sẻ "Bất kỳ ai có đường liên kết" thì mới hiện được.
    Có thể dùng chung SHEET_ID với trang Niên biểu, chỉ cần thêm tab mới. Chưa điền thì hiện dữ liệu minh họa. */
-const HONOR_CONFIG = { SHEET_ID: 'PASTE_HONOR_SHEET_ID_HERE', TAB: 'VINH DANH', PAGE_SIZE: 9 };
+const HONOR_CONFIG = { SHEET_ID: '1NIpbiUeGG5JBBPyN_Wbwl8m4K2IWqUT6ASv7YrxgGlY', TAB: 'VINH DANH', PAGE_SIZE: 9 };
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fold = s => String(s ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/gi, 'd').toLowerCase();
@@ -469,7 +475,7 @@ document.addEventListener('error', e => {
   }
 }, true);
 
-let honors = [], activeLevel = '', shown = HONOR_CONFIG.PAGE_SIZE;
+let honors = [], activeLevel = '', page = 1;
 const honorModal = $('honorModal');
 
 function setHonorNotice(msg, isError) {
@@ -481,9 +487,17 @@ function renderHonorTabs() {
   $('honorTabs').innerHTML = present.map(k =>
     `<button class="tab-btn ${k === activeLevel ? 'is-active' : ''}" role="tab" aria-selected="${k === activeLevel}" data-level="${k}" type="button">${levelLabel(k)}</button>`).join('');
 }
+function pageItems(n, p) {
+  if (n <= 7) return Array.from({ length: n }, (_, i) => i + 1);
+  const set = [...new Set([1, n, p - 1, p, p + 1])].filter(x => x >= 1 && x <= n).sort((a, b) => a - b);
+  const out = []; set.forEach((x, i) => { if (i && x - set[i - 1] > 1) out.push('…'); out.push(x); });
+  return out;
+}
 function renderHonors() {
   const list = honors.map((h, i) => ({ h, i })).filter(x => x.h.level === activeLevel);
-  $('honorGrid').innerHTML = list.slice(0, shown).map(({ h, i }) => `
+  const per = HONOR_CONFIG.PAGE_SIZE, pages = Math.max(1, Math.ceil(list.length / per));
+  page = Math.min(Math.max(1, page), pages);
+  $('honorGrid').innerHTML = list.slice((page - 1) * per, page * per).map(({ h, i }) => `
     <button type="button" class="honor-card" data-i="${i}">
       <div class="photo">${photoHTML(h.photo, h.name)}</div>
       <div class="body">
@@ -492,9 +506,13 @@ function renderHonors() {
         <p class="achievement">${esc(h.achievement.length > 60 ? h.achievement.slice(0, 60) + '…' : h.achievement)}</p>
       </div>
     </button>`).join('');
-  const more = list.length - shown;
-  $('honorMore').hidden = more <= 0;
-  if (more > 0) $('honorMoreBtn').textContent = `Xem thêm (${more})`;
+  const pager = $('honorPager');
+  pager.hidden = pages <= 1;
+  pager.innerHTML = pages <= 1 ? '' :
+    `<button type="button" data-page="${page - 1}" ${page === 1 ? 'disabled' : ''} aria-label="Trang trước">‹</button>` +
+    pageItems(pages, page).map(x => x === '…' ? '<span class="pager__gap" aria-hidden="true">…</span>'
+      : `<button type="button" data-page="${x}" ${x === page ? 'aria-current="page"' : ''} aria-label="Trang ${x}">${x}</button>`).join('') +
+    `<button type="button" data-page="${page + 1}" ${page === pages ? 'disabled' : ''} aria-label="Trang sau">›</button>`;
 }
 function openHonor(i) {
   const h = honors[i]; if (!h) return;
@@ -507,10 +525,15 @@ function openHonor(i) {
 
 $('honorTabs').addEventListener('click', e => {
   const b = e.target.closest('.tab-btn'); if (!b) return;
-  activeLevel = b.dataset.level; shown = HONOR_CONFIG.PAGE_SIZE; renderHonorTabs(); renderHonors();
+  activeLevel = b.dataset.level; page = 1; renderHonorTabs(); renderHonors();
 });
 $('honorGrid').addEventListener('click', e => { const c = e.target.closest('.honor-card'); if (c) openHonor(+c.dataset.i); });
-$('honorMoreBtn').addEventListener('click', () => { shown += HONOR_CONFIG.PAGE_SIZE; renderHonors(); });
+$('honorPager').addEventListener('click', e => {
+  const b = e.target.closest('button[data-page]');
+  if (!b || b.disabled) return;
+  page = +b.dataset.page; renderHonors();
+  $('honorTabs').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+});
 $('honorModalClose').addEventListener('click', () => honorModal.classList.remove('is-open'));
 honorModal.addEventListener('click', e => { if (e.target === honorModal) honorModal.classList.remove('is-open'); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') honorModal.classList.remove('is-open'); });
