@@ -36,12 +36,13 @@ a{color:var(--primary-color)}
 .live-chip{display:inline-flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-4);padding:var(--space-1) var(--space-3);border-radius:var(--radius-pill);background:var(--bg-color);border:1px solid var(--color-blue-100);color:var(--color-blue-700);font-size:14px;font-weight:var(--fw-medium)}
 .live-chip::before{content:"";width:8px;height:8px;border-radius:var(--radius-pill);background:var(--success-color)}
 
-/* Tab chọn biểu mẫu (cùng kiểu với niên biểu) */
-.tabs{display:flex;gap:var(--space-3);overflow-x:auto;padding-bottom:var(--space-1);scrollbar-width:thin}
+/* ---------- Tab chọn biểu mẫu ---------- */
+.tabs{display:flex;gap:var(--space-3);margin-top:var(--space-6);overflow-x:auto;padding-bottom:var(--space-1);scrollbar-width:thin}
 .tab{flex:1 1 0;min-width:max-content;display:flex;align-items:center;justify-content:center;gap:var(--space-2);padding:var(--space-3) var(--space-4);border:1px solid var(--color-blue-100);border-radius:var(--radius-sm);background:var(--bg-color);color:var(--text-color);font-weight:var(--fw-medium);cursor:pointer;transition:var(--transition-base)}
 .tab:hover{border-color:var(--primary-color)}
 .tab[aria-selected="true"]{background:var(--primary-color);border-color:var(--primary-color);color:var(--color-text-on-primary);box-shadow:var(--shadow-glow)}
-.form-section{padding:var(--space-6) 0 var(--space-8)}
+.tab__count{min-width:24px;padding:0 var(--space-2);border-radius:var(--radius-pill);background:var(--color-bg-alt);color:var(--color-dark-500);font-size:13px;font-weight:var(--fw-bold);text-align:center}
+.tab[aria-selected="true"] .tab__count{background:var(--color-blue-700);color:var(--color-text-on-dark)}
 
 /* Hướng dẫn + khung biểu mẫu */
 .registration-grid{display:grid;grid-template-columns:1fr;gap:var(--space-6);margin-top:var(--space-5)}
@@ -115,7 +116,7 @@ a{color:var(--primary-color)}
     <p>Phong trào Sinh viên 5 Tốt cấp khoa vẫn đang chờ bạn tiếp nối hành trình. Chọn biểu mẫu bạn cần điền bên dưới.</p>
     <p class="page-note">Lưu ý: Trang này sẽ trở thành trang thu nhận hồ sơ dành cho các sinh viên có mong muốn xét danh hiệu Sinh viên 5 Tốt khoa Công nghệ thông tin kinh doanh năm 2026 (chi tiết sẽ được cập nhật).</p>
   </div>
-   <div class="tabs" role="tablist" aria-label="Chọn biểu mẫu đăng ký" id="formTabs">
+  <div class="tabs" role="tablist" aria-label="Chọn biểu mẫu đăng ký" id="formTabs">
       <button type="button" role="tab" class="tab" id="tab-tracking" data-form="tracking" aria-selected="true" aria-controls="formPanel">Tracking sheet</button>
       <button type="button" role="tab" class="tab" id="tab-hop-thu" data-form="hop-thu" aria-selected="false" aria-controls="formPanel" tabindex="-1">Hộp thư Sinh viên 5 Tốt</button>
     </div>
@@ -216,7 +217,7 @@ a{color:var(--primary-color)}
 const FORMS = {
   'tracking': {
     label: 'Tracking sheet',
-    url: 'https://docs.google.com/forms/d/e/1FAIpQLSc-MLikKEIx48oV3-ysL42quYFXksWCqLBVSG4ad43-R0CSbQ/viewform',
+    url: 'PASTE_TRACKING_FORM_URL_HERE',
     title: 'Hướng dẫn điền Tracking sheet',
     intro: 'Dùng để theo dõi tiến trình rèn luyện của bạn trong năm học 2026.',
     steps: [
@@ -307,6 +308,25 @@ window.addEventListener('hashchange', () => { const k = location.hash.slice(1); 
 
 // Mở trang với #tracking hoặc #hop-thu sẽ vào thẳng tab tương ứng
 showForm(FORMS[location.hash.slice(1)] ? location.hash.slice(1) : DEFAULT_FORM);
+
+// ---- Số trên "Theo dõi hoạt động đã lưu" (đọc cùng khóa với trang Niên biểu) ----
+(function savedBadge() {
+  const KEY = 'sv5t_tracked_activities';
+  function count() {
+    try { const v = JSON.parse(localStorage.getItem(KEY) || '[]'); return Array.isArray(v) ? v.filter(x => x && x.id && x.name).length : 0; }
+    catch (e) { return 0; }
+  }
+  function update() {
+    const b = document.querySelector('.saved__badge');
+    if (!b) return;
+    const n = count();
+    b.textContent = n;
+    b.setAttribute('aria-label', n + ' hoạt động đã lưu');
+  }
+  update();
+  window.addEventListener('storage', e => { if (e.key === KEY) update(); });  // tab khác vừa lưu / bỏ lưu
+  window.addEventListener('pageshow', update);                                 // quay lại bằng nút Back
+})();
 </script>
 </body>
 </html>
