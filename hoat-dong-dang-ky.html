@@ -10,59 +10,66 @@
 <link rel="stylesheet" href="./css/footer.css">
 
 <style>
-/* Chỉ dùng biến từ root.css (đồng bộ với nien-bieu.html) */
+/* Chỉ dùng biến từ root.css. Không đặt class trùng tên với footer.css (main, btns, fb, ghost, logo, soc, f-*) */
 *,*::before,*::after{box-sizing:border-box}
 body{margin:0;font-family:var(--font-family-base);font-size:var(--font-size-body);line-height:var(--line-height-body);color:var(--text-color);background:var(--bg-color)}
-button{font-family:inherit;font-size:inherit;line-height:inherit}
+input,select,textarea,button,table{font-family:inherit;font-size:inherit;line-height:inherit}
 h1{font-size:var(--font-size-h1);line-height:var(--line-height-h1);margin:0;color:var(--color-blue-700)}
 h2{font-size:var(--font-size-h2);line-height:var(--line-height-h2);margin:0;color:var(--color-blue-700)}
 h3,h4,p,ul,ol,dl,dd{margin:0}
 a{color:var(--primary-color)}
 .container{max-width:var(--container-max);margin:0 auto;padding:0 var(--container-pad)}
 :focus-visible{outline:none;box-shadow:var(--shadow-focus)}
+[id]{scroll-margin-top:var(--space-8)}
 
-/* ---------- Nút ---------- */
+/* Nút */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--gap-icon-text);min-height:var(--button-height);padding:var(--button-padding-y) var(--button-padding-x);border:2px solid var(--primary-color);border-radius:var(--radius-button);font-size:var(--font-size-button);font-weight:var(--fw-medium);text-decoration:none;cursor:pointer;transition:var(--transition-base)}
+.btn svg{width:18px;height:18px}
 .btn--primary{background:var(--primary-color);color:var(--color-text-on-primary)}
-.btn--primary:hover{background:var(--primary-hover);border-color:var(--primary-hover)}
-.btn--outline{background:var(--bg-color);color:var(--primary-color)}
-.btn--outline:hover{background:var(--primary-color-2)}
-.btn--danger{border-color:var(--color-dark-100);background:var(--bg-color);color:var(--error-color)}
-.btn--danger:hover{border-color:var(--error-color)}
-.btn svg{width:18px;height:18px;flex:none}
+.btn--primary:hover:not(:disabled){background:var(--primary-hover);border-color:var(--primary-hover)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.link-btn{padding:0;border:0;background:none;color:var(--primary-color);font-weight:var(--fw-medium);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.link-btn--danger{color:var(--error-color)}
 
-/* ---------- Đầu trang ---------- */
+/* Đầu trang */
 .page-head{padding:var(--space-7) 0 var(--space-6);background:var(--primary-color-2);border-bottom:1px solid var(--color-blue-100)}
 .page-head p{margin-top:var(--space-3);max-width:64ch}
 .live-chip{display:inline-flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-4);padding:var(--space-1) var(--space-3);border-radius:var(--radius-pill);background:var(--bg-color);border:1px solid var(--color-blue-100);color:var(--color-blue-700);font-size:14px;font-weight:var(--fw-medium)}
 .live-chip::before{content:"";width:8px;height:8px;border-radius:var(--radius-pill);background:var(--success-color)}
 
-.main{padding:var(--space-6) 0 var(--space-8)}
+.list-section{padding:var(--space-6) 0 var(--space-8)}
 
-/* ---------- Tiến độ 5 tiêu chuẩn ---------- */
-.progress{padding:var(--space-5);border:1px solid var(--color-dark-100);border-radius:var(--radius-card);background:var(--color-surface)}
-.progress__head{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap}
-.progress__count{font-size:14px;font-weight:var(--fw-bold);color:var(--primary-color)}
-.progress__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:var(--space-3);margin-top:var(--space-4)}
-.crit{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-4);border:1px solid var(--color-dark-100);border-radius:var(--radius-sm);background:var(--color-bg-alt);color:var(--color-dark-500);font-weight:var(--fw-medium);transition:var(--transition-base)}
-.crit__icon{display:grid;place-items:center;flex:none;width:24px;height:24px;border-radius:var(--radius-pill);background:var(--color-dark-100);color:var(--color-text-on-primary);font-size:13px}
-.crit__n{margin-left:auto;font-size:13px;font-weight:var(--fw-bold)}
-.crit.is-done{border-color:var(--color-blue-300);background:var(--primary-color-2);color:var(--color-blue-700)}
+/* Tiến độ 5 tiêu chuẩn */
+.progress{padding:var(--space-5);border:1px solid var(--color-dark-100);border-radius:var(--radius-card);background:var(--color-surface);box-shadow:var(--shadow-sm)}
+.progress__head{display:flex;align-items:baseline;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap}
+.progress__head h2{font-size:20px}
+.progress__text{font-weight:var(--fw-bold);color:var(--color-blue-700)}
+.progress__bar{height:8px;margin-top:var(--space-3);border-radius:var(--radius-pill);background:var(--color-dark-100);overflow:hidden}
+.progress__bar span{display:block;height:100%;width:0;background:var(--primary-color);transition:width var(--transition-slow)}
+.crit-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--space-3);margin-top:var(--space-4)}
+.crit{display:flex;align-items:center;gap:var(--space-2);padding:var(--space-3);border:1px solid var(--color-dark-100);border-radius:var(--radius-sm);color:var(--color-dark-500);transition:var(--transition-base)}
+.crit__icon{flex:none;display:grid;place-items:center;width:24px;height:24px;border-radius:var(--radius-pill);background:var(--color-dark-100);color:var(--color-text-on-dark);font-size:13px}
+.crit__count{margin-left:auto;font-size:13px;font-weight:var(--fw-bold)}
+.crit.is-done{background:var(--color-status-active-bg);border-color:var(--color-blue-100);color:var(--color-status-active-text);font-weight:var(--fw-bold)}
 .crit.is-done .crit__icon{background:var(--primary-color)}
 
-/* ---------- Thanh công cụ ---------- */
-.bar{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap;margin:var(--space-6) 0 var(--space-3)}
-.bar__actions{display:flex;gap:var(--space-3);flex-wrap:wrap}
-.notice{display:flex;gap:var(--space-2);align-items:flex-start;margin-bottom:var(--space-4);padding:var(--space-3) var(--space-4);border-radius:var(--radius-sm);background:var(--primary-color-2);color:var(--color-blue-700);font-size:14px}
-.notice svg{width:16px;height:16px;flex:none;margin-top:3px}
+/* Thanh công cụ */
+.action-bar{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap;margin:var(--space-6) 0 var(--space-3)}
+.action-bar h2{font-size:20px}
+.action-bar__right{display:flex;align-items:center;gap:var(--space-4);flex-wrap:wrap}
+.notice{margin-bottom:var(--space-4);padding:var(--space-3) var(--space-4);border-radius:var(--radius-sm);background:var(--primary-color-2);color:var(--color-blue-700);font-size:14px}
 .notice.is-warn{background:var(--color-status-expired-bg);color:var(--color-dark-700)}
-.notice small{display:block;margin-top:2px;color:var(--color-dark-500)}
+.notice p+p{margin-top:var(--space-1)}
 
-/* ---------- Danh sách (giống niên biểu) ---------- */
-.group{display:flex;align-items:center;gap:var(--space-3);margin:var(--space-5) 0 var(--space-3)}
-.group:first-child{margin-top:0}
-.group::after{content:"";flex:1;border-top:1px solid var(--color-dark-100)}
-.group__label{padding:var(--space-1) var(--space-3);border-radius:var(--radius-pill);font-size:14px;font-weight:var(--fw-bold);background:var(--color-blue-700);color:var(--color-text-on-dark)}
+/* Tab lọc theo tiêu chuẩn */
+.tabs{display:flex;gap:var(--space-3);margin-bottom:var(--space-5);overflow-x:auto;padding-bottom:var(--space-1);scrollbar-width:thin}
+.tab{flex:1 1 0;min-width:max-content;display:flex;align-items:center;justify-content:center;gap:var(--space-2);padding:var(--space-3) var(--space-4);border:1px solid var(--color-blue-100);border-radius:var(--radius-sm);background:var(--bg-color);color:var(--text-color);font-weight:var(--fw-medium);cursor:pointer;transition:var(--transition-base)}
+.tab:hover{border-color:var(--primary-color)}
+.tab[aria-selected="true"]{background:var(--primary-color);border-color:var(--primary-color);color:var(--color-text-on-primary);box-shadow:var(--shadow-glow)}
+.tab__count{min-width:24px;padding:0 var(--space-2);border-radius:var(--radius-pill);background:var(--color-bg-alt);color:var(--color-dark-500);font-size:13px;font-weight:var(--fw-bold);text-align:center}
+.tab[aria-selected="true"] .tab__count{background:var(--color-blue-700);color:var(--color-text-on-dark)}
+
+/* Thẻ hoạt động (giống niên biểu) */
 .act-list{list-style:none;padding:0;display:grid;gap:var(--space-4)}
 .act{display:grid;grid-template-columns:auto 1fr auto;gap:var(--space-4);padding:var(--space-5);border:1px solid var(--color-dark-100);border-radius:var(--radius-card);background:var(--color-surface);transition:var(--transition-base)}
 .act:hover{border-color:var(--color-blue-300);box-shadow:var(--shadow-md)}
@@ -70,24 +77,35 @@ a{color:var(--primary-color)}
 .act__title{font-size:18px;line-height:1.35;font-weight:var(--fw-bold);color:var(--color-dark-700)}
 .act__meta{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-3);margin-top:var(--space-2);color:var(--color-dark-500)}
 .meta-time{display:inline-flex;align-items:center;gap:var(--space-2);font-weight:var(--fw-medium)}
-.act svg.i{width:16px;height:16px;flex:none}
+.act svg{width:16px;height:16px;flex:none}
 .badge{display:inline-block;padding:2px var(--space-3);border-radius:var(--radius-pill);font-size:12px;font-weight:var(--fw-bold)}
 .badge-active{background:var(--color-status-active-bg);color:var(--color-status-active-text)}
 .badge-expired{background:var(--color-status-expired-bg);color:var(--color-status-expired-text)}
-.badge-group{border:1px solid var(--color-blue-300);background:var(--bg-color);color:var(--color-blue-700)}
+.badge-criterion{background:var(--primary-color-2);color:var(--color-blue-700)}
+.badge-group{border:1px solid var(--color-blue-300);color:var(--color-blue-700);background:var(--bg-color)}
 .act__details{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--space-4);margin-top:var(--space-4);padding-top:var(--space-4);border-top:1px solid var(--color-dark-50)}
 .act__details dt{margin-bottom:var(--space-1);font-size:14px;font-weight:var(--fw-bold);color:var(--color-blue-700)}
 .act__details dd{white-space:pre-line}
 .act__note{display:flex;gap:var(--space-2);align-items:flex-start;margin-top:var(--space-4);padding:var(--space-2) var(--space-3);border-radius:var(--radius-sm);background:var(--color-bg-alt);font-size:14px;color:var(--color-dark-500)}
 .act__note svg{margin-top:3px;color:var(--primary-color)}
+.act__saved{margin-top:var(--space-3);font-size:13px;color:var(--text-muted)}
 .save-btn{display:grid;place-items:center;align-self:start;width:var(--button-height);height:var(--button-height);padding:0;border:1px solid var(--primary-color);border-radius:var(--radius-pill);background:var(--primary-color);color:var(--color-text-on-primary);cursor:pointer;transition:var(--transition-base)}
-.save-btn:hover{background:var(--primary-hover);border-color:var(--primary-hover)}
 .save-btn svg{width:20px;height:20px;fill:currentColor}
+.save-btn:hover{background:var(--primary-hover);border-color:var(--primary-hover)}
 
 .empty-state{display:none;padding:var(--space-7) var(--space-5);text-align:center;border:1px dashed var(--color-blue-300);border-radius:var(--radius-card);background:var(--primary-color-2)}
 .empty-state.is-visible{display:block}
 .empty-state h3{font-size:20px;color:var(--color-blue-700)}
 .empty-state p{margin:var(--space-2) auto var(--space-5);max-width:52ch}
+
+/* Phân trang */
+.pager{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:var(--space-2);margin-top:var(--space-6)}
+.pager[hidden]{display:none}
+.pager button{min-width:var(--button-height);height:var(--button-height);padding:0 var(--space-3);border:1px solid var(--color-dark-100);border-radius:var(--radius-button);background:var(--bg-color);color:var(--text-color);font-weight:var(--fw-medium);cursor:pointer;transition:var(--transition-base)}
+.pager button:hover:not(:disabled):not([aria-current]){border-color:var(--primary-color);color:var(--primary-color)}
+.pager button[aria-current="page"]{background:var(--primary-color);border-color:var(--primary-color);color:var(--color-text-on-primary)}
+.pager button:disabled{opacity:.4;cursor:not-allowed}
+.pager__gap{padding:0 var(--space-1);color:var(--text-muted)}
 
 .toast{position:fixed;left:50%;bottom:var(--space-5);z-index:200;transform:translate(-50%,24px);max-width:calc(100% - 2*var(--space-5));padding:var(--space-3) var(--space-5);border-radius:var(--radius-button);background:var(--color-dark-900);color:var(--color-text-on-dark);opacity:0;pointer-events:none;transition:var(--transition-base)}
 .toast.is-visible{opacity:1;transform:translate(-50%,0)}
@@ -97,6 +115,7 @@ a{color:var(--primary-color)}
   h2{font-size:var(--font-size-h2-mobile)}
   body{font-size:var(--font-size-body-mobile)}
   .page-head{padding:var(--space-6) 0 var(--space-5)}
+  .crit-grid{grid-template-columns:repeat(2,1fr)}
   .act{padding:var(--space-4);gap:var(--space-3)}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
@@ -104,7 +123,7 @@ a{color:var(--primary-color)}
 </head>
 <body>
 
-<!-- ================= HEADER (giống nien-bieu.html) ================= -->
+<!-- ================= HEADER (header.html của nhóm) ================= -->
 <header class="header">
   <div class="header__inner">
     <div class="header__left">
@@ -122,7 +141,7 @@ a{color:var(--primary-color)}
         <li><a href="./index.html">Trang chủ</a></li>
         <li><a href="./nien-bieu.html">Niên biểu</a></li>
       </ul>
-      <a href="./hoat-dong-dang-ky.html" class="saved is-active" aria-current="page">
+      <a href="./hoat-dong-dang-ky.html" class="saved" aria-current="page">
         Theo dõi hoạt động đã lưu
         <span class="saved__badge" aria-label="0 hoạt động đã lưu">0</span>
       </a>
@@ -134,47 +153,55 @@ a{color:var(--primary-color)}
 <main>
 <section class="page-head">
   <div class="container">
-    <span class="live-chip">Lưu trên thiết bị của bạn</span>
-    <h1>Hoạt động đã lưu theo dõi</h1>
-    <p>Các hoạt động bạn đánh dấu ở trang Niên biểu được gom lại đây, để bạn theo dõi mức độ phủ 5 tiêu chuẩn Sinh viên 5 Tốt.</p>
+    <span class="live-chip">Lưu trên trình duyệt này</span>
+    <h1>Hoạt động đã lưu để theo dõi</h1>
+    <p>Các hoạt động bạn đã đánh dấu trong Niên biểu. Dùng để lên kế hoạch và chuẩn bị minh chứng cho hồ sơ Sinh viên 5 Tốt năm 2026.</p>
   </div>
 </section>
 
-<section class="main">
+<section class="list-section">
   <div class="container">
 
+    <!-- Tiến độ 5 tiêu chuẩn -->
     <div class="progress">
       <div class="progress__head">
-        <h2>Tiến độ phủ 5 tiêu chuẩn</h2>
-        <span class="progress__count" id="criteriaCountText" aria-live="polite">0/5 tiêu chuẩn</span>
+        <h2>Tiến độ 5 tiêu chuẩn</h2>
+        <span class="progress__text" id="progressText">0/5 tiêu chuẩn</span>
       </div>
-      <div class="progress__grid" id="criteriaGrid"></div>
+      <div class="progress__bar" aria-hidden="true"><span id="progressFill"></span></div>
+      <div class="crit-grid" id="critGrid"></div>
     </div>
 
-    <div class="bar">
-      <h2>Danh sách đã lưu (<span id="totalSavedCount">0</span>)</h2>
-      <div class="bar__actions">
-        <button type="button" class="btn btn--primary" id="btnExport">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+    <!-- Thanh công cụ -->
+    <div class="action-bar">
+      <h2>Danh sách đã lưu (<span id="totalCount">0</span>)</h2>
+      <div class="action-bar__right">
+        <button type="button" class="link-btn link-btn--danger" id="btnClearAll" hidden>Xóa tất cả</button>
+        <button type="button" class="btn btn--primary" id="btnExport" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>
           Xuất file CSV
         </button>
-        <button type="button" class="btn btn--danger" id="btnClearAll" hidden>Xóa tất cả</button>
       </div>
     </div>
 
-    <div class="notice" id="exportNotice" role="note">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-      <span><strong>Lưu ý:</strong> Hãy xuất định kỳ 2 tuần/lần để tránh mất dữ liệu.
-        <small id="lastExport"></small></span>
+    <div class="notice" id="backupNote" role="note">
+      <p><strong>Lưu ý: Hãy xuất định kỳ 2 tuần/lần để tránh mất dữ liệu.</strong></p>
+      <p id="backupStatus"></p>
     </div>
 
-    <div id="savedList"></div>
+    <div class="tabs" role="tablist" aria-label="Lọc theo tiêu chuẩn" id="filterTabs"></div>
 
-    <div class="empty-state" id="emptyState">
-      <h3>Chưa có hoạt động nào được lưu</h3>
-      <p>Hãy vào trang Niên biểu, chọn và đánh dấu các hoạt động bạn dự định tham gia.</p>
-      <a class="btn btn--primary" href="./nien-bieu.html">Khám phá niên biểu hoạt động</a>
+    <div id="listTop" role="tabpanel">
+      <div id="savedList"></div>
+
+      <div class="empty-state" id="emptyState">
+        <h3 id="emptyTitle">Chưa có hoạt động nào được lưu</h3>
+        <p id="emptyDesc">Hãy vào trang Niên biểu, bấm biểu tượng đánh dấu ở các hoạt động bạn dự định tham gia.</p>
+        <a class="btn btn--primary" href="./nien-bieu.html">Khám phá niên biểu hoạt động</a>
+      </div>
     </div>
+
+    <nav class="pager" id="pager" aria-label="Phân trang hoạt động đã lưu" hidden></nav>
   </div>
 </section>
 </main>
@@ -241,24 +268,25 @@ a{color:var(--primary-color)}
 </footer>
 
 <script>
-/* Dùng chung khóa lưu với nien-bieu.html.
-   Mỗi phần tử: { id, criterion, group, name, time, record, req, note, savedAt } */
+/* Dùng chung khóa và cấu trúc dữ liệu với nien-bieu.html:
+   { id, criterion, group, groupLabel, name, time, record, req, note, savedAt } */
+const STORAGE = window.localStorage;
 const SAVED_KEY = 'sv5t_tracked_activities';
 const EXPORT_KEY = 'sv5t_last_export';
-const STORAGE = window.localStorage;
-const CRITERIA = [
-  ['hoc-tap', 'Học tập tốt'], ['dao-duc', 'Đạo đức tốt'], ['tinh-nguyen', 'Tình nguyện tốt'],
-  ['hoi-nhap', 'Hội nhập tốt'], ['the-luc', 'Thể lực tốt']
-];
-const LABEL = Object.fromEntries(CRITERIA);
-const GROUP_LABEL = { required: 'Tiêu chí bắt buộc', other: 'Tiêu chí khác' };
-const ICON_CAL = '<svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>';
-const ICON_INFO = '<svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>';
-const ICON_SAVE = '<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>';
+const PAGE_SIZE = 5;
+const BACKUP_DAYS = 14;
+const CRITERIA = {
+  'hoc-tap': 'Học tập tốt', 'dao-duc': 'Đạo đức tốt', 'tinh-nguyen': 'Tình nguyện tốt',
+  'hoi-nhap': 'Hội nhập tốt', 'the-luc': 'Thể lực tốt'
+};
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ICON_CAL  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>';
+const ICON_INFO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>';
+const ICON_SAVE = '<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>';
 
+/* ---------- Dữ liệu ---------- */
 function readSaved() {
   try { const v = JSON.parse(STORAGE.getItem(SAVED_KEY) || '[]'); return Array.isArray(v) ? v : []; }
   catch (e) { return []; }
@@ -266,8 +294,11 @@ function readSaved() {
 function writeSaved(list) {
   try { STORAGE.setItem(SAVED_KEY, JSON.stringify(list)); return true; } catch (e) { return false; }
 }
+const sortedSaved = () => readSaved().slice().sort((a, b) => String(b.savedAt || '').localeCompare(String(a.savedAt || '')));
+const pad = n => String(n).padStart(2, '0');
+const fmtDate = d => `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`;
 
-/* Trạng thái hoạt động: cùng logic với nien-bieu.html */
+/* Trạng thái theo ngày kết thúc (cùng cách tính với niên biểu) */
 function endDateOf(text) {
   const parts = String(text).split(/[-–]/).map(s => s.trim()).filter(Boolean);
   if (!parts.length) return null;
@@ -279,16 +310,16 @@ function endDateOf(text) {
 }
 function statusOf(time) { const e = endDateOf(time); return e ? (e >= new Date() ? 'active' : 'expired') : ''; }
 
-function toast(msg, ms = 4000) {
-  const t = $('toast'); t.textContent = msg; t.classList.add('is-visible');
-  clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('is-visible'), ms);
-}
+/* ---------- Hiển thị ---------- */
+let filter = 'all', page = 1;
 
-function card(a, n) {
+function actCard(a, n) {
   const st = statusOf(a.time);
   const badge = st === 'active' ? '<span class="badge badge-active">Đang hoạt động</span>'
               : st === 'expired' ? '<span class="badge badge-expired">Đã hết hạn</span>' : '';
-  const grp = GROUP_LABEL[a.group] ? `<span class="badge badge-group">${GROUP_LABEL[a.group]}</span>` : '';
+  const grp = a.group === 'required' ? '<span class="badge badge-group">Bắt buộc</span>'
+            : a.group === 'other' ? '<span class="badge badge-group">Tiêu chí khác</span>' : '';
+  const saved = a.savedAt ? new Date(a.savedAt) : null;
   const details = [];
   if (a.record) details.push(`<div><dt>Ghi nhận</dt><dd>${esc(a.record)}</dd></div>`);
   details.push(`<div><dt>Yêu cầu</dt><dd>${esc(a.req) || '—'}</dd></div>`);
@@ -296,106 +327,160 @@ function card(a, n) {
     <div class="act__num" aria-label="Số thứ tự ${n}">${n}</div>
     <div>
       <h3 class="act__title">${esc(a.name)}</h3>
-      <div class="act__meta"><span class="meta-time">${ICON_CAL}${esc(a.time) || 'Chưa có lịch'}</span>${badge}${grp}</div>
+      <div class="act__meta">
+        <span class="badge badge-criterion">${esc(CRITERIA[a.criterion] || a.criterion || '')}</span>${grp}
+        <span class="meta-time">${ICON_CAL}${esc(a.time) || 'Chưa có lịch'}</span>${badge}
+      </div>
       <dl class="act__details">${details.join('')}</dl>
       ${a.note ? `<p class="act__note">${ICON_INFO}<span>${esc(a.note)}</span></p>` : ''}
+      ${saved && !isNaN(saved) ? `<p class="act__saved">Đã lưu ngày ${fmtDate(saved)}</p>` : ''}
     </div>
-    <button type="button" class="save-btn" data-id="${esc(a.id)}" aria-label="Bỏ lưu hoạt động" title="Bỏ lưu hoạt động">${ICON_SAVE}</button>
+    <button type="button" class="save-btn" data-id="${esc(a.id)}" aria-pressed="true" aria-label="Bỏ lưu hoạt động" title="Bỏ lưu hoạt động">${ICON_SAVE}</button>
   </li>`;
+}
+function pageItems(n, p) {
+  if (n <= 7) return Array.from({ length: n }, (_, i) => i + 1);
+  const set = [...new Set([1, n, p - 1, p, p + 1])].filter(x => x >= 1 && x <= n).sort((a, b) => a - b);
+  const out = []; set.forEach((x, i) => { if (i && x - set[i - 1] > 1) out.push('…'); out.push(x); });
+  return out;
+}
+
+function renderBackupNote(total) {
+  const box = $('backupNote'), el = $('backupStatus');
+  const last = STORAGE.getItem(EXPORT_KEY);
+  const d = last ? new Date(last) : null;
+  let warn = false, text;
+  if (!d || isNaN(d)) { text = 'Bạn chưa xuất file lần nào. Dữ liệu chỉ nằm trên trình duyệt này và sẽ mất nếu xóa dữ liệu duyệt web hoặc đổi thiết bị.'; warn = total > 0; }
+  else {
+    const days = Math.floor((Date.now() - d.getTime()) / 86400000);
+    text = `Lần xuất gần nhất: ${fmtDate(d)} (${days === 0 ? 'hôm nay' : days + ' ngày trước'}).`;
+    warn = total > 0 && days >= BACKUP_DAYS;
+    if (warn) text += ' Đã đến lúc xuất lại.';
+  }
+  el.textContent = text;
+  box.classList.toggle('is-warn', warn);
 }
 
 function render() {
-  const list = readSaved();
-  const counts = {}; list.forEach(a => { counts[a.criterion] = (counts[a.criterion] || 0) + 1; });
+  const saved = sortedSaved();
+  const counts = { all: saved.length };
+  Object.keys(CRITERIA).forEach(k => counts[k] = saved.filter(a => a.criterion === k).length);
 
-  // Badge trên header
-  const b = document.querySelector('.saved__badge');
-  if (b) { b.textContent = list.length; b.setAttribute('aria-label', list.length + ' hoạt động đã lưu'); }
-  $('totalSavedCount').textContent = list.length;
+  // Badge header + tổng
+  const badge = document.querySelector('.saved__badge');
+  if (badge) { badge.textContent = saved.length; badge.setAttribute('aria-label', saved.length + ' hoạt động đã lưu'); }
+  $('totalCount').textContent = saved.length;
+  $('btnExport').disabled = saved.length === 0;
+  $('btnClearAll').hidden = saved.length === 0;
+  renderBackupNote(saved.length);
 
   // Tiến độ 5 tiêu chuẩn
-  let done = 0;
-  $('criteriaGrid').innerHTML = CRITERIA.map(([k, label]) => {
-    const n = counts[k] || 0; if (n) done++;
-    return `<div class="crit${n ? ' is-done' : ''}"><span class="crit__icon" aria-hidden="true">${n ? '✓' : ''}</span>${label}<span class="crit__n">${n}</span></div>`;
-  }).join('');
-  $('criteriaCountText').textContent = `${done}/5 tiêu chuẩn đã có hoạt động`;
+  const done = Object.keys(CRITERIA).filter(k => counts[k] > 0).length;
+  $('progressText').textContent = `${done}/5 tiêu chuẩn`;
+  $('progressFill').style.width = (done / 5 * 100) + '%';
+  $('critGrid').innerHTML = Object.entries(CRITERIA).map(([k, label]) =>
+    `<div class="crit ${counts[k] ? 'is-done' : ''}"><span class="crit__icon" aria-hidden="true">✓</span>${label}<span class="crit__count">${counts[k]}</span></div>`).join('');
 
-  // Danh sách theo từng tiêu chuẩn
-  let html = '';
-  CRITERIA.forEach(([k, label]) => {
-    const items = list.filter(a => a.criterion === k);
-    if (!items.length) return;
-    html += `<div class="group"><span class="group__label">${label}</span></div><ul class="act-list">` +
-      items.map((a, i) => card(a, i + 1)).join('') + '</ul>';
-  });
-  $('savedList').innerHTML = html;
-  $('emptyState').classList.toggle('is-visible', list.length === 0);
-  $('btnClearAll').hidden = list.length === 0;
-  $('btnExport').disabled = list.length === 0;
-  $('btnExport').style.opacity = list.length ? '' : '.6';
+  // Tab lọc
+  $('filterTabs').innerHTML = [['all', 'Tất cả'], ...Object.entries(CRITERIA)].map(([k, label]) =>
+    `<button type="button" role="tab" class="tab" data-filter="${k}" aria-selected="${k === filter}" tabindex="${k === filter ? 0 : -1}">${label} <span class="tab__count">${counts[k]}</span></button>`).join('');
 
-  renderExportInfo(list.length);
-}
+  // Danh sách + phân trang
+  const list = filter === 'all' ? saved : saved.filter(a => a.criterion === filter);
+  const pages = Math.max(1, Math.ceil(list.length / PAGE_SIZE));
+  page = Math.min(Math.max(1, page), pages);
+  const start = (page - 1) * PAGE_SIZE, slice = list.slice(start, start + PAGE_SIZE);
+  $('savedList').innerHTML = slice.length ? `<ul class="act-list">${slice.map((a, i) => actCard(a, start + i + 1)).join('')}</ul>` : '';
 
-function renderExportInfo(n) {
-  let last = null;
-  try { last = STORAGE.getItem(EXPORT_KEY); } catch (e) {}
-  const el = $('lastExport'), box = $('exportNotice');
-  if (!last) {
-    el.textContent = 'Bạn chưa xuất file lần nào.';
-    box.classList.toggle('is-warn', n > 0);
-    return;
+  const empty = $('emptyState');
+  empty.classList.toggle('is-visible', list.length === 0);
+  if (list.length === 0) {
+    const none = saved.length === 0;
+    $('emptyTitle').textContent = none ? 'Chưa có hoạt động nào được lưu' : 'Chưa lưu hoạt động nào thuộc tiêu chuẩn này';
+    $('emptyDesc').textContent = none
+      ? 'Hãy vào trang Niên biểu, bấm biểu tượng đánh dấu ở các hoạt động bạn dự định tham gia.'
+      : 'Chọn tab "Tất cả" để xem toàn bộ, hoặc vào Niên biểu để lưu thêm hoạt động.';
   }
-  const d = new Date(last), days = Math.floor((Date.now() - d) / 864e5);
-  el.textContent = `Lần xuất gần nhất: ${d.toLocaleDateString('vi-VN')} (${days} ngày trước).`;
-  box.classList.toggle('is-warn', n > 0 && days >= 14);
+
+  const pager = $('pager');
+  pager.hidden = pages <= 1;
+  pager.innerHTML = pages <= 1 ? '' :
+    `<button type="button" data-page="${page - 1}" ${page === 1 ? 'disabled' : ''} aria-label="Trang trước">‹</button>` +
+    pageItems(pages, page).map(x => x === '…' ? '<span class="pager__gap" aria-hidden="true">…</span>'
+      : `<button type="button" data-page="${x}" ${x === page ? 'aria-current="page"' : ''} aria-label="Trang ${x}">${x}</button>`).join('') +
+    `<button type="button" data-page="${page + 1}" ${page === pages ? 'disabled' : ''} aria-label="Trang sau">›</button>`;
 }
 
-/* ---------- Xuất CSV (UTF-8 có BOM để Excel đọc đúng tiếng Việt) ---------- */
-function exportCSV() {
-  const list = readSaved();
-  if (!list.length) { toast('Chưa có hoạt động nào để xuất.'); return; }
-  const order = Object.fromEntries(CRITERIA.map(([k], i) => [k, i]));
-  const sorted = [...list].sort((a, b) => (order[a.criterion] ?? 9) - (order[b.criterion] ?? 9));
-  const head = ['STT', 'Tiêu chuẩn', 'Nhóm tiêu chí', 'Hoạt động', 'Thời gian diễn ra', 'Trạng thái', 'Ghi nhận', 'Yêu cầu', 'Ghi chú', 'Ngày lưu'];
-  const cell = v => {
-    let s = String(v ?? '');
-    if (/^[=+@\t\r]/.test(s)) s = "'" + s; // chặn công thức độc hại khi mở bằng Excel
-    return '"' + s.replace(/"/g, '""') + '"';
-  };
-  const rows = sorted.map((a, i) => [
-    i + 1, LABEL[a.criterion] || a.criterion, GROUP_LABEL[a.group] || '', a.name, a.time,
-    { active: 'Đang hoạt động', expired: 'Đã hết hạn' }[statusOf(a.time)] || '',
-    a.record, a.req, a.note, a.savedAt ? new Date(a.savedAt).toLocaleDateString('vi-VN') : ''
-  ]);
-  const csv = '\uFEFF' + [head, ...rows].map(r => r.map(cell).join(',')).join('\r\n');
-  const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
-  const a = document.createElement('a');
-  a.href = url; a.download = `sv5t-hoat-dong-da-luu-${new Date().toISOString().slice(0, 10)}.csv`;
-  document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-  try { STORAGE.setItem(EXPORT_KEY, new Date().toISOString()); } catch (e) {}
-  toast('Đã xuất file CSV. Nhớ xuất lại sau 2 tuần nhé!');
-  render();
+function toast(msg, ms = 3500) {
+  const t = $('toast'); t.textContent = msg; t.classList.add('is-visible');
+  clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('is-visible'), ms);
 }
 
 /* ---------- Sự kiện ---------- */
-$('btnExport').addEventListener('click', exportCSV);
-$('btnClearAll').addEventListener('click', () => {
-  if (confirm('Bạn có chắc muốn xóa toàn bộ hoạt động đã lưu? Hãy xuất CSV trước nếu cần giữ lại dữ liệu.')) {
-    if (!writeSaved([])) toast('Không xóa được. Trình duyệt đang chặn lưu trữ cục bộ.');
-    render();
-  }
+$('filterTabs').addEventListener('click', e => {
+  const b = e.target.closest('[data-filter]');
+  if (!b) return;
+  filter = b.dataset.filter; page = 1; render();
+  $('filterTabs').querySelector(`[data-filter="${filter}"]`).focus();
+});
+$('filterTabs').addEventListener('keydown', e => {
+  const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+  if (!d) return;
+  e.preventDefault();
+  const tabs = [...$('filterTabs').querySelectorAll('[data-filter]')];
+  const i = tabs.findIndex(t => t.dataset.filter === filter);
+  filter = tabs[(i + d + tabs.length) % tabs.length].dataset.filter; page = 1; render();
+  $('filterTabs').querySelector(`[data-filter="${filter}"]`).focus();
+});
+$('pager').addEventListener('click', e => {
+  const b = e.target.closest('button[data-page]');
+  if (!b || b.disabled) return;
+  page = +b.dataset.page; render();
+  $('listTop').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth', block: 'start' });
 });
 $('savedList').addEventListener('click', e => {
   const b = e.target.closest('.save-btn');
   if (!b) return;
-  if (!writeSaved(readSaved().filter(x => x.id !== b.dataset.id))) { toast('Không cập nhật được. Trình duyệt đang chặn lưu trữ cục bộ.'); return; }
-  toast('Đã bỏ lưu hoạt động.', 2500);
+  const list = readSaved().filter(x => x.id !== b.dataset.id);
+  if (!writeSaved(list)) { toast('Không cập nhật được. Trình duyệt đang chặn lưu trữ cục bộ.'); return; }
+  toast('Đã bỏ lưu hoạt động.');
   render();
 });
+$('btnClearAll').addEventListener('click', () => {
+  if (!confirm('Xóa toàn bộ hoạt động đã lưu?\nBạn nên xuất file CSV trước khi xóa.')) return;
+  writeSaved([]); page = 1; filter = 'all'; render(); toast('Đã xóa tất cả hoạt động đã lưu.');
+});
 window.addEventListener('storage', e => { if (e.key === SAVED_KEY || e.key === EXPORT_KEY) render(); });
+
+/* ---------- Xuất CSV ---------- */
+function csvCell(v) {
+  let s = String(v ?? '');
+  if (/^[=+@\t\r]/.test(s) || /^-\S/.test(s)) s = "'" + s;   // chặn chèn công thức khi mở bằng Excel
+  return '"' + s.replace(/"/g, '""') + '"';
+}
+function exportCSV() {
+  const list = sortedSaved();
+  if (!list.length) return;
+  const head = ['STT', 'Tiêu chuẩn', 'Nhóm tiêu chí', 'Hoạt động', 'Ghi nhận', 'Yêu cầu', 'Thời gian diễn ra', 'Trạng thái', 'Ghi chú', 'Ngày lưu'];
+  const rows = list.map((a, i) => {
+    const st = statusOf(a.time);
+    const dt = a.savedAt ? new Date(a.savedAt) : null;
+    return [i + 1, CRITERIA[a.criterion] || a.criterion || '', a.groupLabel || (a.group === 'required' ? 'Bắt buộc' : a.group === 'other' ? 'Khác' : ''),
+            a.name, a.record, a.req, a.time, st === 'active' ? 'Đang hoạt động' : st === 'expired' ? 'Đã hết hạn' : '', a.note,
+            dt && !isNaN(dt) ? fmtDate(dt) : ''];
+  });
+  // BOM UTF-8 để Excel đọc đúng tiếng Việt
+  const csv = '\uFEFF' + [head, ...rows].map(r => r.map(csvCell).join(',')).join('\r\n');
+  const now = new Date();
+  const name = `sv5t-hoat-dong-da-luu-${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}.csv`;
+  const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+  const a = document.createElement('a');
+  a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  try { STORAGE.setItem(EXPORT_KEY, now.toISOString()); } catch (e) {}
+  render(); toast(`Đã xuất ${list.length} hoạt động ra file ${name}`, 5000);
+}
+$('btnExport').addEventListener('click', exportCSV);
 
 render();
 </script>
