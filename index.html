@@ -7,6 +7,9 @@
 
 <!-- root.css: nguồn duy nhất của màu sắc, font, spacing, bo góc -->
 <link rel="stylesheet" href="./css/root.css">
+<link rel="stylesheet" href="./css/header.css">
+<link rel="stylesheet" href="./css/banner.css">
+<link rel="stylesheet" href="./css/footer.css">
 
 <style>
 /* ===== Base (chỉ dùng biến từ root.css) ===== */
@@ -30,39 +33,6 @@ h3,h4{margin:0}
 .btn--outline:hover{background:var(--primary-color-2)}
 .ph{display:flex;align-items:center;justify-content:center;text-align:center;width:100%;height:100%;color:var(--color-dark-300);font-weight:var(--fw-medium);padding:var(--space-3);
   background:repeating-linear-gradient(135deg,var(--color-dark-100),var(--color-dark-100) 10px,var(--color-bg-alt) 10px,var(--color-bg-alt) 20px)}
-
-/* ===== Header ===== */
-.site-header{position:sticky;top:0;z-index:50;background:var(--bg-color);border-bottom:1px solid var(--color-border);transition:box-shadow var(--transition-base)}
-.site-header.is-scrolled{box-shadow:var(--shadow-header)}
-.site-header .container{display:flex;align-items:center;justify-content:space-between;gap:var(--space-5);min-height:72px}
-.brand{display:flex;align-items:center;gap:var(--space-3)}
-.brand img{height:44px;width:auto}
-.brand-name{display:block;font-weight:var(--fw-bold);color:var(--color-blue-700)}
-.brand-tag{display:block;font-size:13px;color:var(--text-muted)}
-.nav-menu{display:flex;align-items:center;gap:var(--space-5);font-weight:var(--fw-medium)}
-.nav-menu a{padding:var(--space-2) 0;border-bottom:2px solid transparent}
-.nav-menu a:hover,.nav-menu a.is-active{color:var(--primary-color);border-color:var(--primary-color)}
-.nav-menu .nav-cta{padding:var(--space-2) var(--space-4);border:0;border-radius:var(--radius-button);background:var(--primary-color);color:var(--color-text-on-primary)}
-.nav-menu .nav-cta:hover{background:var(--primary-hover);color:var(--color-text-on-primary)}
-.nav-actions{display:flex;align-items:center;gap:var(--space-3)}
-.icon-btn{position:relative;display:grid;place-items:center;width:var(--button-height);height:var(--button-height);border-radius:var(--radius-pill);background:var(--primary-color-2);color:var(--primary-color);font-size:20px}
-.icon-badge{position:absolute;top:-2px;right:-2px;min-width:18px;height:18px;padding:0 4px;border-radius:var(--radius-pill);background:var(--primary-color);color:var(--color-text-on-primary);font-size:11px;display:grid;place-items:center}
-.nav-toggle{display:none;width:var(--button-height);height:var(--button-height);border:1px solid var(--color-border);border-radius:var(--radius-button);background:var(--bg-color);cursor:pointer;font-size:20px}
-
-/* ===== 1. Banner ===== */
-.hero-banner{background:var(--gradient-hero);color:var(--color-text-on-dark);padding:var(--space-9) 0}
-.hero-banner__layout{display:grid;grid-template-columns:1.1fr 1fr;gap:var(--space-7);align-items:center}
-.hero-content__title{display:flex;flex-direction:column;font-weight:var(--fw-bold)}
-.hero-content__title-line--one{font-size:var(--font-size-h2);color:var(--color-blue-100)}
-.hero-content__title-line--two{font-size:56px;line-height:1.1;background:var(--gradient-text);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero-content__subtitle{margin:var(--space-4) 0 var(--space-6);color:var(--color-blue-100)}
-.hero-content__actions{display:flex;flex-wrap:wrap;gap:var(--space-4)}
-.hero-button--outline{color:var(--color-text-on-dark);border-color:var(--color-blue-300)}
-.hero-button--outline:hover{background:rgba(255,255,255,.1)}
-.hero-gallery{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:var(--gap-col-cards);height:380px}
-.hero-gallery__item{border-radius:var(--radius-card);overflow:hidden;box-shadow:var(--shadow-lg)}
-.hero-gallery__item--one{grid-row:1/3}
-.hero-gallery__image{width:100%;height:100%;object-fit:cover}
 
 /* ===== 2. 5 tiêu chuẩn ===== */
 .tabs-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--space-3);margin-top:var(--space-5)}
@@ -113,48 +83,20 @@ h3,h4{margin:0}
 .modal .achievement-text{margin:0}
 .modal-close{position:absolute;top:var(--space-3);right:var(--space-3);width:36px;height:36px;border:0;border-radius:var(--radius-pill);background:var(--color-dark-50);font-size:22px;cursor:pointer}
 
-/* ===== 5. Footer ===== */
-.wave-divider{display:block;width:100%;height:48px;fill:var(--color-dark-900)}
-.site-footer{background:var(--color-dark-900);color:var(--color-dark-100)}
-.f-cta{display:flex;align-items:center;justify-content:space-between;gap:var(--space-6);flex-wrap:wrap;padding:var(--space-8) var(--container-pad) var(--space-7);max-width:var(--container-max);margin:0 auto}
-.f-cta h2{color:var(--color-text-on-dark)}
-.f-cta p{margin:var(--space-2) 0 0;color:var(--color-dark-300)}
-.f-btns{display:flex;flex-wrap:wrap;gap:var(--space-3)}
-.f-btns .btn--outline{color:var(--color-blue-300);border-color:rgba(255,255,255,.3)}
-.f-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:var(--space-7);padding:var(--space-7) var(--container-pad);max-width:var(--container-max);margin:0 auto;border-top:1px solid rgba(255,255,255,.1)}
-.f-brand .logo{height:48px;width:auto;padding:var(--space-2);background:var(--bg-color);border-radius:var(--radius-sm);margin-bottom:var(--space-4)}
-.f-brand p{margin:0 0 var(--space-4);color:var(--color-dark-300);font-size:14px}
-.soc{display:flex;gap:var(--space-3)}
-.soc a{display:grid;place-items:center;width:40px;height:40px;border-radius:var(--radius-pill);background:rgba(255,255,255,.08)}
-.soc a:hover{background:var(--primary-color)}
-.soc svg{width:18px;height:18px;fill:currentColor}
-.f-col h4{margin-bottom:var(--space-4);color:var(--color-text-on-dark)}
-.f-col a,.f-col p{display:block;margin:0 0 var(--space-3);font-size:14px;color:var(--color-dark-300)}
-.f-col a:hover{color:var(--color-blue-300)}
-.f-bottom{max-width:var(--container-max);margin:0 auto;padding:var(--space-5) var(--container-pad);border-top:1px solid rgba(255,255,255,.1);font-size:13px;color:var(--color-dark-300)}
-
 /* ===== Responsive ===== */
 @media (max-width:900px){
   h1{font-size:var(--font-size-h1-mobile)} h2{font-size:var(--font-size-h2-mobile)}
   body{font-size:var(--font-size-body-mobile)}
   .section{padding:var(--spacing-section-mobile) 0}
-  .nav-toggle{display:block}
-  .nav-menu{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:flex-start;padding:var(--space-4) var(--container-pad);background:var(--bg-color);border-bottom:1px solid var(--color-border)}
-  .nav-menu.is-open{display:flex}
-  .hero-banner{padding:var(--space-8) 0}
-  .hero-banner__layout{grid-template-columns:1fr;gap:var(--gap-col-mobile)}
-  .hero-content__title-line--two{font-size:40px}
-  .hero-gallery{height:260px;gap:var(--gap-col-mobile)}
   .tabs-grid{grid-template-columns:repeat(2,1fr)}
   .tab[data-active="true"]::after{display:none}
   .photo-row{grid-template-columns:repeat(2,1fr);gap:var(--gap-col-mobile)}
   .year-card{grid-template-columns:1fr;padding:var(--space-5)}
   .honor-grid{grid-template-columns:1fr 1fr;gap:var(--gap-col-mobile)}
   .modal{grid-template-columns:1fr}
-  .f-grid{grid-template-columns:1fr 1fr;gap:var(--space-6)}
 }
 @media (max-width:560px){
-  .honor-grid,.f-grid{grid-template-columns:1fr}
+  .honor-grid{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
@@ -162,49 +104,66 @@ h3,h4{margin:0}
 
 <body id="top">
 
-<!-- ================= HEADER ================= -->
-<header class="site-header">
-  <div class="container">
-    <a href="index.html" class="brand">
-      <img src="assets/bit-logo.png" alt="Logo BIT">
-      <span>
-        <span class="brand-name">Sinh viên 5 Tốt</span>
-        <span class="brand-tag">Khoa Công nghệ thông tin kinh doanh</span>
-      </span>
-    </a>
-    <nav class="nav-menu" id="navMenu" aria-label="Điều hướng chính">
-      <a href="index.html" class="is-active" aria-current="page">Trang chủ</a>
-      <a href="nien-bieu.html">Niên biểu</a>
-      <a href="dang-ky.html" class="nav-cta" target="_blank" rel="noopener">Đăng ký phong trào SV5T</a>
-    </nav>
-    <div class="nav-actions">
-      <a href="hoat-dong-dang-ky.html" class="icon-btn" id="trackedBtn" aria-label="Hoạt động đã lưu">★<span class="icon-badge" id="trackedCount">0</span></a>
-      <button class="nav-toggle" id="navToggle" aria-label="Mở menu" aria-expanded="false">☰</button>
+<!-- ================= HEADER (header.html của nhóm) ================= -->
+<header class="header">
+  <div class="header__inner">
+
+    <!-- Cột 1 + 2 -->
+    <div class="header__left">
+      <a href="/" class="brand" aria-label="Trang chủ BIT">
+        <img class="brand__logo" src="assets/bit-logo.png" alt="Logo BIT" />
+        <span class="brand__name">
+          ĐOÀN - HỘI<br />KHOA CÔNG NGHỆ THÔNG TIN KINH DOANH
+        </span>
+      </a>
+      <div class="header__tag"><span>SV5T</span></div>
     </div>
+
+    <!-- Cột 3 + 4 + 5 -->
+    <nav class="header__right" aria-label="Điều hướng chính">
+      <ul class="menu">
+        <li><a href="./index.html" class="is-active" aria-current="page">Trang chủ</a></li>
+        <li><a href="./nien-bieu.html">Niên biểu</a></li>
+      </ul>
+
+      <a href="./hoat-dong-dang-ky.html" class="saved">
+        Theo dõi hoạt động đã lưu
+        <span class="saved__badge" aria-label="0 hoạt động đã lưu">0</span>
+      </a>
+
+      <a href="./dang-ky.html" class="cta">Đăng ký phong trào SV5T</a>
+    </nav>
+
   </div>
 </header>
 
 <!-- ================= 1. BANNER ================= -->
+<!-- HERO BANNER -->
 <section class="hero-banner" id="hero">
-  <div class="container">
+  <div class="hero-banner__inner">
     <div class="hero-banner__layout">
+
+      <!-- Cột trái: 7 hàng (hàng 1, 5, 7 là khoảng trống do CSS tạo) -->
       <div class="hero-content">
         <h1 class="hero-content__title">
           <span class="hero-content__title-line--one">SINH VIÊN</span>
           <span class="hero-content__title-line--two">5 TỐT 2026</span>
         </h1>
         <p class="hero-content__subtitle">Cổng thông tin Sinh viên 5 Tốt</p>
+
         <div class="hero-content__actions">
-          <a href="dang-ky.html" target="_blank" rel="noopener" class="btn btn--primary hero-button">Đăng ký phong trào SV5T</a>
-          <a href="nien-bieu.html" class="btn btn--outline hero-button hero-button--outline">Xem niên biểu hoạt động</a>
+          <a href="dang-ky.html" target="_blank" rel="noopener" class="hero-button hero-button--primary">Đăng ký phong trào SV5T</a>
+          <a href="nien-bieu.html" class="hero-button hero-button--outline">Xem niên biểu hoạt động</a>
         </div>
       </div>
+
+      <!-- Cột phải: 3 khung ảnh (thay chữ bằng <img class="hero-gallery__image"> khi có ảnh) -->
       <div class="hero-gallery">
-        <!-- Thay chữ bằng <img class="hero-gallery__image" src="..." alt="..."> khi có ảnh -->
-        <div class="hero-gallery__item hero-gallery__item--one"><div class="ph">Ảnh 1</div></div>
-        <div class="hero-gallery__item hero-gallery__item--two"><div class="ph">Ảnh 2</div></div>
-        <div class="hero-gallery__item hero-gallery__item--three"><div class="ph">Ảnh 3</div></div>
+        <div class="hero-gallery__item hero-gallery__item--one">Ảnh 1</div>
+        <div class="hero-gallery__item hero-gallery__item--two">Ảnh 2</div>
+        <div class="hero-gallery__item hero-gallery__item--three">Ảnh 3</div>
       </div>
+
     </div>
   </div>
 </section>
@@ -308,68 +267,71 @@ h3,h4{margin:0}
 </div>
 
 <!-- ================= 5. FOOTER ================= -->
-<svg class="wave-divider" viewBox="0 0 1200 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0,24 C300,60 900,-12 1200,24 L1200,48 L0,48 Z"/></svg>
-<footer class="site-footer">
-  <section class="f-cta">
-    <div>
-      <h2>Sẵn sàng chinh phục danh hiệu SV5T 2026?</h2>
-      <p>Đăng ký tham gia phong trào ngay hôm nay để BIT đồng hành cùng bạn suốt năm học.</p>
-    </div>
-    <div class="f-btns">
-      <a class="btn btn--primary" href="dang-ky.html" target="_blank" rel="noopener">Đăng ký phong trào SV5T</a>
-      <a class="btn btn--outline" href="https://www.facebook.com/groups/1129624948171351" target="_blank" rel="noopener">Tham gia group Facebook</a>
-    </div>
-  </section>
+<footer>
+    <!-- Dòng 1 -->
+    <div class="f-top"></div>
 
-  <div class="f-grid">
+    <!-- Dòng 2 -->
+    <section class="f-cta">
+        <div>
+            <h2>Sẵn sàng chinh phục danh hiệu SV5T 2026?</h2>
+            <p>Đăng ký tham gia phong trào ngay hôm nay để BIT đồng hành cùng bạn suốt năm học.</p>
+        </div>
+        <div class="btns">
+            <a class="fb main" href="#dang-ki">Đăng ký phong trào SV5T</a>
+            <a class="fb ghost" href="https://www.facebook.com/groups/1129624948171351">Tham gia group Facebook</a>
+        </div>
+    </section>
+
+    <!-- Dòng 3: 4 nhóm -->
     <div class="f-col f-brand">
-      <img class="logo" src="assets/bit-logo.png" alt="Logo BIT">
-      <p>Cổng thông tin Sinh viên 5 Tốt khoa BIT, UEH: tra cứu hoạt động, theo dõi tiến trình và vinh danh sinh viên tiêu biểu.</p>
-      <div class="soc">
-        <a href="https://www.facebook.com/groups/1129624948171351" aria-label="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-1.6 19.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0 0 12 2z"/></svg></a>
-        <a href="mailto:doanhoi.bit@ueh.edu.vn" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zm0 2v.5l8 5 8-5V7H4zm16 10V9.9l-8 5-8-5V17h16z"/></svg></a>
-      </div>
+        <img class="logo" src="assets/bit-logo.png" alt="Logo BIT">
+        <div>
+            <p>Cổng thông tin Sinh viên 5 Tốt khoa BIT, UEH: tra cứu hoạt động, theo dõi tiến trình và vinh danh
+                sinh viên tiêu biểu.</p>
+            <div class="soc">
+                <a href="https://www.facebook.com/groups/1129624948171351" aria-label="Facebook"><svg
+                        viewBox="0 0 24 24">
+                        <path
+                            d="M12 2a10 10 0 0 0-1.6 19.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0 0 12 2z" />
+                    </svg></a>
+                <a href="mailto:doanhoi.bit@ueh.edu.vn" aria-label="Email"><svg viewBox="0 0 24 24">
+                        <path
+                            d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zm0 2v.5l8 5 8-5V7H4zm16 10V9.9l-8 5-8-5V17h16z" />
+                    </svg></a>
+            </div>
+        </div>
     </div>
-    <nav class="f-col" aria-label="Điều hướng">
-      <h4>Điều hướng</h4>
-      <a href="#top">Trang chủ</a>
-      <a href="nien-bieu.html">Niên biểu hoạt động</a>
-      <a href="#tieu-chuan">Về phong trào SV5T</a>
-      <a href="#vinh-danh">Vinh danh tiêu biểu</a>
-    </nav>
-    <nav class="f-col" aria-label="Tham gia">
-      <h4>Tham gia</h4>
-      <a href="dang-ky.html" target="_blank" rel="noopener">Đăng ký phong trào SV5T</a>
-      <a href="https://www.facebook.com/groups/1129624948171351" target="_blank" rel="noopener">Group Cùng BIT chinh phục SV5T</a>
-      <a href="nien-bieu.html">Gửi yêu cầu xét duyệt hoạt động</a>
-    </nav>
-    <div class="f-col">
-      <h4>Liên hệ</h4>
-      <p>Đoàn TN – Hội SV khoa Công nghệ thông tin kinh doanh (BIT), UEH</p>
-      <a href="mailto:doanhoi.bit@ueh.edu.vn">doanhoi.bit@ueh.edu.vn</a>
-    </div>
-  </div>
 
-  <p class="f-bottom">© 2026 Đoàn TN – Hội SV khoa Công nghệ thông tin kinh doanh (BIT), UEH</p>
+    <nav class="f-col f-nav" aria-label="Điều hướng">
+        <h4>Điều hướng</h4>
+        <a href="#top">Trang chủ</a>
+        <a href="#nien-bieu">Niên biểu hoạt động</a>
+        <a href="#tieu-chuan">Về phong trào SV5T</a>
+        <a href="#vinh-danh">Vinh danh tiêu biểu</a>
+    </nav>
+
+    <nav class="f-col f-join" aria-label="Tham gia">
+        <h4>Tham gia</h4>
+        <a href="#dang-ki">Đăng ký phong trào SV5T</a>
+        <a href="https://www.facebook.com/groups/1129624948171351">Group Cùng BIT chinh phục SV5T</a>
+        <a href="#nien-bieu">Gửi yêu cầu xét duyệt hoạt động</a>
+    </nav>
+
+    <div class="f-col f-contact">
+        <h4>Liên hệ</h4>
+        <p>Đoàn TN – Hội SV khoa Công nghệ thông tin kinh doanh (BIT), UEH</p>
+        <a href="mailto:doanhoi.bit@ueh.edu.vn">doanhoi.bit@ueh.edu.vn</a>
+    </div>
+
+    <!-- Dòng 4 -->
+    <div class="f-divider"></div>
+
+    <!-- Dòng 5 -->
+    <p class="f-copy">© 2026 Đoàn TN – Hội SV khoa Công nghệ thông tin kinh doanh (BIT), UEH</p>
 </footer>
 
 <script>
-// ---- Header ----
-const siteHeader = document.querySelector('.site-header');
-window.addEventListener('scroll', () => siteHeader.classList.toggle('is-scrolled', window.scrollY > 8), { passive: true });
-
-const navToggle = document.getElementById('navToggle');
-const navMenu = document.getElementById('navMenu');
-navToggle.addEventListener('click', () => {
-  const open = navMenu.classList.toggle('is-open');
-  navToggle.setAttribute('aria-expanded', open);
-});
-
-document.getElementById('trackedBtn').addEventListener('click', (e) => {
-  e.preventDefault();
-  alert('Tính năng theo dõi hoạt động đã lưu (LocalStorage) sẽ ra mắt ở giai đoạn sau.');
-});
-
 // ---- 5 tiêu chuẩn ----
 const TAB_DATA = {
   'hoc-tap':     { title: 'Học tập tốt',     desc: 'Một trong hai tiêu chuẩn nền tảng, yêu cầu kết quả học tập ổn định.', badges: ['Cuộc thi kiến thức', 'Nghiên cứu khoa học'] },
