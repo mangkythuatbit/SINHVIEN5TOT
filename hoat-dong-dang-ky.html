@@ -83,6 +83,7 @@ a{color:var(--primary-color)}
 .badge-expired{background:var(--color-status-expired-bg);color:var(--color-status-expired-text)}
 .badge-criterion{background:var(--primary-color-2);color:var(--color-blue-700)}
 .badge-group{border:1px solid var(--color-blue-300);color:var(--color-blue-700);background:var(--bg-color)}
+.badge-level{background:var(--primary-color-2);color:var(--color-blue-700);border:1px solid var(--color-blue-100)}
 .act__details{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--space-4);margin-top:var(--space-4);padding-top:var(--space-4);border-top:1px solid var(--color-dark-50)}
 .act__details dt{margin-bottom:var(--space-1);font-size:14px;font-weight:var(--fw-bold);color:var(--color-blue-700)}
 .act__details dd{white-space:pre-line}
@@ -107,6 +108,27 @@ a{color:var(--primary-color)}
 .pager button:disabled{opacity:.4;cursor:not-allowed}
 .pager__gap{padding:0 var(--space-1);color:var(--text-muted)}
 
+.muted{color:var(--text-muted)}
+.input{width:100%;min-height:var(--button-height);padding:var(--space-2) var(--space-3);border:1px solid var(--color-dark-100);border-radius:var(--radius-button);background:var(--bg-color);color:var(--text-color);transition:var(--transition-base)}
+.input::placeholder{color:var(--text-muted)}
+.input:focus{outline:none;border-color:var(--primary-color);box-shadow:var(--shadow-focus)}
+.input[aria-invalid="true"]{border-color:var(--error-color)}
+.field__error{display:block;min-height:18px;margin-top:var(--space-1);font-size:13px;color:var(--error-color)}
+.ev-summary{margin-top:var(--space-1);font-size:14px;color:var(--color-dark-500)}
+.act__evidence{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-3);margin-top:var(--space-3);padding:var(--space-2) var(--space-3);border:1px dashed var(--color-blue-300);border-radius:var(--radius-sm);font-size:14px}
+.ev-label{display:inline-flex;align-items:center;gap:var(--space-1);font-weight:var(--fw-bold);color:var(--color-blue-700)}
+.btn--outline{background:transparent;color:var(--primary-color)}
+.btn--outline:hover{background:var(--primary-color-2)}
+body.modal-open{overflow:hidden}
+.modal{position:fixed;inset:0;z-index:300;display:grid;place-items:center;padding:var(--space-5);background:var(--color-overlay-dark)}
+.modal[hidden]{display:none}
+.modal__box{width:min(520px,100%);padding:var(--space-6);border-radius:var(--radius-card);background:var(--bg-color);box-shadow:var(--shadow-lg)}
+.modal__box h3{font-size:20px;color:var(--color-blue-700)}
+.modal__name{margin:var(--space-2) 0 var(--space-4);font-weight:var(--fw-medium);color:var(--color-dark-700)}
+.modal__box label{display:block;margin-bottom:var(--space-1);font-size:14px;font-weight:var(--fw-bold);color:var(--color-blue-700)}
+.modal__hint{display:flex;gap:var(--space-2);margin-top:var(--space-2);font-size:13px;color:var(--color-dark-500)}
+.modal__hint svg{flex:none;width:16px;height:16px;margin-top:2px;color:var(--primary-color)}
+.modal__actions{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:var(--space-3);margin-top:var(--space-5)}
 .toast{position:fixed;left:50%;bottom:var(--space-5);z-index:200;transform:translate(-50%,24px);max-width:calc(100% - 2*var(--space-5));padding:var(--space-3) var(--space-5);border-radius:var(--radius-button);background:var(--color-dark-900);color:var(--color-text-on-dark);opacity:0;pointer-events:none;transition:var(--transition-base)}
 .toast.is-visible{opacity:1;transform:translate(-50%,0)}
 
@@ -153,6 +175,7 @@ a{color:var(--primary-color)}
 <main>
 <section class="page-head">
   <div class="container">
+    <span class="live-chip">Lưu trên trình duyệt này</span>
     <h1>Hoạt động đã lưu để theo dõi</h1>
     <p>Các hoạt động bạn đã đánh dấu trong Niên biểu. Dùng để lên kế hoạch và chuẩn bị minh chứng cho hồ sơ Sinh viên 5 Tốt năm 2026.</p>
   </div>
@@ -173,7 +196,7 @@ a{color:var(--primary-color)}
 
     <!-- Thanh công cụ -->
     <div class="action-bar">
-      <h2>Danh sách đã lưu (<span id="totalCount">0</span>)</h2>
+      <div><h2>Danh sách đã lưu (<span id="totalCount">0</span>)</h2><p class="ev-summary" id="evSummary"></p></div>
       <div class="action-bar__right">
         <button type="button" class="link-btn link-btn--danger" id="btnClearAll" hidden>Xóa tất cả</button>
         <button type="button" class="btn btn--primary" id="btnExport" disabled>
@@ -184,7 +207,7 @@ a{color:var(--primary-color)}
     </div>
 
     <div class="notice" id="backupNote" role="note">
-      <p><strong>BIT khuyến khích bạn xuất file định kì 2 tuần/lần</strong></p>
+      <p><strong>BIT khuyến khích bạn xuất file định kỳ 2 tuần/lần để tránh mất dữ liệu.</strong></p>
       <p id="backupStatus"></p>
     </div>
 
@@ -204,6 +227,24 @@ a{color:var(--primary-color)}
   </div>
 </section>
 </main>
+
+<!-- ================= MINH CHỨNG (link Google Drive, chỉ lưu trên trình duyệt này) ================= -->
+<div class="modal" id="evidenceModal" hidden>
+  <div class="modal__box" role="dialog" aria-modal="true" aria-labelledby="evTitle">
+    <h3 id="evTitle">Minh chứng cho hoạt động</h3>
+    <p class="modal__name" id="evName"></p>
+    <form id="evidenceForm" novalidate>
+      <label for="evLink">Link minh chứng trên Google Drive (không bắt buộc)</label>
+      <input class="input" id="evLink" type="url" placeholder="https://drive.google.com/..." autocomplete="off" aria-describedby="err-ev">
+      <span class="field__error" id="err-ev"></span>
+      <p class="modal__hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span>Chỉ lưu trên trình duyệt của bạn, trang web không gửi link này cho ai. Có nhiều file thì hãy dùng link thư mục. Hãy tự kiểm tra quyền chia sẻ trên Drive trước khi nộp hồ sơ.</span></p>
+      <div class="modal__actions">
+        <button type="button" class="btn btn--outline" id="evSkip">Hủy</button>
+        <button type="submit" class="btn btn--primary">Lưu minh chứng</button>
+      </div>
+    </form>
+  </div>
+</div>
 
 <div class="toast" id="toast" role="status"></div>
 
@@ -268,7 +309,7 @@ a{color:var(--primary-color)}
 
 <script>
 /* Dùng chung khóa và cấu trúc dữ liệu với nien-bieu.html:
-   { id, criterion, group, groupLabel, name, time, record, req, note, savedAt } */
+   { id, criterion, group, groupLabel, name, time, record, req, note, evidence, savedAt } */
 const STORAGE = window.localStorage;
 const SAVED_KEY = 'sv5t_tracked_activities';
 const EXPORT_KEY = 'sv5t_last_export';
@@ -287,8 +328,14 @@ const ICON_SAVE = '<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="
 
 /* ---------- Dữ liệu ---------- */
 function readSaved() {
-  try { const v = JSON.parse(STORAGE.getItem(SAVED_KEY) || '[]'); return Array.isArray(v) ? v : []; }
-  catch (e) { return []; }
+  try {
+    const v = JSON.parse(STORAGE.getItem(SAVED_KEY) || '[]');
+    if (!Array.isArray(v)) return [];
+    // Bỏ bản ghi cũ sai cấu trúc (VD: dữ liệu mẫu của phiên bản trang trước) và dọn khỏi bộ nhớ
+    const ok = v.filter(x => x && x.id && x.name && CRITERIA[x.criterion]);
+    if (ok.length !== v.length) writeSaved(ok);
+    return ok;
+  } catch (e) { return []; }
 }
 function writeSaved(list) {
   try { STORAGE.setItem(SAVED_KEY, JSON.stringify(list)); return true; } catch (e) { return false; }
@@ -296,6 +343,8 @@ function writeSaved(list) {
 const sortedSaved = () => readSaved().slice().sort((a, b) => String(b.savedAt || '').localeCompare(String(a.savedAt || '')));
 const pad = n => String(n).padStart(2, '0');
 const fmtDate = d => `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`;
+/* Cột GHI NHẬN = cấp ghi nhận (Khoa / UEH / Thành phố ...). Một ô có thể ghi nhiều cấp. */
+const levelsOf = text => String(text || '').split(/[\n;,]+/).map(s => s.trim()).filter(Boolean);
 
 /* Trạng thái theo ngày kết thúc (cùng cách tính với niên biểu) */
 function endDateOf(text) {
@@ -309,6 +358,71 @@ function endDateOf(text) {
 }
 function statusOf(time) { const e = endDateOf(time); return e ? (e >= new Date() ? 'active' : 'expired') : ''; }
 
+/* ---------- Minh chứng: link Google Drive (chỉ lưu trong trình duyệt này, không gửi đi đâu) ---------- */
+function parseDriveLink(raw) {
+  const v = String(raw || '').trim();
+  if (!v) return { ok: true, url: '' };
+  let u;
+  try { u = new URL(v); } catch (e) { return { ok: false, error: 'Link chưa đúng định dạng. Hãy dán nguyên link từ Google Drive.' }; }
+  if (u.protocol !== 'https:' || !['drive.google.com', 'docs.google.com'].includes(u.hostname.toLowerCase()))
+    return { ok: false, error: 'Chỉ nhận link Google Drive (drive.google.com hoặc docs.google.com).' };
+  return { ok: true, url: u.href };
+}
+function evUrlOf(a) { const r = parseDriveLink(a && a.evidence); return r.ok ? r.url : ''; }
+
+const evModal = $('evidenceModal');
+let evId = null;
+function openEvidence(id) {
+  const rec = readSaved().find(x => x.id === id);
+  if (!rec) return;
+  evId = id;
+  $('evName').textContent = rec.name;
+  $('evLink').value = evUrlOf(rec);
+  $('err-ev').textContent = ''; $('evLink').setAttribute('aria-invalid', 'false');
+  evModal.hidden = false; document.body.classList.add('modal-open');
+  setTimeout(() => $('evLink').focus(), 0);
+}
+function closeEvidence(msg) {
+  const id = evId; evId = null;
+  evModal.hidden = true; document.body.classList.remove('modal-open');
+  if (msg) toast(msg, 3500);
+  const back = id && document.querySelector('[data-ev="' + id + '"]');
+  if (back) back.focus();
+}
+const skipEvidence = () => closeEvidence();
+$('evSkip').addEventListener('click', skipEvidence);
+evModal.addEventListener('mousedown', e => { if (e.target === evModal) skipEvidence(); });
+evModal.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { e.preventDefault(); skipEvidence(); return; }
+  if (e.key !== 'Tab') return;
+  const f = [...evModal.querySelectorAll('input,button')].filter(x => !x.disabled);
+  const first = f[0], last = f[f.length - 1];
+  if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+});
+$('evidenceForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const r = parseDriveLink($('evLink').value);
+  $('err-ev').textContent = r.ok ? '' : r.error;
+  $('evLink').setAttribute('aria-invalid', r.ok ? 'false' : 'true');
+  if (!r.ok) { $('evLink').focus(); return; }
+  const list = readSaved(), rec = list.find(x => x.id === evId);
+  if (rec) {
+    rec.evidence = r.url; rec.evidenceAt = r.url ? new Date().toISOString() : '';
+    if (!writeSaved(list)) { toast('Không lưu được. Trình duyệt đang chặn lưu trữ cục bộ.'); return; }
+  }
+  render();
+  closeEvidence(r.url ? 'Đã lưu link minh chứng.' : 'Đã xóa link minh chứng.');
+});
+
+const ICON_LOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+function evidenceBlock(a) {
+  const url = evUrlOf(a), id = esc(a.id);
+  return `<div class="act__evidence"><span class="ev-label" title="Chỉ bạn thấy link này">${ICON_LOCK}Minh chứng</span>` + (url
+    ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Mở link Drive</a><button type="button" class="link-btn" data-ev="${id}">Sửa</button><button type="button" class="link-btn link-btn--danger" data-ev-del="${id}">Xóa</button>`
+    : `<span class="muted">Chưa có</span><button type="button" class="link-btn" data-ev="${id}">Thêm link Drive</button>`) + '</div>';
+}
+
 /* ---------- Hiển thị ---------- */
 let filter = 'all', page = 1;
 
@@ -318,20 +432,19 @@ function actCard(a, n) {
               : st === 'expired' ? '<span class="badge badge-expired">Đã hết hạn</span>' : '';
   const grp = a.group === 'required' ? '<span class="badge badge-group">Bắt buộc</span>'
             : a.group === 'other' ? '<span class="badge badge-group">Tiêu chí khác</span>' : '';
+  const lv = levelsOf(a.record).map(t => `<span class="badge badge-level">${esc(t)}</span>`).join('');
   const saved = a.savedAt ? new Date(a.savedAt) : null;
-  const details = [];
-  if (a.record) details.push(`<div><dt>Ghi nhận</dt><dd>${esc(a.record)}</dd></div>`);
-  details.push(`<div><dt>Yêu cầu</dt><dd>${esc(a.req) || '—'}</dd></div>`);
   return `<li class="act">
     <div class="act__num" aria-label="Số thứ tự ${n}">${n}</div>
     <div>
       <h3 class="act__title">${esc(a.name)}</h3>
       <div class="act__meta">
-        <span class="badge badge-criterion">${esc(CRITERIA[a.criterion] || a.criterion || '')}</span>${grp}
+        <span class="badge badge-criterion">${esc(CRITERIA[a.criterion] || a.criterion || '')}</span>${grp}${lv}
         <span class="meta-time">${ICON_CAL}${esc(a.time) || 'Chưa có lịch'}</span>${badge}
       </div>
-      <dl class="act__details">${details.join('')}</dl>
+      <dl class="act__details"><div><dt>Yêu cầu</dt><dd>${esc(a.req) || '—'}</dd></div></dl>
       ${a.note ? `<p class="act__note">${ICON_INFO}<span>${esc(a.note)}</span></p>` : ''}
+      ${evidenceBlock(a)}
       ${saved && !isNaN(saved) ? `<p class="act__saved">Đã lưu ngày ${fmtDate(saved)}</p>` : ''}
     </div>
     <button type="button" class="save-btn" data-id="${esc(a.id)}" aria-pressed="true" aria-label="Bỏ lưu hoạt động" title="Bỏ lưu hoạt động">${ICON_SAVE}</button>
@@ -349,7 +462,7 @@ function renderBackupNote(total) {
   const last = STORAGE.getItem(EXPORT_KEY);
   const d = last ? new Date(last) : null;
   let warn = false, text;
-  if (!d || isNaN(d)) { text = 'Để giữ trải nghiệm tốt nhất, BIT khuyến khích bạn hãy định kì lưu trữ và hẹn bạn tại Lễ tuyên dương Sinh viên 5 tốt các cấp nhé!'; warn = total > 0; }
+  if (!d || isNaN(d)) { text = 'Bạn chưa xuất file lần nào. Để trải nghiệm tốt nhất, BIT khuyến khích bạn hãy định kỳ xuất file.'; warn = total > 0; }
   else {
     const days = Math.floor((Date.now() - d.getTime()) / 86400000);
     text = `Lần xuất gần nhất: ${fmtDate(d)} (${days === 0 ? 'hôm nay' : days + ' ngày trước'}).`;
@@ -369,6 +482,8 @@ function render() {
   const badge = document.querySelector('.saved__badge');
   if (badge) { badge.textContent = saved.length; badge.setAttribute('aria-label', saved.length + ' hoạt động đã lưu'); }
   $('totalCount').textContent = saved.length;
+  const withEv = saved.filter(a => evUrlOf(a)).length;
+  $('evSummary').textContent = saved.length ? `Đã gắn minh chứng: ${withEv}/${saved.length} hoạt động` : '';
   $('btnExport').disabled = saved.length === 0;
   $('btnClearAll').hidden = saved.length === 0;
   renderBackupNote(saved.length);
@@ -438,8 +553,19 @@ $('pager').addEventListener('click', e => {
   $('listTop').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth', block: 'start' });
 });
 $('savedList').addEventListener('click', e => {
+  const edit = e.target.closest('[data-ev]');
+  if (edit) { openEvidence(edit.dataset.ev); return; }
+  const del = e.target.closest('[data-ev-del]');
+  if (del) {
+    if (!confirm('Xóa link minh chứng của hoạt động này?')) return;
+    const all = readSaved(), rec = all.find(x => x.id === del.dataset.evDel);
+    if (rec && writeSaved(all.map(x => x === rec ? { ...x, evidence: '', evidenceAt: '' } : x))) { render(); toast('Đã xóa link minh chứng.'); }
+    return;
+  }
   const b = e.target.closest('.save-btn');
   if (!b) return;
+  const cur = readSaved().find(x => x.id === b.dataset.id);
+  if (cur && evUrlOf(cur) && !confirm('Bỏ lưu sẽ xóa link minh chứng đã gắn cho hoạt động này. Tiếp tục?')) return;
   const list = readSaved().filter(x => x.id !== b.dataset.id);
   if (!writeSaved(list)) { toast('Không cập nhật được. Trình duyệt đang chặn lưu trữ cục bộ.'); return; }
   toast('Đã bỏ lưu hoạt động.');
@@ -460,12 +586,12 @@ function csvCell(v) {
 function exportCSV() {
   const list = sortedSaved();
   if (!list.length) return;
-  const head = ['STT', 'Tiêu chuẩn', 'Nhóm tiêu chí', 'Hoạt động', 'Ghi nhận', 'Yêu cầu', 'Thời gian diễn ra', 'Trạng thái', 'Ghi chú', 'Ngày lưu'];
+  const head = ['STT', 'Tiêu chuẩn', 'Nhóm tiêu chí', 'Hoạt động', 'Ghi nhận (cấp)', 'Yêu cầu', 'Thời gian diễn ra', 'Trạng thái', 'Ghi chú', 'Link minh chứng', 'Ngày lưu'];
   const rows = list.map((a, i) => {
     const st = statusOf(a.time);
     const dt = a.savedAt ? new Date(a.savedAt) : null;
     return [i + 1, CRITERIA[a.criterion] || a.criterion || '', a.groupLabel || (a.group === 'required' ? 'Bắt buộc' : a.group === 'other' ? 'Khác' : ''),
-            a.name, a.record, a.req, a.time, st === 'active' ? 'Đang hoạt động' : st === 'expired' ? 'Đã hết hạn' : '', a.note,
+            a.name, a.record, a.req, a.time, st === 'active' ? 'Đang hoạt động' : st === 'expired' ? 'Đã hết hạn' : '', a.note, evUrlOf(a),
             dt && !isNaN(dt) ? fmtDate(dt) : ''];
   });
   // BOM UTF-8 để Excel đọc đúng tiếng Việt
