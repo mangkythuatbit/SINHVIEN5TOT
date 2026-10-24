@@ -111,13 +111,13 @@ a{color:var(--primary-color)}
 
 <section class="page-head">
   <div class="container">
-    <span class="live-chip">Năm học 2026</span>
     <h1>Đăng ký phong trào Sinh viên 5 Tốt</h1>
     <p>Phong trào Sinh viên 5 Tốt cấp khoa vẫn đang chờ bạn tiếp nối hành trình. Chọn biểu mẫu bạn cần điền bên dưới.</p>
     <p class="page-note">Lưu ý: Trang này sẽ trở thành trang thu nhận hồ sơ dành cho các sinh viên có mong muốn xét danh hiệu Sinh viên 5 Tốt khoa Công nghệ thông tin kinh doanh năm 2026 (chi tiết sẽ được cập nhật).</p>
     <div class="tabs" role="tablist" aria-label="Chọn biểu mẫu đăng ký" id="formTabs">
       <button type="button" role="tab" class="tab" id="tab-tracking" data-form="tracking" aria-selected="true" aria-controls="formPanel">Tracking sheet</button>
       <button type="button" role="tab" class="tab" id="tab-hop-thu" data-form="hop-thu" aria-selected="false" aria-controls="formPanel" tabindex="-1">Hộp thư Sinh viên 5 Tốt</button>
+       <button type="button" role="tab" class="tab" id="tab-ho-so" data-form="ho-so" aria-selected="false" aria-controls="formPanel" tabindex="-1">Thu nhận hồ sơ (sẽ sớm cập nhật)</button>
     </div>
   </div>
 </section>
@@ -217,7 +217,7 @@ a{color:var(--primary-color)}
 const FORMS = {
   'tracking': {
     label: 'Tracking sheet',
-    url: 'PASTE_TRACKING_FORM_URL_HERE',
+    url: 'https://docs.google.com/forms/d/e/1FAIpQLSc-MLikKEIx48oV3-ysL42quYFXksWCqLBVSG4ad43-R0CSbQ/viewform',
     title: 'Hướng dẫn điền Tracking sheet',
     intro: 'Dùng để theo dõi tiến trình rèn luyện của bạn trong năm học 2026.',
     steps: [
@@ -232,6 +232,19 @@ const FORMS = {
     label: 'Hộp thư Sinh viên 5 Tốt',
     url: 'https://docs.google.com/forms/d/e/1FAIpQLSenTIO2XU41sW7mgtEr7hkoK_-1Iz2Qbkj_MoTP2j4Xzfym7g/viewform',
     title: 'Hướng dẫn đăng ký Hộp thư',
+    intro: 'Đăng ký để nhận thông tin, thông báo của phong trào Sinh viên 5 Tốt khoa BIT.',
+    steps: [
+      '<strong>Đăng nhập Email UEH:</strong> Đảm bảo trình duyệt đã đăng nhập tài khoản Google sinh viên (<code>@st.ueh.edu.vn</code>).',
+      '<strong>Chuẩn bị thông tin:</strong> Điền chính xác Mã số sinh viên, Lớp, Khóa và thông tin liên lạc (Zalo/SĐT).',
+      '<strong>Chọn mục tiêu:</strong> Đánh dấu các cấp danh hiệu và tiêu chuẩn bạn dự định chinh phục trong năm học 2026.',
+      '<strong>Xác nhận:</strong> Bấm nút <strong>Gửi / Submit</strong> ở cuối biểu mẫu đến khi nhận được thông báo thành công.'
+    ],
+    note: ''
+  },
+  'ho-so': {
+    label: 'Thu nhận hồ sơ xét Sinh viên 5 tốt cấp khoa',
+    url: '',
+    title: 'Hướng dẫn đăng ký xét danh hiệu Sinh viên 5 tốt khoa Công nghệ thông tin kinh doanh năm 2026',
     intro: 'Đăng ký để nhận thông tin, thông báo của phong trào Sinh viên 5 Tốt khoa BIT.',
     steps: [
       '<strong>Đăng nhập Email UEH:</strong> Đảm bảo trình duyệt đã đăng nhập tài khoản Google sinh viên (<code>@st.ueh.edu.vn</code>).',
