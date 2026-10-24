@@ -340,6 +340,7 @@ body.modal-open{overflow:hidden}
         <tbody id="requestBody"></tbody>
       </table>
     </div>
+    <nav class="pager" id="reqPager" aria-label="Phân trang yêu cầu" hidden></nav>
   </div>
 </section>
 </main>
@@ -797,21 +798,42 @@ Object.keys(SHEET_CONFIG.TABS).forEach(k => loadCriterion(k).then(r => setCount(
 let serverRequests = [], localRequests = [];
 const STATUS = { approved: ['badge-approved', 'Đã duyệt'], pending: ['badge-pending', 'Chờ duyệt'], rejected: ['badge-rejected', 'Bị từ chối'] };
 
+const REQ_PAGE_SIZE = 5;
+let reqPage = 1;
+
 function renderRequests(state) {
-  const tb = $('requestBody');
+  const tb = $('requestBody'), pg = $('reqPager');
+  pg.hidden = true; pg.innerHTML = '';
   if (state === 'loading') { tb.innerHTML = '<tr><td colspan="5" class="state">Đang tải...</td></tr>'; return; }
   if (state === 'error')   { tb.innerHTML = '<tr><td colspan="5" class="state">Không tải được danh sách yêu cầu. Vui lòng thử lại sau.</td></tr>'; return; }
   const known = new Set(serverRequests.map(r => r.code));
   const items = [...localRequests.filter(r => !known.has(r.code)), ...serverRequests];
   if (!items.length) { tb.innerHTML = '<tr><td colspan="5" class="state">Chưa có yêu cầu nào.</td></tr>'; return; }
-  tb.innerHTML = items.slice(0, 20).map(r => {
+
+  const pages = Math.max(1, Math.ceil(items.length / REQ_PAGE_SIZE));
+  reqPage = Math.min(Math.max(1, reqPage), pages);
+  const slice = items.slice((reqPage - 1) * REQ_PAGE_SIZE, reqPage * REQ_PAGE_SIZE);
+
+  tb.innerHTML = slice.map(r => {
     const [cls, label] = STATUS[r.status] || STATUS.pending;
     const link = /^https?:\/\//i.test(r.link) ? `<a href="${esc(r.link)}" target="_blank" rel="noopener">Xem liên kết</a>` : '—';
-    // Chỉ hiện cấp ghi nhận khi đã duyệt (kiểm tra thêm ở phía trang, phòng khi dữ liệu trả về sai)
     const level = r.status === 'approved' && r.level ? `<span class="badge badge-level">${esc(r.level)}</span>` : '—';
     return `<tr><td><strong>${esc(r.code)}</strong></td><td>${esc(r.name)}</td><td>${link}</td><td><span class="badge ${cls}">${label}</span></td><td>${level}</td></tr>`;
   }).join('');
+
+  pg.hidden = pages <= 1;
+  pg.innerHTML = pages <= 1 ? '' :
+    `<button type="button" data-page="${reqPage - 1}" ${reqPage === 1 ? 'disabled' : ''} aria-label="Trang trước">‹</button>` +
+    pageItems(pages, reqPage).map(x => x === '…' ? '<span class="pager__gap" aria-hidden="true">…</span>'
+      : `<button type="button" data-page="${x}" ${x === reqPage ? 'aria-current="page"' : ''} aria-label="Trang ${x}">${x}</button>`).join('') +
+    `<button type="button" data-page="${reqPage + 1}" ${reqPage === pages ? 'disabled' : ''} aria-label="Trang sau">›</button>`;
 }
+
+$('reqPager').addEventListener('click', e => {
+  const b = e.target.closest('button[data-page]');
+  if (!b || b.disabled) return;
+  reqPage = +b.dataset.page; renderRequests();
+});
 async function loadRequests() {
   if (!hookReady()) { serverRequests = DEMO_REQUESTS; renderRequests(); return; }
   try {
