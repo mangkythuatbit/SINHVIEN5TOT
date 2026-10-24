@@ -12,6 +12,19 @@
   <link rel="stylesheet" href="css/footer.css">
 
 <style>
+  /* Chỉ dùng biến từ root.css */
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:var(--font-family-base);font-size:var(--font-size-body);line-height:var(--line-height-body);color:var(--text-color);background:var(--bg-color)}
+input,select,textarea,button,table{font-family:inherit;font-size:inherit;line-height:inherit}
+h1{font-size:var(--font-size-h1);line-height:var(--line-height-h1);margin:0;color:var(--color-blue-700)}
+h2{font-size:var(--font-size-h2);line-height:var(--line-height-h2);margin:0;color:var(--color-blue-700)}
+h3,h4,p,ul,ol,dl,dd{margin:0}
+a{color:var(--primary-color)}
+.container{max-width:var(--container-max);margin:0 auto;padding:0 var(--container-pad)}
+.muted{color:var(--text-muted)}
+:focus-visible{outline:none;box-shadow:var(--shadow-focus)}
+[id]{scroll-margin-top:var(--space-8)}
+  
   /* ---------- Đầu trang ---------- */
 .page-head{padding:var(--space-7) 0 var(--space-6);background:var(--primary-color-2);border-bottom:1px solid var(--color-blue-100)}
 .page-head p{margin-top:var(--space-3);max-width:64ch}
@@ -140,7 +153,7 @@
 <!-- PAGE TITLE -->
 <section class="page-head">
   <div class="container">
-    <h1>Đăng ký phong trào Sinh viên 5 tốt cấp khoa</h1>
+    <h1>ĐĂNG KÝ NHẬN HỘP THƯ SINH VIÊN 5 TỐT</h1>
     <p>Phong trào Sinh viên 5 tốt cấp khoa vẫn đang chờ bạn tiếp nối hành trình</p>
     <p>Lưu ý: Trang này sẽ trở thành trang Thu nhận hồ sơ dành cho các sinh viên có mong muốn xét danh hiệu Sinh viên 5 tốt khoa Công nghệ thông tin kinh doanh năm 2026 (chi tiết sẽ được cập nhật).</p>
 </section>
@@ -184,7 +197,7 @@
 
         <!-- THAY URL GOOGLE FORM CỦA BẠN VÀO THẺ SRC DƯỚI ĐÂY -->
         <iframe 
-          src="https://docs.google.com/forms/d/e/1FAIpQLSc_YOUR_FORM_ID/viewform?embedded=true" 
+          src="https://docs.google.com/forms/d/e/1FAIpQLSenTIO2XU41sW7mgtEr7hkoK_-1Iz2Qbkj_MoTP2j4Xzfym7g/viewform" 
           title="Form Đăng ký Sinh viên 5 Tốt BIT 2026"
           loading="lazy">
           Đang tải biểu mẫu...
