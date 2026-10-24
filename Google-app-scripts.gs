@@ -5,21 +5,23 @@
  * CÁCH CÀI ĐẶT
  * 1. Tạo Google Sheet mới (VD: "SV5T – Yêu cầu xét duyệt"), để ở chế độ riêng tư.
  * 2. Extensions (Tiện ích mở rộng) → Apps Script → dán toàn bộ file này.
- * 3. Chạy hàm setupSheet() một lần (cấp quyền khi được hỏi) để tạo tiêu đề cột.
- * 4. Deploy (Triển khai) → New deployment → loại "Web app":
- *      - Execute as: Me
- *      - Who has access: Anyone
+ * 3. Chạy setupSheet() một lần (cấp quyền khi được hỏi) để tạo tiêu đề cột.
+ * 4. Chạy testMail_() một lần để cấp quyền gửi mail và kiểm tra hộp thư.
+ * 5. Deploy → New deployment → loại "Web app" (Execute as: Me, Who has access: Anyone).
  *    Copy "Web app URL" dán vào REQUEST_CONFIG.WEB_APP_URL trong nien-bieu.html.
- * 5. Mỗi lần sửa code: Deploy → Manage deployments → Edit → New version.
+ * 6. Mỗi lần sửa code: Deploy → Manage deployments → Edit → New version.
  *
- * BCH duyệt bằng cách đổi cột "Trạng thái" trong Sheet:
- *   Chờ duyệt / Đã duyệt / Bị từ chối  → trang web tự cập nhật.
+ * BCH duyệt bằng cách đổi cột "Trạng thái" và chọn cấp ở cột "Ghi nhận":
+ *   Trạng thái: Chờ duyệt / Đã duyệt / Bị từ chối
+ *   Ghi nhận:   Cấp UEH / Cấp khoa / Cấp TW / Cấp TP  (chỉ hiện trên web khi đã duyệt)
  */
 
 const SHEET_NAME = 'Yêu cầu xét duyệt';
-const HEADERS = ['Thời gian gửi', 'Mã yêu cầu', 'Email', 'Tên hoạt động', 'Link hoạt động', 'Ghi chú', 'Trạng thái'];
+const HEADERS = ['Thời gian gửi', 'Mã yêu cầu', 'Email', 'Tên hoạt động', 'Link hoạt động', 'Ghi chú', 'Trạng thái', 'Ghi nhận'];
+const COL = { TIME: 1, CODE: 2, EMAIL: 3, NAME: 4, LINK: 5, NOTE: 6, STATUS: 7, LEVEL: 8 }; // số cột, bắt đầu từ 1
 const STATUSES = ['Chờ duyệt', 'Đã duyệt', 'Bị từ chối'];
-const NOTIFY_EMAIL = ''; // (tuỳ chọn) điền email BCH để nhận thông báo mỗi khi có yêu cầu mới
+const LEVELS = ['Cấp UEH', 'Cấp khoa', 'Cấp TW', 'Cấp TP'];
+const NOTIFY_EMAIL = 'mangkythuat.bit@gmail.com'; // nhiều người nhận: 'a@x.com,b@y.com'
 const LIST_LIMIT = 50;
 
 function getSheet_() {
@@ -27,13 +29,16 @@ function getSheet_() {
   return ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
 }
 
-// Chạy 1 lần để tạo tiêu đề cột và danh sách chọn cho cột Trạng thái
+// Chạy lại được nhiều lần, không mất dữ liệu: tạo tiêu đề + danh sách chọn cho Trạng thái và Ghi nhận
 function setupSheet() {
   const sh = getSheet_();
   sh.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]).setFontWeight('bold');
   sh.setFrozenRows(1);
-  const rule = SpreadsheetApp.newDataValidation().requireValueInList(STATUSES, true).build();
-  sh.getRange(2, HEADERS.length, sh.getMaxRows() - 1, 1).setDataValidation(rule);
+  const rows = Math.max(sh.getMaxRows() - 1, 1);
+  const statusRule = SpreadsheetApp.newDataValidation().requireValueInList(STATUSES, true).build();
+  const levelRule = SpreadsheetApp.newDataValidation().requireValueInList(LEVELS, true).setAllowInvalid(false).build();
+  sh.getRange(2, COL.STATUS, rows, 1).setDataValidation(statusRule);
+  sh.getRange(2, COL.LEVEL, rows, 1).setDataValidation(levelRule);
 }
 
 // Chống chèn công thức vào Sheet (ô bắt đầu bằng = + - @)
@@ -45,6 +50,42 @@ function clean_(v, max) {
 
 function json_(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}
+
+// Gửi mail báo cho BCH. Lỗi mail không làm hỏng việc ghi yêu cầu.
+function notify_(d) {
+  if (!NOTIFY_EMAIL) return;
+  try {
+    const sheetUrl = SpreadsheetApp.getActiveSpreadsheet().getUrl();
+    MailApp.sendEmail({
+      to: NOTIFY_EMAIL,
+      subject: '[SV5T] Yêu cầu hoạt động mới: ' + d.name,
+      body:
+        'Có yêu cầu mới gửi từ trang Niên biểu.\n\n' +
+        'Mã yêu cầu: ' + d.code + '\n' +
+        'Email người gửi: ' + d.email + '\n' +
+        'Hoạt động: ' + d.name + '\n' +
+        'Link: ' + d.link + '\n' +
+        'Ghi chú: ' + (d.note || '—') + '\n\n' +
+        'Mở Sheet để duyệt: ' + sheetUrl,
+      replyTo: d.email,
+      name: 'SV5T BIT'
+    });
+  } catch (err) {
+    console.error('Gửi mail thất bại: ' + err);
+  }
+}
+
+// Chạy 1 lần trong trình soạn thảo: cấp quyền gửi mail + kiểm tra
+// Chạy 1 lần trong trình soạn thảo để cấp quyền gửi mail + kiểm tra
+function testMail() {
+  Logger.log('Hạn mức mail còn lại hôm nay: ' + MailApp.getRemainingDailyQuota());
+  MailApp.sendEmail({
+    to: NOTIFY_EMAIL,
+    subject: '[SV5T] Thư kiểm tra',
+    body: 'Nếu bạn nhận được thư này thì cấu hình gửi mail đã chạy.'
+  });
+  Logger.log('Đã gửi tới ' + NOTIFY_EMAIL);
 }
 
 // Nhận yêu cầu từ form (POST)
@@ -67,12 +108,10 @@ function doPost(e) {
 
     const sh = getSheet_();
     if (sh.getLastRow() === 0) setupSheet();
-    sh.appendRow([new Date(), code, email, name, link, note, STATUSES[0]]);
+    // Cột "Ghi nhận" để trống: BCH chọn cấp khi xét duyệt
+    sh.appendRow([new Date(), code, email, name, link, note, STATUSES[0], '']);
 
-    if (NOTIFY_EMAIL) {
-      MailApp.sendEmail(NOTIFY_EMAIL, '[SV5T] Yêu cầu hoạt động mới: ' + name,
-        'Mã: ' + code + '\nEmail: ' + email + '\nHoạt động: ' + name + '\nLink: ' + link + '\nGhi chú: ' + note);
-    }
+    notify_({ code, email, name, link, note });
     return json_({ ok: true, code: code });
   } catch (err) {
     return json_({ ok: false, error: String(err) });
@@ -92,15 +131,20 @@ function doGet(e) {
     const rows = sh.getRange(2, 1, last - 1, HEADERS.length).getValues();
     const map = { 'Đã duyệt': 'approved', 'Bị từ chối': 'rejected' };
     const items = rows
-      .filter(r => r[1])
+      .filter(r => r[COL.CODE - 1])
       .reverse()
       .slice(0, LIST_LIMIT)
-      .map(r => ({
-        code: String(r[1]),
-        name: String(r[3]),
-        link: /^https?:\/\//i.test(String(r[4])) ? String(r[4]) : '',
-        status: map[String(r[6]).trim()] || 'pending'
-      }));
+      .map(r => {
+        const status = map[String(r[COL.STATUS - 1]).trim()] || 'pending';
+        const level = String(r[COL.LEVEL - 1]).trim();
+        return {
+          code: String(r[COL.CODE - 1]),
+          name: String(r[COL.NAME - 1]),
+          link: /^https?:\/\//i.test(String(r[COL.LINK - 1])) ? String(r[COL.LINK - 1]) : '',
+          status: status,
+          level: (status === 'approved' && LEVELS.indexOf(level) >= 0) ? level : '' // chỉ công khai khi đã duyệt
+        };
+      });
     return json_({ ok: true, items: items });
   } catch (err) {
     return json_({ ok: false, error: String(err) });
