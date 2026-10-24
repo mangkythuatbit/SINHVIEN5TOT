@@ -69,6 +69,11 @@ a{color:var(--primary-color)}
 .tab__count{min-width:24px;padding:0 var(--space-2);border-radius:var(--radius-pill);background:var(--color-bg-alt);color:var(--color-dark-500);font-size:13px;font-weight:var(--fw-bold);text-align:center}
 .tab[aria-selected="true"] .tab__count{background:var(--color-blue-700);color:var(--color-text-on-dark)}
 
+/* Bộ lọc nhóm tiêu chí */
+.group-filter{display:flex;align-items:center;gap:var(--space-3);flex-wrap:wrap;margin-bottom:var(--space-5)}
+.group-filter label{font-size:14px;font-weight:var(--fw-bold);color:var(--color-blue-700)}
+.group-filter .input{width:auto;min-width:220px}
+
 /* Thẻ hoạt động (giống niên biểu) */
 .act-list{list-style:none;padding:0;display:grid;gap:var(--space-4)}
 .act{display:grid;grid-template-columns:auto 1fr auto;gap:var(--space-4);padding:var(--space-5);border:1px solid var(--color-dark-100);border-radius:var(--radius-card);background:var(--color-surface);transition:var(--transition-base)}
@@ -212,6 +217,18 @@ body.modal-open{overflow:hidden}
 
     <div class="tabs" role="tablist" aria-label="Lọc theo tiêu chuẩn" id="filterTabs"></div>
 
+    <div class="group-filter">
+      <label for="groupFilter">Nhóm tiêu chí</label>
+      <select class="input" id="groupFilter">
+        <option value="">Tất cả</option>
+        <option value="required">Bắt buộc</option>
+        <option value="other">Tiêu chí khác</option>
+        <option value="hoi-nhap">Hội nhập</option>
+        <option value="ky-nang">Kỹ năng</option>
+        <option value="ngoai-ngu">Ngoại ngữ</option>
+      </select>
+    </div>
+
     <div id="listTop" role="tabpanel">
       <div id="savedList"></div>
 
@@ -308,7 +325,7 @@ body.modal-open{overflow:hidden}
 
 <script>
 /* Dùng chung khóa và cấu trúc dữ liệu với nien-bieu.html:
-   { id, criterion, group, groupLabel, name, time, record, req, note, evidence, savedAt } */
+   { id, criterion, group, groupLabel, sub, name, time, record, req, note, evidence, savedAt } */
 const STORAGE = window.localStorage;
 const SAVED_KEY = 'sv5t_tracked_activities';
 const EXPORT_KEY = 'sv5t_last_export';
@@ -422,15 +439,28 @@ function evidenceBlock(a) {
     : `<span class="muted">Chưa có</span><button type="button" class="link-btn" data-ev="${id}">Thêm link Drive</button>`) + '</div>';
 }
 
-/* ---------- Hiển thị ---------- */
-let filter = 'all', page = 1;
+/* ---------- Nhóm tiêu chí ---------- */
+let filter = 'all', page = 1, groupFilter = '';
 
 const GROUP_BADGE = { required: 'Bắt buộc', other: 'Tiêu chí khác', 'hoi-nhap': 'Hội nhập', 'ky-nang': 'Kỹ năng', 'ngoai-ngu': 'Ngoại ngữ' };
+/* nien-bieu.html lưu Hội nhập / Kỹ năng / Ngoại ngữ ở trường `sub` (VD: 'HỘI NHẬP') */
+const SUB_KEY = { 'hoi nhap': 'hoi-nhap', 'ky nang': 'ky-nang', 'ngoai ngu': 'ngoai-ngu' };
+const fold = s => String(s ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/gi, 'd').toLowerCase().replace(/\s+/g, ' ').trim();
+/* Một hoạt động có thể thuộc 2 nhóm: Bắt buộc/Khác + (Hội nhập/Kỹ năng/Ngoại ngữ) */
+function groupKeys(a) {
+  const keys = [];
+  if (GROUP_BADGE[a.group]) keys.push(a.group);
+  const s = SUB_KEY[fold(a.sub)];
+  if (s && !keys.includes(s)) keys.push(s);
+  return keys;
+}
+
+/* ---------- Hiển thị ---------- */
 function actCard(a, n) {
   const st = statusOf(a.time);
   const badge = st === 'active' ? '<span class="badge badge-active">Đang hoạt động</span>'
               : st === 'expired' ? '<span class="badge badge-expired">Đã hết hạn</span>' : '';
-  const grp = GROUP_BADGE[a.group] ? `<span class="badge badge-group">${GROUP_BADGE[a.group]}</span>` : '';
+  const grp = groupKeys(a).map(k => `<span class="badge badge-group">${GROUP_BADGE[k]}</span>`).join('');
   const lv = levelsOf(a.record).map(t => `<span class="badge badge-level">${esc(t)}</span>`).join('');
   const saved = a.savedAt ? new Date(a.savedAt) : null;
   return `<li class="act">
@@ -499,7 +529,8 @@ function render() {
     `<button type="button" role="tab" class="tab" data-filter="${k}" aria-selected="${k === filter}" tabindex="${k === filter ? 0 : -1}">${label} <span class="tab__count">${counts[k]}</span></button>`).join('');
 
   // Danh sách + phân trang
-  const list = filter === 'all' ? saved : saved.filter(a => a.criterion === filter);
+  const byCrit = filter === 'all' ? saved : saved.filter(a => a.criterion === filter);
+  const list = groupFilter ? byCrit.filter(a => groupKeys(a).includes(groupFilter)) : byCrit;
   const pages = Math.max(1, Math.ceil(list.length / PAGE_SIZE));
   page = Math.min(Math.max(1, page), pages);
   const start = (page - 1) * PAGE_SIZE, slice = list.slice(start, start + PAGE_SIZE);
@@ -509,10 +540,12 @@ function render() {
   empty.classList.toggle('is-visible', list.length === 0);
   if (list.length === 0) {
     const none = saved.length === 0;
-    $('emptyTitle').textContent = none ? 'Chưa có hoạt động nào được lưu' : 'Chưa lưu hoạt động nào thuộc tiêu chuẩn này';
+    $('emptyTitle').textContent = none ? 'Chưa có hoạt động nào được lưu' : groupFilter ? 'Không có hoạt động phù hợp bộ lọc' : 'Chưa lưu hoạt động nào thuộc tiêu chuẩn này';
     $('emptyDesc').textContent = none
       ? 'Hãy vào trang Niên biểu, bấm biểu tượng đánh dấu ở các hoạt động bạn dự định tham gia.'
-      : 'Chọn tab "Tất cả" để xem toàn bộ, hoặc vào Niên biểu để lưu thêm hoạt động.';
+      : groupFilter
+        ? 'Không có hoạt động đã lưu thuộc nhóm tiêu chí này. Hãy chọn "Tất cả" ở bộ lọc Nhóm tiêu chí.'
+        : 'Chọn tab "Tất cả" để xem toàn bộ, hoặc vào Niên biểu để lưu thêm hoạt động.';
   }
 
   const pager = $('pager');
@@ -545,6 +578,7 @@ $('filterTabs').addEventListener('keydown', e => {
   filter = tabs[(i + d + tabs.length) % tabs.length].dataset.filter; page = 1; render();
   $('filterTabs').querySelector(`[data-filter="${filter}"]`).focus();
 });
+$('groupFilter').addEventListener('change', e => { groupFilter = e.target.value; page = 1; render(); });
 $('pager').addEventListener('click', e => {
   const b = e.target.closest('button[data-page]');
   if (!b || b.disabled) return;
@@ -572,7 +606,7 @@ $('savedList').addEventListener('click', e => {
 });
 $('btnClearAll').addEventListener('click', () => {
   if (!confirm('Xóa toàn bộ hoạt động đã lưu?\nBạn nên xuất file CSV trước khi xóa.')) return;
-  writeSaved([]); page = 1; filter = 'all'; render(); toast('Đã xóa tất cả hoạt động đã lưu.');
+  writeSaved([]); page = 1; filter = 'all'; groupFilter = ''; $('groupFilter').value = ''; render(); toast('Đã xóa tất cả hoạt động đã lưu.');
 });
 window.addEventListener('storage', e => { if (e.key === SAVED_KEY || e.key === EXPORT_KEY) render(); });
 
@@ -589,7 +623,7 @@ function exportCSV() {
   const rows = list.map((a, i) => {
     const st = statusOf(a.time);
     const dt = a.savedAt ? new Date(a.savedAt) : null;
-    return [i + 1, CRITERIA[a.criterion] || a.criterion || '', a.groupLabel || GROUP_BADGE[a.group] || '',
+    return [i + 1, CRITERIA[a.criterion] || a.criterion || '', groupKeys(a).map(k => GROUP_BADGE[k]).join(' / ') || a.groupLabel || '',
             a.name, a.record, a.req, a.time, st === 'active' ? 'Đang hoạt động' : st === 'expired' ? 'Đã hết hạn' : '', a.note, evUrlOf(a),
             dt && !isNaN(dt) ? fmtDate(dt) : ''];
   });
