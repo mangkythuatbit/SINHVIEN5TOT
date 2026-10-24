@@ -425,12 +425,12 @@ function evidenceBlock(a) {
 /* ---------- Hiển thị ---------- */
 let filter = 'all', page = 1;
 
+const GROUP_BADGE = { required: 'Bắt buộc', other: 'Tiêu chí khác', 'hoi-nhap': 'Hội nhập', 'ky-nang': 'Kỹ năng', 'ngoai-ngu': 'Ngoại ngữ' };
 function actCard(a, n) {
   const st = statusOf(a.time);
   const badge = st === 'active' ? '<span class="badge badge-active">Đang hoạt động</span>'
               : st === 'expired' ? '<span class="badge badge-expired">Đã hết hạn</span>' : '';
-  const grp = a.group === 'required' ? '<span class="badge badge-group">Bắt buộc</span>'
-            : a.group === 'other' ? '<span class="badge badge-group">Tiêu chí khác</span>' : '';
+  const grp = GROUP_BADGE[a.group] ? `<span class="badge badge-group">${GROUP_BADGE[a.group]}</span>` : '';
   const lv = levelsOf(a.record).map(t => `<span class="badge badge-level">${esc(t)}</span>`).join('');
   const saved = a.savedAt ? new Date(a.savedAt) : null;
   return `<li class="act">
@@ -589,7 +589,7 @@ function exportCSV() {
   const rows = list.map((a, i) => {
     const st = statusOf(a.time);
     const dt = a.savedAt ? new Date(a.savedAt) : null;
-    return [i + 1, CRITERIA[a.criterion] || a.criterion || '', a.groupLabel || (a.group === 'required' ? 'Bắt buộc' : a.group === 'other' ? 'Khác' : ''),
+    return [i + 1, CRITERIA[a.criterion] || a.criterion || '', a.groupLabel || GROUP_BADGE[a.group] || '',
             a.name, a.record, a.req, a.time, st === 'active' ? 'Đang hoạt động' : st === 'expired' ? 'Đã hết hạn' : '', a.note, evUrlOf(a),
             dt && !isNaN(dt) ? fmtDate(dt) : ''];
   });
