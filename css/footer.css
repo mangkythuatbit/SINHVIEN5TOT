@@ -203,7 +203,8 @@ footer {
 .f-brand {
     grid-column: 1/6;
     display: grid;
-    grid-template-rows: 3fr 2fr;
+    grid-template-rows: auto auto;   /* thay vì 3fr 2fr */
+    align-content: start;            /* không kéo giãn hàng theo chiều cao cột */
     gap: var(--space-4)
 }
 
