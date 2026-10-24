@@ -436,9 +436,13 @@ function rowsToActivities(rows) {
   const out = []; let group = null;
   rows.forEach(r => {
     const c = r.map(x => (x || '').trim());
-    const marker = c.find(x => /TIÊU\s*CHÍ/i.test(x));
-    if (marker && !/^\d+$/.test(c[0])) { group = /BẮT\s*BUỘC/i.test(marker) ? 'required' : 'other'; return; }
-    if (/^\d+$/.test(c[0]) && c[1]) out.push({ group, stt: c[0], name: c[1], record: c[2] || '', req: c[3] || '', time: c[4] || '', note: c[5] || '' });
+    if (/^\d+$/.test(c[0])) {            // dòng có STT là một hoạt động
+      if (c[1]) out.push({ group, stt: c[0], name: c[1], record: c[2] || '', req: c[3] || '', time: c[4] || '', note: c[5] || '' });
+      return;
+    }
+    // dòng tiêu đề nhóm: so khớp không dấu, lấy chữ ngay sau "TIÊU CHÍ"
+    const m = fold(c.join(' ')).match(/tieu\s*chi\s*(bat\s*buoc|khac)/);
+    if (m) group = m[1].startsWith('bat') ? 'required' : 'other';
   });
   return out;
 }
@@ -459,7 +463,7 @@ const cache = {};
 async function loadCriterion(key) {
   if (cache[key]) return cache[key];
   if (!sheetReady()) return (cache[key] = { rows: DEMO_ROWS[key] || [], demo: true });
-  const url = `https://docs.google.com/spreadsheets/d/${SHEET_CONFIG.SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(SHEET_CONFIG.TABS[key])}`;
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_CONFIG.SHEET_ID}/gviz/tq?tqx=out:csv&headers=0&sheet=${encodeURIComponent(SHEET_CONFIG.TABS[key])}`;
   const res = await fetch(url);
   if (!res.ok) throw new Error('HTTP ' + res.status);
   return (cache[key] = { rows: rowsToActivities(parseCSV(await res.text())), demo: false });
@@ -492,7 +496,7 @@ function updateSavedBadge() {
 function toggleSaved(a) {
   const list = readSaved(), id = keyOf(a), i = list.findIndex(x => x.id === id);
   if (i >= 0) list.splice(i, 1);
-  else list.unshift({ id, criterion: current, name: a.name, time: a.time, record: a.record, req: a.req, note: a.note, savedAt: new Date().toISOString() });
+  else list.unshift({ id, criterion: current, group: a.group, name: a.name, time: a.time, record: a.record, req: a.req, note: a.note, savedAt: new Date().toISOString() });
   if (!writeSaved(list)) { toast('Không lưu được. Trình duyệt đang chặn lưu trữ cục bộ.'); return; }
   updateSavedBadge();
   toast(i >= 0 ? 'Đã bỏ lưu hoạt động.' : 'Đã lưu hoạt động. Xem tại "Theo dõi hoạt động đã lưu".', 3000);
