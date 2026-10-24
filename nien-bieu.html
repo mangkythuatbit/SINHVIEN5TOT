@@ -335,7 +335,7 @@ body.modal-open{overflow:hidden}
     <div class="table-wrap">
       <table class="data-table">
         <thead>
-          <tr><th>Mã yêu cầu</th><th>Tên hoạt động</th><th>Link hoạt động</th><th>Trạng thái</th></tr>
+          <tr><th>Mã yêu cầu</th><th>Tên hoạt động</th><th>Link hoạt động</th><th>Trạng thái</th><th>Ghi nhận</th></tr>
         </thead>
         <tbody id="requestBody"></tbody>
       </table>
@@ -448,22 +448,6 @@ const PAGE_SIZE = 5; // mỗi trang hiển thị tối đa 5 hoạt động
 
 /* Cấu trúc mỗi tab: A=STT, B=HOẠT ĐỘNG, C=GHI NHẬN, D=YÊU CẦU, E=THỜI GIAN DIỄN RA, F=GHI CHÚ.
    Dòng có chữ "TIÊU CHÍ ..." là tiêu đề nhóm; dòng có STT là số là một hoạt động. */
-
-const DEMO_ROWS = {
-  'the-luc': [
-    { group: 'other', groupLabel: 'TIÊU CHÍ KHÁC (ĐẠT 1)', stt: '1', name: 'GIẢI CHẠY BỘ HỌC SINH, SINH VIÊN, THANH NIÊN CÔNG NHÂN 2025', record: 'Cấp Thành phố', req: 'Cự ly: \n- Nam: 5.000m (30 phút) \n- Nữ: 3.000m (30 phút)', time: '22/03', note: 'Được cấp giấy chứng nhận "Thanh niên khỏe"' },
-    { group: 'other', groupLabel: 'TIÊU CHÍ KHÁC (ĐẠT 1)', stt: '2', name: 'HOẠT ĐỘNG SÁT HẠCH THỂ LỰC, CÔNG NHẬN DANH HIỆU “SINH VIÊN KHỎE', record: 'Cấp UEH', req: 'Các nội dung kiểm tra từ loại đạt trở lên.\n- Nữ (chọn 3/4 nội dung): chạy 100m, chạy 800m, bật xa tại chỗ, nhảy xa.\n- Nam (chọn 4/5 nội dung): chạy 100m, chạy 800m, bật xa tại chỗ, nhảy xa, kéo tay xà đơn.', time: '22/03', note: 'Nội dung chi tiết' },
-    { group: 'other', groupLabel: 'TIÊU CHÍ KHÁC (ĐẠT 1)', stt: '3', name: '[BIT][TÌM KIẾM VẬN ĐỘNG VIÊN THAM GIA HỘI THAO TRUYỀN THỐNG SINH VIÊN UEH]', record: 'Cấp Khoa', req: 'Tham gia vào đội hình thi đấu chính thức.', time: '01/04 - 18/05', note: '' },
-    { group: 'other', groupLabel: 'TIÊU CHÍ KHÁC (ĐẠT 1)', stt: '4', name: 'MỞ ĐƠN ĐĂNG KÝ THAM GIA HỘI THAO “SINH VIÊN KHỎE”', record: 'Cấp UEH', req: 'Đạt 4/5 nội dung đối với nữ và 5/5 nội dung đối với nam.\nNội dung tổ chức sát hạch: Chạy 30m, Lực kế bóp tay, Bật xa tại chỗ, Hít đất, Gập bụng.', time: '13 - 14/05', note: '' },
-    { group: 'other', groupLabel: 'TIÊU CHÍ KHÁC (ĐẠT 1)', stt: '5', name: 'GIẢI VIỆT DÃ HỌC SINH, SINH VIÊN TP.HCM MỞ RỘNG 2025', record: 'Cấp Thành phố', req: 'Hoàn thành đường chạy ', time: '20/9 - 26/9/2025', note: 'Được cấp giấy chứng nhận "Thanh niên khỏe"' },
-    { group: 'other', groupLabel: 'TIÊU CHÍ KHÁC (ĐẠT 1)', stt: '6', name: 'GIẢI CHẠY MINH HỌA SỐ 6 (DÙNG ĐỂ XEM PHÂN TRANG)', record: 'Cấp Khoa', req: 'Hoàn thành cự ly 3.000m.', time: '15/12', note: '' }
-  ]
-};
-const DEMO_REQUESTS = [
-  { code: 'A1B2C3', name: 'Ngày hội STEM khoa BIT', link: '#', status: 'approved' },
-  { code: 'D4E5F6', name: 'Giải Cờ vua sinh viên', link: '#', status: 'pending' },
-  { code: 'G7H8I9', name: 'Workshop Thiết kế UI/UX', link: '#', status: 'rejected' }
-];
 
 /* ---------- Tiện ích ---------- */
 const $ = id => document.getElementById(id);
@@ -815,15 +799,17 @@ const STATUS = { approved: ['badge-approved', 'Đã duyệt'], pending: ['badge-
 
 function renderRequests(state) {
   const tb = $('requestBody');
-  if (state === 'loading') { tb.innerHTML = '<tr><td colspan="4" class="state">Đang tải...</td></tr>'; return; }
-  if (state === 'error')   { tb.innerHTML = '<tr><td colspan="4" class="state">Không tải được danh sách yêu cầu. Vui lòng thử lại sau.</td></tr>'; return; }
+  if (state === 'loading') { tb.innerHTML = '<tr><td colspan="5" class="state">Đang tải...</td></tr>'; return; }
+  if (state === 'error')   { tb.innerHTML = '<tr><td colspan="5" class="state">Không tải được danh sách yêu cầu. Vui lòng thử lại sau.</td></tr>'; return; }
   const known = new Set(serverRequests.map(r => r.code));
   const items = [...localRequests.filter(r => !known.has(r.code)), ...serverRequests];
-  if (!items.length) { tb.innerHTML = '<tr><td colspan="4" class="state">Chưa có yêu cầu nào.</td></tr>'; return; }
+  if (!items.length) { tb.innerHTML = '<tr><td colspan="5" class="state">Chưa có yêu cầu nào.</td></tr>'; return; }
   tb.innerHTML = items.slice(0, 20).map(r => {
     const [cls, label] = STATUS[r.status] || STATUS.pending;
     const link = /^https?:\/\//i.test(r.link) ? `<a href="${esc(r.link)}" target="_blank" rel="noopener">Xem liên kết</a>` : '—';
-    return `<tr><td><strong>${esc(r.code)}</strong></td><td>${esc(r.name)}</td><td>${link}</td><td><span class="badge ${cls}">${label}</span></td></tr>`;
+    // Chỉ hiện cấp ghi nhận khi đã duyệt (kiểm tra thêm ở phía trang, phòng khi dữ liệu trả về sai)
+    const level = r.status === 'approved' && r.level ? `<span class="badge badge-level">${esc(r.level)}</span>` : '—';
+    return `<tr><td><strong>${esc(r.code)}</strong></td><td>${esc(r.name)}</td><td>${link}</td><td><span class="badge ${cls}">${label}</span></td><td>${level}</td></tr>`;
   }).join('');
 }
 async function loadRequests() {
