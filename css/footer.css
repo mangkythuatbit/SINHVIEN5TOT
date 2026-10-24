@@ -99,7 +99,8 @@ footer {
     margin: 0 0 var(--space-2);
     font-size: var(--font-size-h2);
     line-height: var(--line-height-h2);
-    font-weight: var(--fw-bold)
+    font-weight: var(--fw-bold);
+    color: #fff;  
 }
 
 .f-cta p {
