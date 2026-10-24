@@ -69,7 +69,7 @@ textarea.input{min-height:96px;resize:vertical}
 .group__label--other{border:1px solid var(--color-blue-300);color:var(--color-blue-700);background:var(--bg-color)}
 .group__hint{font-size:14px;color:var(--text-muted)}
 .act-list{list-style:none;padding:0;display:grid;gap:var(--space-4)}
-.act{display:grid;grid-template-columns:auto 1fr;gap:var(--space-4);padding:var(--space-5);border:1px solid var(--color-dark-100);border-radius:var(--radius-card);background:var(--color-surface);transition:var(--transition-base)}
+.act{display:grid;grid-template-columns:auto 1fr auto;gap:var(--space-4);padding:var(--space-5);border:1px solid var(--color-dark-100);border-radius:var(--radius-card);background:var(--color-surface);transition:var(--transition-base)}
 .act:hover{border-color:var(--color-blue-300);box-shadow:var(--shadow-md)}
 .act__num{display:grid;place-items:center;width:44px;height:44px;border-radius:var(--radius-sm);background:var(--primary-color-2);color:var(--color-blue-700);font-weight:var(--fw-bold)}
 .act__title{font-size:18px;line-height:1.35;font-weight:var(--fw-bold);color:var(--color-dark-700)}
@@ -85,6 +85,11 @@ textarea.input{min-height:96px;resize:vertical}
 .act__details dd{white-space:pre-line}
 .act__note{display:flex;gap:var(--space-2);align-items:flex-start;margin-top:var(--space-4);padding:var(--space-2) var(--space-3);border-radius:var(--radius-sm);background:var(--color-bg-alt);font-size:14px;color:var(--color-dark-500)}
 .act__note svg{margin-top:3px;color:var(--primary-color)}
+.save-btn{display:grid;place-items:center;align-self:start;width:var(--button-height);height:var(--button-height);padding:0;border:1px solid var(--color-dark-100);border-radius:var(--radius-pill);background:var(--bg-color);color:var(--color-dark-300);cursor:pointer;transition:var(--transition-base)}
+.save-btn:hover{border-color:var(--primary-color);color:var(--primary-color);background:var(--primary-color-2)}
+.save-btn svg{width:20px;height:20px}
+.save-btn[aria-pressed="true"]{border-color:var(--primary-color);background:var(--primary-color);color:var(--color-text-on-primary)}
+.save-btn[aria-pressed="true"] svg{fill:currentColor}
 
 .skeleton{height:132px;border-radius:var(--radius-card);background:linear-gradient(90deg,var(--color-bg-alt) 25%,var(--color-dark-100) 50%,var(--color-bg-alt) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite linear}
 @keyframes shimmer{to{background-position:-200% 0}}
@@ -460,6 +465,42 @@ async function loadCriterion(key) {
   return (cache[key] = { rows: rowsToActivities(parseCSV(await res.text())), demo: false });
 }
 
+/* ---------- Lưu hoạt động để theo dõi (Web Storage) ----------
+   Đổi sang sessionStorage nếu chỉ muốn lưu trong phiên duyệt web hiện tại.
+   Dữ liệu: mảng JSON dưới khóa SAVED_KEY, mỗi phần tử:
+   { id, criterion, name, time, record, req, note, savedAt }
+   Trang "hoat-dong-dang-ky.html" chỉ cần đọc cùng khóa này. */
+const STORAGE = window.localStorage;
+const SAVED_KEY = 'sv5t_tracked_activities';
+const keyOf = a => current + '::' + fold(a.name);
+function readSaved() {
+  try { const v = JSON.parse(STORAGE.getItem(SAVED_KEY) || '[]'); return Array.isArray(v) ? v : []; }
+  catch (e) { return []; }
+}
+function writeSaved(list) {
+  try { STORAGE.setItem(SAVED_KEY, JSON.stringify(list)); return true; }
+  catch (e) { return false; }
+}
+const isSaved = a => readSaved().some(x => x.id === keyOf(a));
+function updateSavedBadge() {
+  const b = document.querySelector('.saved__badge');
+  if (!b) return;
+  const n = readSaved().length;
+  b.textContent = n;
+  b.setAttribute('aria-label', n + ' hoạt động đã lưu');
+}
+function toggleSaved(a) {
+  const list = readSaved(), id = keyOf(a), i = list.findIndex(x => x.id === id);
+  if (i >= 0) list.splice(i, 1);
+  else list.unshift({ id, criterion: current, name: a.name, time: a.time, record: a.record, req: a.req, note: a.note, savedAt: new Date().toISOString() });
+  if (!writeSaved(list)) { toast('Không lưu được. Trình duyệt đang chặn lưu trữ cục bộ.'); return; }
+  updateSavedBadge();
+  toast(i >= 0 ? 'Đã bỏ lưu hoạt động.' : 'Đã lưu hoạt động. Xem tại "Theo dõi hoạt động đã lưu".', 3000);
+  render();
+}
+window.addEventListener('storage', e => { if (e.key === SAVED_KEY) { updateSavedBadge(); render(); } });
+updateSavedBadge();
+
 /* ---------- Hiển thị danh sách + phân trang ---------- */
 let current = 'hoc-tap', all = [], page = 1, loading = false;
 const GROUPS = {
@@ -472,8 +513,10 @@ function filtered() {
   const g = $('groupSelect').value, s = $('statusSelect').value;
   return all.filter(a => (!q || fold(a.name).includes(q)) && (!g || a.group === g) && (!s || statusOf(a.time) === s));
 }
+const ICON_SAVE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>';
 function actCard(a) {
   const st = statusOf(a.time);
+  const saved = isSaved(a);
   const badge = st === 'active' ? '<span class="badge badge-active">Đang hoạt động</span>'
               : st === 'expired' ? '<span class="badge badge-expired">Đã hết hạn</span>' : '';
   const details = [];
@@ -487,6 +530,7 @@ function actCard(a) {
       <dl class="act__details">${details.join('')}</dl>
       ${a.note ? `<p class="act__note">${ICON_INFO}<span>${esc(a.note)}</span></p>` : ''}
     </div>
+    <button type="button" class="save-btn" data-key="${esc(keyOf(a))}" aria-pressed="${saved}" aria-label="${saved ? 'Bỏ lưu hoạt động' : 'Lưu hoạt động để theo dõi'}" title="${saved ? 'Bỏ lưu hoạt động' : 'Lưu hoạt động để theo dõi'}">${ICON_SAVE}</button>
   </li>`;
 }
 function pageItems(n, p) {
@@ -586,6 +630,15 @@ $('pager').addEventListener('click', e => {
   page = +b.dataset.page; render();
   $('listTop').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth', block: 'start' });
 });
+$('activityList').addEventListener('click', e => {
+  const b = e.target.closest('.save-btn');
+  if (!b) return;
+  const a = all.find(x => keyOf(x) === b.dataset.key);
+  if (!a) return;
+  toggleSaved(a);
+  const again = document.querySelector(`.save-btn[data-key="${CSS.escape(b.dataset.key)}"]`);
+  if (again) again.focus();
+});
 document.querySelectorAll('[data-goto-form]').forEach(a => a.addEventListener('click', () => setTimeout(() => $('reqEmail').focus({ preventScroll: true }), 450)));
 
 showCriterion('hoc-tap');
@@ -620,9 +673,9 @@ async function loadRequests() {
 }
 renderRequests('loading'); loadRequests();
 
-function toast(html) {
+function toast(html, ms = 6000) {
   const t = $('toast'); t.innerHTML = html; t.classList.add('is-visible');
-  clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('is-visible'), 6000);
+  clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('is-visible'), ms);
 }
 function genCode() {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; let c = '';
