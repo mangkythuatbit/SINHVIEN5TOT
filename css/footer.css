@@ -105,7 +105,8 @@ footer {
 .f-cta p {
     margin: 0;
     color: var(--color-blue-100);
-    max-width: 48ch
+    max-width: none;          /* bỏ 48ch */
+    text-wrap: pretty;
 }
 
 .btns {
@@ -213,7 +214,8 @@ footer {
 }
 
 .f-brand p {
-    max-width: 52ch
+    max-width: none;          /* bỏ 52ch */
+    text-wrap: pretty;
 }
 
 .soc {
