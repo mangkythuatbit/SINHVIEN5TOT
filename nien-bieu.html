@@ -443,7 +443,7 @@ body.modal-open{overflow:hidden}
    ===================================================================== */
 const SHEET_CONFIG = {
   SHEET_ID: '1XNW-OJTQU9xVuGLL-hoDByLJk5bC6PEe1ruP559UNHs',
-  LINKS_URL: 'https://script.google.com/macros/s/AKfycbzeMb3Tw_jBcft0DJ81VuLeZd6CP_tHh8jryLzBC0yWWehZZVpzRw-3kwVF-xWBwGg9/exec',
+  LINKS_URL: 'https://script.google.com/macros/s/AKfycbyBPpvD24iMXfmUffN9kKb5fUzavUTwfmwwCZ5spsmt7bw1Xsi0aB-pVVubCKi1aQ/exec',
   TABS: {
     'hoc-tap':     'HỌC TẬP TỐT',
     'dao-duc':     'ĐẠO ĐỨC TỐT',
@@ -480,7 +480,7 @@ function parseCSV(text) {
   if (cell !== '' || row.length) { row.push(cell); rows.push(row); }
   return rows;
 }
-const SUBS = [['ngoai ngu', 'Ngoại ngữ'], ['ky nang', 'Kỹ năng'], ['hoi nhap', 'Hội nhập']];
+const SUBS = [['ngoai ngu', 'NGOẠI NGỮ'], ['ky nang', 'KỸ NĂNG'], ['hoi nhap', 'HỘI NHẬP']];
 const nameKey = s => fold(s).replace(/\s+/g, ' ').trim();
 
 // Nhận diện dòng nhóm nội dung (bỏ số thứ tự / "Nhóm" / "Tiêu chí" ở đầu)
@@ -892,7 +892,7 @@ $('reqPager').addEventListener('click', e => {
 async function loadRequests() {
   if (!hookReady()) { serverRequests = DEMO_REQUESTS; renderRequests(); return; }
   try {
-    const res = await fetch(REQUEST_CONFIG.WEB_APP_URL + '?action=list');
+    const res = await fetch(REQUEST_CONFIG.WEB_APP_URL + '?action=list', { redirect: 'follow' });
     const data = await res.json();
     if (!data.ok) throw new Error(data.error || 'error');
     serverRequests = data.items; renderRequests();
@@ -925,7 +925,7 @@ $('requestForm').addEventListener('submit', async e => {
     if ($('reqWebsite').value) { /* bot: bỏ qua nhưng vẫn báo thành công */ }
     else if (hookReady()) {
       // text/plain + no-cors để tránh preflight CORS với Apps Script
-      await fetch(REQUEST_CONFIG.WEB_APP_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ code, email, name, link, note }) });
+      await fetch(REQUEST_CONFIG.WEB_APP_URL, { method: 'POST', redirect: 'follow', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ code, email, name, link, note }) });
       setTimeout(loadRequests, 4000);
     }
     localRequests.unshift({ code, name, link, status: 'pending' });
