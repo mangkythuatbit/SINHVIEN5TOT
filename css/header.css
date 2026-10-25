@@ -208,4 +208,44 @@
   .menu a:hover,
   .saved:hover { background: #F3F7FB; }
   .menu a.is-active { background: var(--color-blue-100, #D2E4F1); }
+ /* Không cho logo bị co */
+  .header__left,
+  .brand { flex-shrink: 0; }
+  .brand__logo {
+    height: 32px;
+    width: auto;
+    flex-shrink: 0;                        /* quan trọng nhất */
+    max-width: none;
+  }
+
+  /* SV5T gọn lại */
+  .header__tag {
+    display: flex;
+    margin-left: 10px;
+    padding-left: 10px;
+    height: 24px;
+  }
+  .header__tag span {
+    font-size: 16px;
+    letter-spacing: 0.04em;
+  }
+
+  /* Cụm icon bên phải cũng không co, nhưng nhỏ hơn một chút */
+  .header__right { flex-shrink: 0; gap: 0; }
+  .menu { gap: 0; }
+  .menu a,
+  .saved,
+  .cta { width: 40px; height: 40px; }
+}
+
+/* Màn rất nhỏ (≤ 400px): nén thêm để vẫn đủ chỗ */
+@media (max-width: 400px) {
+  .header__inner { padding: 0 8px 0 12px; }
+  .brand__logo { height: 28px; }
+  .header__tag { margin-left: 8px; padding-left: 8px; }
+  .header__tag span { font-size: 14px; }
+  .menu a,
+  .saved,
+  .cta { width: 36px; height: 36px; }
+}
 }
