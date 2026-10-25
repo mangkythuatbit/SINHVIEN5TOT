@@ -149,8 +149,7 @@
   .header { height: 64px; }
   .header__inner { padding: 0 12px 0 16px; }
 
-  .brand__name,
-  .header__tag { display: none; }          /* bỏ chữ Đoàn - Hội và SV5T */
+  .brand__name { display: none; }          /* bỏ chữ Đoàn - Hội và SV5T */
   .brand__logo { height: 32px; }
 
   .header__right { display: flex; gap: 4px; }
